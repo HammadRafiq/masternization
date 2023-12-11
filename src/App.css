@@ -1,0 +1,199 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100;0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;0,9..40,900;0,9..40,1000;1,9..40,100;1,9..40,200;1,9..40,400;1,9..40,500;1,9..40,600;1,9..40,700;1,9..40,800;1,9..40,900;1,9..40,1000&display=swap');
+
+:root {
+  --purple:#6B63FB;
+  --light-purple:#F6F5FD;
+  --dark-purple:#080226;
+  --body-text:#262626;
+  --black:#141414;
+  --white:#ffffff;
+  --stroke-card:rgba(38, 38, 38, 0.30);
+}
+
+* {
+  font-family: 'DM Sans', sans-serif;
+  padding:0;
+  margin:0;
+}
+button,h1,h2,h3,h4,h5,h6 {
+  font-family: 'DM Sans', sans-serif !important;
+}
+h2 {
+  color: var(--dark-Purple);
+  font-size: 64px;
+  font-weight: 700;
+  line-height: 100%; 
+  letter-spacing: -1.92px; 
+}
+h3,.h3 {
+  color: var(--body-text);
+  font-size: 48px;
+  font-weight: 700;
+  line-height: 116.667%;
+  letter-spacing: -1.44px; 
+}
+
+h6 {
+  color: var(--black);
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 120%;
+  letter-spacing: -0.6px; 
+  margin-right: 12px;
+}
+.mastermode h6 {
+  font-weight: 700 !important;
+}
+p {
+  font-weight: 400;
+  color:var(--body-text);
+}
+p,input,button,label {
+  font-family: 'GeneralSans-Variable', sans-serif !important;
+}
+label {
+  color: var(--white);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 250%;
+  margin-bottom: 120px !important;
+}
+.center {
+  text-align: center;
+}
+.left {
+  text-align: left !important;
+}
+.App {
+  text-align: center;
+}
+.small-tagline {
+  font-size: 20px;
+  line-height:24px;
+  font-weight:400;
+  color:var(--purple);
+  margin-bottom: 24px;
+}
+.letting-spacing-6 {
+  letter-spacing: -0.6px; 
+}
+.p-primary {
+  font-size: 18px;
+  line-height: 28px;
+}
+.p-secondary {
+  font-size: 16px;
+  line-height: 150%;
+}
+.white {
+  color:#fff;
+}
+.hero-heading {
+  font-weight: 700;
+  line-height: 76px;
+}
+.card-heading {
+  color: var(--black);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px; 
+  letter-spacing: -0.72px; 
+  margin-top:17px;
+}
+.card-description {
+  color: var(--body-text);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px; 
+  margin-top:12px;
+}
+.maxwidth-85 {
+  max-width: 85%;
+}
+.youtube-course-descripton {
+  padding-top:20px;
+}
+.max-width-100 {
+  max-width: 100%;
+}
+
+.padding-all {
+  padding:100px 100px;
+}
+.padding-all-left {
+  padding:100px 0 100px 100px;
+}
+.padding-48 {
+  padding:48px 65px;
+}
+.margin-8 {
+  margin-bottom: 8px;
+}
+.marginleft-8 {
+  margin-left: 8px;
+}
+.mb-12 {
+  margin-bottom: 12px;
+}
+
+.margin-16 {
+  margin-bottom: 16px;
+}
+.mt-16 {
+  margin-top:16px;
+}
+.mb-16 {
+  margin-bottom: 16px;
+}
+.mb-40 {
+  margin-bottom: 40px;
+}
+.margin-32 {
+  margin-bottom: 32px;
+}
+.box-img {
+  width: 64px;
+  height: auto;
+}
+.padding-40 {
+  padding:40px 0;
+}
+.light-purple {
+  background: var(--light-purple);
+}
+.form-footer h2 {
+  color:#fff;
+  margin-bottom: 16px;
+  line-height: 72px;
+}
+.MuiOutlinedInput-notchedOutline {
+  border: none !important;
+}
+.curved-bg {
+  background: url('./Assets/curved-background.svg');
+  background-position: bottom center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 16px 16px 0 0;
+}
+.social-icon-border {
+  border:1px solid #141414;
+  padding:8px 11px;
+  border-radius: 50%;
+}
+
+
+@media only screen and (max-width:600px) {
+  .padding-all {
+    padding:50px 20px;
+  }
+  h3 {
+    font-size: 36px;
+  }
+  .p-primary {
+    font-size: 16px;
+    line-height: 26px;
+  }
+}
