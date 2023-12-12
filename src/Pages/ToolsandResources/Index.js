@@ -17,119 +17,119 @@ import ToolsCard from '../../Components/Tools/ToolsCard';
 
 const bloggingTutorials = {
     "tools": [
-      {
-        "id": 1,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 2,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 3,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 4,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 5,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 6,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 7,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 8,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 9,
-        "title": "Blogging",
-        "instructor":'Dale Strong',
-        "imageURL": BookImg,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "courseLink":"http://localhost:3000/",
-    },
-  ],
-  };
+        {
+            "id": 1,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 2,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 3,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 4,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 5,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 6,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 7,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 8,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 9,
+            "title": "Blogging",
+            "instructor": 'Dale Strong',
+            "imageURL": BookImg,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "courseLink": "http://localhost:3000/",
+        },
+    ],
+};
 
 const Tools = () => {
-  return (
-    <>
-    <Box className="padding-all" sx={{ flexGrow:1 }}>
-        <SecondaryHeader title={'Blogging Tools & Resources'} />
-        <Grid container spacing={2.5}>
-           {
-            bloggingTutorials.tools.map((tool) => {
-                return(
-                    <ToolsCard />
-                )
-            })
-           }
-        </Grid>
-        <Box sx={{display:'flex',alignItems:'center',justifyContent:'center',marginTop:'49px'}}>
-        <LoadButton text={'More Tools & Resources'} />
-        </Box>
-    </Box>
-    <FormFooter
-    title={'Submit a Tool or a Resource'}
-    description1={'If you wish to submit a tutorial for potential listing on Masternization, kindly fill the form below.'}
-    description2={'(If you are the creator of the tutorial, please submit it using the Creator Dashboard in My Account page)'}
-    label1={'Tool Name'}
-    placeholder1={'Enter the name of the tool'}
-    label2={'Tool URL'}
-    placeholder2={'Paste the URL of the tool here'}
-    />
-    </>
-  )
+    return (
+        <>
+            <Box className="padding-all" sx={{ flexGrow: 1 }}>
+                <SecondaryHeader title={'Blogging Tools & Resources'} />
+                <Grid container spacing={2.5}>
+                    {
+                        bloggingTutorials.tools.map((tool) => {
+                            return (
+                                <ToolsCard />
+                            )
+                        })
+                    }
+                </Grid>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
+                    <LoadButton text={'More Tools & Resources'} />
+                </Box>
+            </Box>
+            <FormFooter
+                title={'Submit a Tool or a Resource'}
+                description1={'If you wish to submit a tutorial for potential listing on Masternization, kindly fill the form below.'}
+                description2={'(If you are the creator of the tutorial, please submit it using the Creator Dashboard in My Account page)'}
+                label1={'Tool Name'}
+                placeholder1={'Enter the name of the tool'}
+                label2={'Tool URL'}
+                placeholder2={'Paste the URL of the tool here'}
+            />
+        </>
+    )
 }
 
 export default Tools
