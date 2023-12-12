@@ -1,6 +1,6 @@
 import './Fonts/WEB/css/general-sans.css'
 import './App.css';
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, Navigate } from 'react-router-dom'
 import Courses from './Pages/Courses/Index';
 import Home from './Pages/Home/Index';
 import Tutorials from './Pages/Tutorials/Index';
