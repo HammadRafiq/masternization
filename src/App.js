@@ -62,6 +62,10 @@ function App() {
       element: MasterBlogging,
       layout: Layout
     },
+    {
+      path: "/",
+      element: () => <Navigate to="/home" />,
+    },
   ]
 
   return (
