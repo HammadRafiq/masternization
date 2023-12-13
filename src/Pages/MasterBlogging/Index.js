@@ -136,7 +136,7 @@ const bloggingCourse = {
 const MasterBlogging = () => {
   return (
     <>
-    <Box className="padding-all" sx={{ flexGrow:1 }}>
+    <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow:1 }}>
         <Box sx={{textAlign:'center',marginBottom:'42px'}}>
             <h5 className="small-tagline letting-spacing-6 mb-12">Get Inspired</h5>
             <h3 className="mb-16">Blogging Success Stories</h3>

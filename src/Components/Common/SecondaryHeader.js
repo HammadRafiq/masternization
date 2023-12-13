@@ -8,13 +8,21 @@ import Typography from '@mui/material/Typography';
 const SecondaryHeader = ({ title }) => {
   return (
     <>
-      <Box sx={{
-        display: 'flex', marginBottom: {
-          xs: '50px',
-          md: '60px',
-          lg: '80px'
-        }
-      }}>
+      <Box
+        sx={{
+          display: 'flex',
+          marginBottom: {
+            xs: '20px',
+            md: '30px',
+            lg: '40px'
+          },
+          marginTop: {
+            xs: '20px',
+            md: '20px',
+            lg: '30px'
+          }
+        }}
+      >
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="h6" sx={{
             color: 'var(--dark-purple)',

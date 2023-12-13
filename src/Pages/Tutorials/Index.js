@@ -129,7 +129,7 @@ const bloggingTutorials = {
 const Tutorials = () => {
   return (
     <>
-      <Box className="padding-all" sx={{ flexGrow: 1 }}>
+      <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
         <SecondaryHeader title={'Blogging Tutorials'} />
         <Grid container spacing={2.5}>
           {
