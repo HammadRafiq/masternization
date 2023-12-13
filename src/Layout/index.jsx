@@ -2,19 +2,10 @@ import React, { useMemo } from 'react'
 import Logo from '../Assets/Masternization.svg'
 import { useLocation, useNavigate } from "react-router-dom"
 import LoadButton from '../Components/Common/LoadButton'
-import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
 import CustomMenu from '../Components/Common/CustomMenu';
-import MenuIcon from '@mui/icons-material/Menu';
+import Footer from '../Components/Footer/Footer';
 
 const pages = [
     {
@@ -54,10 +45,13 @@ const Layout = ({ children }) => {
 
     return (
         <Box>
-            <Box className="pl-100 pr-100" sx={{ padding: "15px 0", display: "flex", justifyContent: "space-between", alignItems: "center" }}> {/* HEADER */}
-                <img
-                    src={Logo}
-                />
+            <Box className="pl-100 pr-100" sx={{ paddingTop: "15px", paddingBottom: "15px", display: "flex", justifyContent: "space-between", alignItems: "center" }}> {/* HEADER */}
+                <Box sx={{ width: { xs: "150px", md: "250px" } }}>
+                    <img
+                        src={Logo}
+                        width="100%"
+                    />
+                </Box>
                 <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
                     {pages.map((page) => {
                         const isActiveMenu = location.pathname.includes(page.link)
@@ -84,7 +78,7 @@ const Layout = ({ children }) => {
                         text={'Logout'}
                         styleProps={{
                             minWidth: {
-                                xs: '100%',
+                                xs: '110px',
                                 md: '110px'
                             },
                             height: "40px",
@@ -96,9 +90,7 @@ const Layout = ({ children }) => {
             <Box>
                 {children}
             </Box>
-            <Box> {/* FOOTER */}
-
-            </Box>
+            <Footer />
         </Box>
     )
 }

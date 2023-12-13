@@ -45,8 +45,12 @@ const Footer = () => {
                             support@masternization.com
                         </Typography>
                     </Grid>
-                    <Grid>
-                        Third Col
+                    <Grid item xs={12} md={4}>
+                        <Box display="flex" justifyContent="flex-end">
+                            <Typography sx={{ textAlign: 'center', lineHeight: '36px', color: 'var(--black)' }}>
+                                Terms of Service | Privacy Policy
+                            </Typography>
+                        </Box>
                     </Grid>
                 </Grid>
                 <Box sx={{ maxWidth: '1090px', margin: '39px auto 0', paddingTop: '20px', borderTop: '1px solid #E4D8D8' }}>

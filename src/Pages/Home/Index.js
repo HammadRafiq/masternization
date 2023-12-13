@@ -6,14 +6,20 @@ import IconImg from '../../Assets/icon_skill.png'
 import LoadButton from '../../Components/Common/LoadButton';
 import MasterFeatures from '../../Components/Home/MasterFeatures';
 import Typography from '@mui/material/Typography';
-import HeroBanner from '../../Assets/hero_banner.svg';
-import HeroBannerBg from '../../Assets/hero_banner_bg.svg'
 import CustomTextField from '../../Components/Common/CustomTextField';
 import FormFooter from '../../Components/Common/FormFooter';
 import { ReactComponent as BgRight } from "../../Assets/gradient-bg-right.svg"
 import { ReactComponent as BgLeft } from "../../Assets/gradient-bg-left.svg"
+import { ReactComponent as WebDev } from "../../Assets/courses/web-dev.svg"
+import { ReactComponent as UI } from "../../Assets/courses/ui.svg"
+import { ReactComponent as GraphicDesign } from "../../Assets/courses/graphic-design.svg"
+import { ReactComponent as Blogging } from "../../Assets/courses/blogging.svg"
+import { ReactComponent as Blockchain } from "../../Assets/courses/blockchain.svg"
+import { ReactComponent as Photoshop } from "../../Assets/courses/photoshop.svg"
+import { ReactComponent as Social } from "../../Assets/courses/social.svg"
+import { ReactComponent as Animation } from "../../Assets/courses/animation.svg"
+import { ReactComponent as Freelance } from "../../Assets/courses/freelance.svg"
 import BannerBg from "../../Assets/banner-bg.png"
-import Layout from '../../Layout';
 
 
 const pickCourse = {
@@ -22,63 +28,63 @@ const pickCourse = {
       "id": 1,
       "title": "Web Development",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": WebDev,
       "courseLink": "http://localhost:3000/",
     },
     {
       "id": 2,
-      "title": "Web Development",
+      "title": "UI/UX Design",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": UI,
       "courseLink": "http://localhost:3000/",
     },
     {
       "id": 3,
-      "title": "Web Development",
+      "title": "Graphic Design",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": GraphicDesign,
       "courseLink": "http://localhost:3000/",
     },
     {
       "id": 4,
-      "title": "Web Development",
+      "title": "Blogging",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": Blogging,
       "courseLink": "http://localhost:3000/",
     },
     {
       "id": 5,
-      "title": "Web Development",
+      "title": "Blockchain Development",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": Blockchain,
       "courseLink": "http://localhost:3000/",
     },
     {
       "id": 6,
-      "title": "Web Development",
+      "title": "Photoshop",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": Photoshop,
       "courseLink": "http://localhost:3000/",
     },
     {
       "id": 7,
-      "title": "Web Development",
+      "title": "Social Media Management",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": Social,
       "courseLink": "http://localhost:3000/",
     },
     {
       "id": 8,
-      "title": "Web Development",
+      "title": "Animation",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": Animation,
       "courseLink": "http://localhost:3000/",
     },
     {
       "id": 9,
-      "title": "Web Development",
+      "title": "Freelance Writing",
       "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": IconImg,
+      "imageURL": Freelance,
       "courseLink": "http://localhost:3000/",
     },
   ],
@@ -181,7 +187,7 @@ const Home = () => {
           {
             pickCourse.courses.map((course) => {
               return (
-                <PickACourseCards id={course.id} title={course.title} des={course.description} />
+                <PickACourseCards key={course.id} course={course} />
               )
             })
           }

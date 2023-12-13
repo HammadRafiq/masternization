@@ -13,6 +13,7 @@ import Footer from './Components/Footer/Footer';
 import MasterBlogging from './Pages/MasterBlogging/Index';
 import Layout from './Layout';
 import { Fragment } from 'react';
+import Login from './Pages/Login';
 
 function App() {
 
@@ -63,6 +64,11 @@ function App() {
       layout: Layout
     },
     {
+      path: "/login",
+      element: Login,
+      layout: null
+    },
+    {
       path: "/",
       element: () => <Navigate to="/home" />,
     },
@@ -87,7 +93,6 @@ function App() {
         }
         )}
       </Routes>
-      <Footer />
     </>
   );
 }
