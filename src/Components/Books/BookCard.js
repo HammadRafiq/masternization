@@ -20,7 +20,7 @@ const BookCard = ({ book }) => {
                     padding: '24px'
                 }}>
                     <img className="max-width-100" src={book.imageURL} alt="Book Img" />
-                    <h2 class="card-heading">{book.title}</h2>
+                    <h2 class="card-heading card-heading-inner">{book.title}</h2>
                     <Box sx={{
                         margin: '8px 0 24px',
                         display: 'flex',

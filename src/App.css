@@ -128,6 +128,9 @@ label {
   letter-spacing: -0.72px;
   margin-top: 17px;
 }
+.card-heading-inner {
+  font-size: 22px;
+}
 
 .card-description {
   color: var(--body-text);
@@ -216,6 +219,9 @@ label {
 .MuiOutlinedInput-notchedOutline {
   border: none !important;
 }
+input {
+  padding: 16.5px 30px !important;
+}
 
 .curved-bg {
   background: url('./Assets/curved-background.svg');
@@ -258,11 +264,18 @@ label {
 .heart-icon.active path {
   stroke: var(--purple)
 }
-
+.blogging-job-card h2 {
+  margin:0;
+  font-weight: 500;
+}
 
 @media only screen and (max-width:600px) {
   .padding-all {
     padding: 50px 20px;
+  }
+  h2.main-heading {
+    font-size: 48px;
+    line-height: 100%;
   }
 
   h3 {
@@ -287,6 +300,23 @@ label {
   }
 
   .pr-100 {
+    padding-right: 20px !important;
+  }
+  .padding-48 {
+    padding:48px 20px;
+  }
+  .mastermode h6 {
+    line-height: 28px;
+  }
+  .master-features-box:last-child {
+    margin-bottom: 0;
+    flex:100%;
+  }
+  .hero-heading  {
+    font-size: 30px;
+    line-height: 150%;
+  }
+  .pr-m {
     padding-right: 20px !important;
   }
 }

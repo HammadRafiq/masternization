@@ -11,7 +11,7 @@ import Typography from '@mui/material/Typography';
 const BloggingTutorialsCard = () => {
   return (
     <>
-    <Grid item  xs={4} md={6} lg={4}>
+    <Grid item  xs={12} md={6} lg={4}>
             <Box sx={{
                 borderRadius:'16px',
                 border:'1px solid var(--stroke-card)',
@@ -39,7 +39,7 @@ const BloggingTutorialsCard = () => {
                     </Box>
                 </Box>
                 <Box sx={{padding:'7px 24px 24px'}}>
-                    <h2 class="card-heading">Project 24</h2>
+                    <h2 class="card-heading card-heading-inner">Project 24</h2>
                     <Typography sx={{
                         color:'var(--purple)',
                         fontWeight:500,
