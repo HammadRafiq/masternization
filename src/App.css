@@ -22,7 +22,9 @@ h2,
 h3,
 h4,
 h5,
-h6 {
+h6,
+.form-label,
+.dashboard-logins-styles button {
   font-family: 'DM Sans', sans-serif !important;
 }
 
@@ -61,6 +63,9 @@ p {
   font-weight: 400;
   color: var(--body-text);
 }
+form {
+  width: 100%;
+}
 
 p,
 input,
@@ -75,6 +80,29 @@ label {
   font-weight: 700;
   line-height: 250%;
   margin-bottom: 120px !important;
+}
+.dashboard-logins-styles {
+  max-width: 40vw;
+  margin:0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  min-height: 100vh;
+  flex-direction: column;
+  padding:80px 0;
+}
+.dashboard-logins-styles button[type="submit"] {
+  padding:10px 112px;
+  margin-top:32px;
+  font-weight: 700;
+}
+.form-label {
+  color:#000;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 40px;
+  letter-spacing: -0.54px; 
+  margin-bottom: 12px;
 }
 
 .center {

@@ -14,6 +14,7 @@ import MasterBlogging from './Pages/MasterBlogging/Index';
 import Layout from './Layout';
 import { Fragment } from 'react';
 import Login from './Pages/Login';
+import Registration from './Pages/Registration/Index';
 
 function App() {
 
@@ -67,6 +68,11 @@ function App() {
       path: "/login",
       element: Login,
       layout: null
+    },
+    {
+      path:"/registration",
+      element:Registration,
+      layout:null
     },
     {
       path: "/",
