@@ -196,6 +196,9 @@ label {
 .margin-8 {
   margin-bottom: 8px;
 }
+.mr-8 {
+  margin-right: 8px;
+}
 
 .marginleft-8 {
   margin-left: 8px;
@@ -295,6 +298,17 @@ input {
 .blogging-job-card h2 {
   margin:0;
   font-weight: 500;
+}
+.list-style-none {
+  list-style: none;
+}
+
+.dashboard-menu-item a {
+  color:#fff;
+  text-decoration: none;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 100%;
 }
 
 @media only screen and (max-width:600px) {

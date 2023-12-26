@@ -15,6 +15,10 @@ import Layout from './Layout';
 import { Fragment } from 'react';
 import Login from './Pages/Login';
 import Registration from './Pages/Registration/Index';
+import Dashboard from './Pages/Dashboard/Index';
+import DashboardLayout from './Layout/DashboardLayout';
+import Users from './Pages/Dashboard/InnerPages/Users';
+import AccountSettings from './Pages/Dashboard/InnerPages/AccountSettings';
 
 function App() {
 
@@ -23,6 +27,20 @@ function App() {
       path: "/home",
       element: Home,
       layout: Layout
+    },
+    {
+      path:"/dashboard",
+      element:Dashboard,
+    },
+    {
+      path:"/dashboard/users",
+      element:Users,
+      layout:DashboardLayout
+    },
+    {
+      path:"/dashboard/account-settings",
+      element:AccountSettings,
+      layout:DashboardLayout
     },
     {
       path: "/courses",
