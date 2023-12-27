@@ -13,6 +13,10 @@ const pages = [
         link: "/home"
     },
     {
+        title: "Dashboard",
+        link: "/courses"
+    },
+    {
         title: "Courses",
         link: "/courses"
     },
@@ -79,7 +83,6 @@ const Layout = ({ children }) => {
                         styleProps={{
                             minWidth: {
                                 xs: '110px',
-                                md: '110px'
                             },
                             height: "40px",
                             fontSize: "14px",
