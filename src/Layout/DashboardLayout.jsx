@@ -14,27 +14,46 @@ import Typography from '@mui/material/Typography';
 
 const DashboardLayout = ({ children }) => {
     return (
-        <Box >
-            <Grid container>
-                <Grid sx={{
-                    minHeight: '100vh',
-                    background: 'var(--dark-purple)'
-                }} item xs={12} md={2.3}>
-                    <Box className="navigation-bar">
-                        <NavigationBar />
-                    </Box>
-                </Grid>
-                <Grid sx={{ minHeight: '100vh' }} item xs={12} md={9.7}>
+        <Box>
+            <Box display="flex">
+                <Box
+                    sx={{
+                        background: 'var(--dark-purple)',
+                        height: "100vh"
+                    }}
+                >
+                    <NavigationBar />
+                </Box>
+                <Box flex={1} height="100vh" sx={{ overflowY: "scroll" }}>
                     <Box className="top-header">
                         <DashboardHeader />
                     </Box>
                     <Box className="main-content">
                         {children}
                     </Box>
+                </Box>
+            </Box>
+            {/* <Grid container>
+                <Grid item xs={12} md={2.3}>
+                    <Box sx={{
+                        minHeight: '100vh',
+                        background: 'var(--dark-purple)'
+                    }}
+                    >
+                        <NavigationBar />
+                    </Box>
                 </Grid>
-            </Grid>
-
-
+                <Grid item xs={12} md={9.7}>
+                    <Box sx={{ minHeight: '100vh' }}>
+                        <Box className="top-header">
+                            <DashboardHeader />
+                        </Box>
+                        <Box className="main-content">
+                            {children}
+                        </Box>
+                    </Box>
+                </Grid>
+            </Grid> */}
         </Box>
     )
 }

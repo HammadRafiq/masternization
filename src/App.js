@@ -32,34 +32,34 @@ function App() {
       layout: Layout
     },
     {
-      path:"/dashboard",
-      element:Dashboard,
+      path: "/dashboard/overview",
+      element: Dashboard,
     },
     {
-      path:"/dashboard/users",
-      element:Users,
-      layout:DashboardLayout
+      path: "/dashboard/users",
+      element: Users,
+      layout: DashboardLayout
     },
     {
-      path:"/dashboard/account-settings",
-      element:AccountSettings,
-      layout:DashboardLayout
+      path: "/dashboard/account-settings",
+      element: AccountSettings,
+      layout: DashboardLayout
     },
     {
-      path:"/dashboard/creators",
-      element:Creators,
-      layout:DashboardLayout
+      path: "/dashboard/creators",
+      element: Creators,
+      layout: DashboardLayout
 
     },
     {
-      path:"/dashboard/saved-works",
-      element:SavedWorks,
-      layout:DashboardLayout
+      path: "/dashboard/saved-works",
+      element: SavedWorks,
+      layout: DashboardLayout
     },
     {
-      path:"/dashboard/content",
-      element:Content,
-      layout:DashboardLayout
+      path: "/dashboard/content",
+      element: Content,
+      layout: DashboardLayout
     },
     {
       path: "/courses",
@@ -107,15 +107,16 @@ function App() {
       layout: null
     },
     {
-      path:"/registration",
-      element:Registration,
-      layout:null
+      path: "/registration",
+      element: Registration,
+      layout: null
     },
     {
       path: "/",
       element: () => <Navigate to="/home" />,
     },
   ]
+
 
   return (
     <>

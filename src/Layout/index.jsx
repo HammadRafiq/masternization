@@ -14,7 +14,7 @@ const pages = [
     },
     {
         title: "Dashboard",
-        link: "/courses"
+        link: "/dashboard/overview"
     },
     {
         title: "Courses",
@@ -33,8 +33,12 @@ const pages = [
         link: "/tools"
     },
     {
-        title: "Youtube Channels",
+        title: "YouTube Channels",
         link: "/youtube-channels"
+    },
+    {
+        title: "Groups",
+        link: "/groups-forums"
     },
     {
         title: "Jobs",
@@ -66,7 +70,7 @@ const Layout = ({ children }) => {
                                     navigate(page.link)
                                 }}
                                 sx={{
-                                    my: 2, color: isActiveMenu ? "#6B63FB" : 'black', display: 'block',
+                                    my: 2, px: "6px", color: isActiveMenu ? "#6B63FB" : 'black', display: 'block', textTransform: "capitalize", fontWeight: isActiveMenu ? 700 : 400
                                 }}
                             >
                                 {page.title}

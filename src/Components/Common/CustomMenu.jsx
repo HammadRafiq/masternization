@@ -53,7 +53,7 @@ const CustomMenu = ({
                         }}
                     >
                         <Box style={{ display: "flex", alignItems: "center", gap: "7px" }}>
-                            <Typography variant='body2'>
+                            <Typography variant='body2' textTransform="capitalize">
                                 {item.title}
                             </Typography>
                         </Box>

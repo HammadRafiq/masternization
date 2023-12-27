@@ -9,6 +9,7 @@ const LoadButton = (
 ) => {
   return (
     <Button
+      type='submit'
       sx={{
         backgroundColor: 'var(--purple)',
         color: 'var(--white)',
