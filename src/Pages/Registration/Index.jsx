@@ -91,6 +91,7 @@ const Registration = () => {
                     showPassword={showPassword}
                     handleClickShowPassword={handleClickShowPassword}
                     handleMouseDownPassword={handleMouseDownPassword}
+                    label={'Password'}
                 />
 
                 <LoadButton text={'Create my free account'} />

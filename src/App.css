@@ -253,6 +253,9 @@ label {
 input {
   padding: 16.5px 30px !important;
 }
+.dashboard-search input {
+  font-family: 'DM Sans', sans-serif !important;
+}
 
 .curved-bg {
   background: url('./Assets/curved-background.svg');

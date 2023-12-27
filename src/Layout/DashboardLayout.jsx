@@ -15,16 +15,16 @@ import Typography from '@mui/material/Typography';
 const DashboardLayout = ({ children }) => {
     return (
         <Box >
-            <Grid container spacing={2.5}>
+            <Grid container>
                 <Grid sx={{
                     minHeight: '100vh',
                     background: 'var(--dark-purple)'
-                }} item xs={12} md={2}>
+                }} item xs={12} md={2.3}>
                     <Box className="navigation-bar">
                         <NavigationBar />
                     </Box>
                 </Grid>
-                <Grid sx={{ minHeight: '100vh' }} item xs={12} md={10}>
+                <Grid sx={{ minHeight: '100vh' }} item xs={12} md={9.7}>
                     <Box className="top-header">
                         <DashboardHeader />
                     </Box>

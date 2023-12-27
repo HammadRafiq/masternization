@@ -73,6 +73,7 @@ const Login = () => {
           showPassword={showPassword}
           handleClickShowPassword={handleClickShowPassword}
           handleMouseDownPassword={handleMouseDownPassword}
+          label={'Password'}
         />
 
         <LoadButton text={'Login'} padding={'10px 112px'} />

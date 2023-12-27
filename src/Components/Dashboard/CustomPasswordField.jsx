@@ -2,21 +2,25 @@ import React from 'react'
 import { TextField, IconButton, InputAdornment } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
+import Box from '@mui/system/Box';
 
-const CustomPasswordField = ({ register, errors, showPassword, handleClickShowPassword, handleMouseDownPassword }) => {
+
+const CustomPasswordField = ({ register, errors, showPassword, handleClickShowPassword, handleMouseDownPassword, mt, label, name }) => {
     const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/;
     return (
-        <div className="mt-16">
+        <Box sx={{marginTop:mt}} className="mt-16">
             <label className="form-label" htmlFor="password">
-                Password
+                {label}
             </label>
             <TextField
                 id="password"
                 label=""
+                name={name}
                 fullWidth
                 sx={{
                     background: 'var(--light-purple)',
                     borderRadius: '8px',
+                    
                 }}
                 type={showPassword ? 'text' : 'password'}
                 error={!!errors.password}
@@ -48,7 +52,7 @@ const CustomPasswordField = ({ register, errors, showPassword, handleClickShowPa
                     {errors.password.message}
                 </Typography>
             )}
-        </div>
+        </Box>
     )
 }
 
