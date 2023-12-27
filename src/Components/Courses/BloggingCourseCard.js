@@ -36,7 +36,7 @@ const BloggingCourseCard = ({id,title,instructor,description,imgurl,favorite,inf
                         }}>FREE</Typography>
                     </Box>
                 </Box>
-                <h2 class="card-heading">{title}</h2>
+                <h2 class="card-heading card-heading-inner">{title}</h2>
                 <Typography sx={{
                     color:'var(--purple)',
                     fontWeight:500,

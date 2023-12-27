@@ -13,10 +13,13 @@ const Footer = () => {
         <>
             <Box sx={{
                 background: '#fff',
-                padding: '93px 100px 47px',
+                padding: {
+                    xs:'50px 20px',
+                    md:'93px 100px 47px',
+                },
             }}>
                 <Grid container spacing={2.5}>
-                    <Grid item xs={12} md={4}>
+                    <Grid sx={{display:'flex',justifyContent:'center'}} item xs={12} md={4}>
                         <img src={Logo} alt="logo" />
                     </Grid>
                     <Grid item xs={12} md={4}>
@@ -46,7 +49,7 @@ const Footer = () => {
                         </Typography>
                     </Grid>
                     <Grid item xs={12} md={4}>
-                        <Box display="flex" justifyContent="flex-end">
+                        <Box display="flex" justifyContent={{xs:"center",md:"flex-end"}}>
                             <Typography sx={{ textAlign: 'center', lineHeight: '36px', color: 'var(--black)' }}>
                                 Terms of Service | Privacy Policy
                             </Typography>

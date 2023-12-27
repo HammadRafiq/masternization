@@ -16,7 +16,7 @@ import YoutubeChannelLinkIcon from '../../Assets/youtube_channel_link_icon.svg'
 const YoutubeChannelCard = () => {
   return (
     <>
-    <Grid item xs={4} md={4} lg={4}>
+    <Grid item xs={12} md={6} lg={4}>
         <Box sx={{
             borderRadius:'16px',
             border:'1px solid var(--stroke-card)',
@@ -26,7 +26,7 @@ const YoutubeChannelCard = () => {
             }}>
             <img className="max-width-100" src={Youtubechannelimg} alt="Book Img" />
            <Box sx={{padding:'7px 20px 0'}}>
-                <h2 class="card-heading">Niche Pursuits</h2>
+                <h2 class="card-heading card-heading-inner">Niche Pursuits</h2>
                 <p class="card-description youtube-course-descripton">
                 The NichePursuits YouTube channel contains a ton of useful blogging related content.
                 </p>

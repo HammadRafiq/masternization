@@ -6,10 +6,11 @@ import InfoCircle from '../../Assets/info-circle.svg'
 import Typography from '@mui/material/Typography';
 import ToolImg from '../../Assets/ToolIcon.svg'
 
+
 const ToolsCard = () => {
   return (
     <>
-     <Grid item xs={4} md={4} lg={4}>
+     <Grid item xs={12} md={6} lg={4}>
         <Box sx={{
             borderRadius:'16px',
             border:'1px solid var(--stroke-card)',
@@ -19,7 +20,7 @@ const ToolsCard = () => {
               }}>
             <img className="max-width-100" src={ToolImg} alt="Book Img" />
             <Box sx={{padding:' 7px 0 0 12px'}}>
-                <h2 class="card-heading">CMS Hub</h2>
+                <h2 class="card-heading card-heading-inner">CMS Hub</h2>
                 <Box sx={{
                     margin:'8px 0 24px',
                     }}>

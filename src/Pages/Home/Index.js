@@ -125,21 +125,21 @@ const Home = () => {
     <Box>
       <Box position="relative">
         <Grid container space={2}>
-          <Grid item xs={7.5} zIndex={9} className="pt-100 pb-100 pl-100">
+          <Grid item xs={12} md={7.5} zIndex={9} className="pt-100 pb-100 pl-100 pr-m">
             <h5 className="small-tagline left margin-16">Gain Skills; Make Money.</h5>
             <Typography class="h3 hero-heading" variant="h3">
               Earn Your First Dollar... <br />Or Your First Million Starting From 0
             </Typography>
             <Typography variant="body1" sx={{
-              fontSize: '24px',
-              lineHeight: '35px',
+              fontSize: {xs:'16px',md:'24px'},
+              lineHeight: {xs:'26px',md:'35px'},
               margin: '30px 0 25px'
             }}>
               We give you all you need to become an expert in your field, whether you are starting from scratch or not - courses, tutorials, books, tools and much more.
             </Typography>
             <LoadButton text={'Start Your Journey'} />
           </Grid>
-          <Grid item xs={4.5}>
+          <Grid item xs={12} md={4.5}>
             <Box height="100%" position="relative">
               <img
                 src={BannerBg}
@@ -157,7 +157,7 @@ const Home = () => {
       </Box>
       <Box className="padding-48 mastermode light-purple">
         <h3 className="center">#MasterMode</h3>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '40px' }}>
+        <Box sx={{ display: 'flex', alignItems: {xs:'start',md:'center'}, justifyContent: 'space-between', marginTop: {xs:'30px',md:'40px'}, flexWrap:'wrap' }}>
           {
             pickCourse.mastermode.map((feature) => {
               return (
@@ -170,14 +170,14 @@ const Home = () => {
       <Box className="padding-all" sx={{ flexGrow: 1 }}>
         <Box sx={{ maxWidth: '726px', margin: '0 auto 61px' }}>
           <h5 className="center small-tagline">Explore Opportunities</h5>
-          <h2 className="center">Pick a Course. <br />Master a Skill.</h2>
+          <h2 className="center main-heading">Pick a Course. <br />Master a Skill.</h2>
           <p className="center p-primary padding-40">Explore boundless opportunities for personal and professional growth through expert-led courses, tutorials, and mentorship with Pineapple.</p>
           <Box>
-            <Grid container spacing={4} sx={{ display: 'flex', alignItems: 'center' }}>
-              <Grid item xs={9}>
-                <CustomTextField placeholder={'Search courses'} borderRadius={'40px'} bgColor={'#EBEBEC'} paddingLeft={'16px'} />
+            <Grid container spacing={{xs:1,md:4}} sx={{ display: 'flex', alignItems: 'center' }}>
+              <Grid item xs={12} md={9}>
+                <CustomTextField placeholder={'Search courses'} borderRadius={'40px'} bgColor={'#EBEBEC'} paddingLeft={'0px'} />
               </Grid>
-              <Grid item xs={3}>
+              <Grid item xs={12} md={3}>
                 <LoadButton text={'More Courses'} />
               </Grid>
             </Grid>

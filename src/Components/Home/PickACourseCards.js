@@ -11,7 +11,7 @@ const PickACourseCards = ({ course }) => {
   const [heart, setHeart] = useState("inactive")
 
   return (
-    <Grid item xs={4} md={6} lg={4}>
+    <Grid item xs={12} md={6} lg={4}>
       <Box sx={{
         borderRadius: '16px',
         border: '1px solid rgba(38, 38, 38, 0.10)',

@@ -14,6 +14,14 @@ import MasterBlogging from './Pages/MasterBlogging/Index';
 import Layout from './Layout';
 import { Fragment } from 'react';
 import Login from './Pages/Login';
+import Registration from './Pages/Registration/Index';
+import Dashboard from './Pages/Dashboard/Index';
+import DashboardLayout from './Layout/DashboardLayout';
+import Users from './Pages/Dashboard/InnerPages/Users';
+import AccountSettings from './Pages/Dashboard/InnerPages/AccountSettings';
+import Creators from './Pages/Dashboard/InnerPages/Creators'
+import SavedWorks from './Pages/Dashboard/InnerPages/SavedWorks'
+import Content from './Pages/Dashboard/InnerPages/Content'
 
 function App() {
 
@@ -22,6 +30,36 @@ function App() {
       path: "/home",
       element: Home,
       layout: Layout
+    },
+    {
+      path:"/dashboard",
+      element:Dashboard,
+    },
+    {
+      path:"/dashboard/users",
+      element:Users,
+      layout:DashboardLayout
+    },
+    {
+      path:"/dashboard/account-settings",
+      element:AccountSettings,
+      layout:DashboardLayout
+    },
+    {
+      path:"/dashboard/creators",
+      element:Creators,
+      layout:DashboardLayout
+
+    },
+    {
+      path:"/dashboard/saved-works",
+      element:SavedWorks,
+      layout:DashboardLayout
+    },
+    {
+      path:"/dashboard/content",
+      element:Content,
+      layout:DashboardLayout
     },
     {
       path: "/courses",
@@ -67,6 +105,11 @@ function App() {
       path: "/login",
       element: Login,
       layout: null
+    },
+    {
+      path:"/registration",
+      element:Registration,
+      layout:null
     },
     {
       path: "/",

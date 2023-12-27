@@ -11,6 +11,7 @@ const SecondaryHeader = ({ title }) => {
       <Box
         sx={{
           display: 'flex',
+          alignItems:'start',
           marginBottom: {
             xs: '20px',
             md: '30px',
@@ -71,7 +72,7 @@ const SecondaryHeader = ({ title }) => {
         <h3 className="center">{title}</h3>
         <p className="center p-primary mt-16 mb-40">Blogging is a way of creating and sharing content on the internet to connect with an audience.</p>
       </Box>
-      <Box sx={{ display: { xs: 'block', md: 'flex' }, justifyContent: 'space-between', alignItems: 'center', marginBottom: { xs: '50px', md: '72px' } }}>
+      <Box className="secondary-header" sx={{ display: { xs: 'block', md: 'flex' }, justifyContent: 'space-between', alignItems: 'center', marginBottom: { xs: '50px', md: '72px' } }}>
         <Box></Box>
         <Box sx={{
           display: {
@@ -84,9 +85,10 @@ const SecondaryHeader = ({ title }) => {
           }, minWidth: {
             xs: '100%',
             md: '60%'
-          }, gap: '16px'
+          }, gap: '16px',
+          
         }}>
-          <CustomTextField sx={{ maxHeight: '60px !important' }} placeholder={'Search courses'} borderRadius={'40px'} bgColor={'#EBEBEC'} paddingLeft={'16px'} />
+          <CustomTextField sx={{ maxHeight: '60px !important' }} placeholder={'Search courses'} borderRadius={'40px'} bgColor={'#EBEBEC'} paddingLeft={'0px'} />
           <LoadButton text={'Search'} />
         </Box>
         <Box>Filter Bar</Box>
