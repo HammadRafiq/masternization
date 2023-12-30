@@ -48,7 +48,7 @@ const AccountSettings = () => {
             register={register}
             errors={errors}
             label={'Username'}
-            type={'text'}
+            type={'text12'}
             requiredMsg={'Username is required'}
             invalidMsg={'Invalid Username'}
             name={'profileusername'}
@@ -142,6 +142,7 @@ const AccountSettings = () => {
               handleMouseDownPassword={handleMouseDownPassword}
               mt={'24px'}
               label={'New Password'}
+              name={'newpassword'}
             />
             <CustomPasswordField
               register={register}
@@ -151,6 +152,7 @@ const AccountSettings = () => {
               handleMouseDownPassword={handleMouseDownPassword}
               mt={'24px'}
               label={'Repeat new password'}
+              name={'confirmnewpassword'}
             />
             <Box sx={{ marginTop: '24px' }}>
               <LoadButton text={'Change'} padding={'10px 112px'} />

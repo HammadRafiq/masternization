@@ -29,7 +29,7 @@ h6,
 }
 
 h2 {
-  color: var(--dark-Purple);
+  color: var(--dark-purple);
   font-size: 64px;
   font-weight: 700;
   line-height: 100%;
@@ -79,7 +79,7 @@ label {
   font-size: 18px;
   font-weight: 700;
   line-height: 250%;
-  margin-bottom: 120px !important;
+  
 }
 .dashboard-logins-styles {
   max-width: 40vw;
@@ -135,8 +135,14 @@ label {
 }
 
 .p-secondary {
-  font-size: 16px;
-  line-height: 150%;
+  font-size: 16px !important;
+  line-height: 150% !important;
+}
+.p-14 {
+  font-size: 14px;
+  line-height: 24px;
+  color:#fff;
+  margin-bottom: 16px;
 }
 
 .white {
@@ -250,8 +256,13 @@ label {
 .MuiOutlinedInput-notchedOutline {
   border: none !important;
 }
+.css-ahj2mt-MuiTypography-root {
+  font-size: 14px !important;
+  line-height: 24px !important;
+  font-family: 'GeneralSans-Variable', sans-serif !important;
+}
 input {
-  padding: 16.5px 30px !important;
+  
 }
 .dashboard-search input {
   font-family: 'DM Sans', sans-serif !important;

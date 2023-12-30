@@ -9,7 +9,6 @@ import Tools from './Pages/ToolsandResources/Index';
 import YoutubeChannels from './Pages/YoutubeChannels/Index';
 import BloggingGroups from './Pages/Groups/Index';
 import BloggingJobs from './Pages/Jobs/Index';
-import Footer from './Components/Footer/Footer';
 import MasterBlogging from './Pages/MasterBlogging/Index';
 import Layout from './Layout';
 import { Fragment } from 'react';
@@ -22,6 +21,8 @@ import AccountSettings from './Pages/Dashboard/InnerPages/AccountSettings';
 import Creators from './Pages/Dashboard/InnerPages/Creators'
 import SavedWorks from './Pages/Dashboard/InnerPages/SavedWorks'
 import Content from './Pages/Dashboard/InnerPages/Content'
+import MyAccount from './Pages/MyAccount/Index';
+
 
 function App() {
 
@@ -31,6 +32,7 @@ function App() {
       element: Home,
       layout: Layout
     },
+    
     {
       path: "/dashboard/overview",
       element: Dashboard,
@@ -100,6 +102,11 @@ function App() {
       path: "/master-blogging",
       element: MasterBlogging,
       layout: Layout
+    },
+    {
+      path:"/my-account",
+      element:MyAccount,
+      layout:Layout
     },
     {
       path: "/login",

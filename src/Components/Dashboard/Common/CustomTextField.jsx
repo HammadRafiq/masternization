@@ -12,15 +12,18 @@ const CustomTextField = ({ register, errors, label, mt, type, requiredMsg, inval
         <>
             <Box sx={{ marginTop: mt }}>
                 <label className="form-label" htmlFor="email">{label}</label>
+                
                 <TextField
                     id="email"
                     type="text"
-                    name={name}
+                    name=""
+                    
                     fullWidth
                     sx={{
                         background: 'var(--light-purple)',
                         borderRadius: '8px',
                     }}
+                    
                     error={!!errors.email}
                     //helperText={errors.email ? errors.email.message : ''}
                     {...register(type, {

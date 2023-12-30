@@ -14,7 +14,7 @@ const pages = [
     },
     {
         title: "Dashboard",
-        link: "/dashboard/overview"
+        link: "/master-blogging"
     },
     {
         title: "Courses",
@@ -29,7 +29,7 @@ const pages = [
         link: "/books"
     },
     {
-        title: "Tools & Resources",
+        title: "Tools",
         link: "/tools"
     },
     {
@@ -43,6 +43,10 @@ const pages = [
     {
         title: "Jobs",
         link: "/jobs"
+    },
+    {
+        title:"My Account",
+        link:"/my-account"
     }
 ]
 
