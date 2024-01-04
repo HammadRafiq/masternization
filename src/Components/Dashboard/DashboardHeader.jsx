@@ -21,7 +21,8 @@ const DashboardHeader = () => {
           background: '#fff',
           borderRadius: '40px',
           color: 'var(--body-text)',
-          width: '484px'
+          width: '484px',
+          paddingLeft:'16px'
         }}
           placeholder="Search"
           variant="outlined"

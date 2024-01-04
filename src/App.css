@@ -225,6 +225,9 @@ label {
 .mb-16 {
   margin-bottom: 16px;
 }
+.ml-16 {
+  margin-left: 16px;
+}
 
 .mb-40 {
   margin-bottom: 40px;
@@ -261,8 +264,28 @@ label {
   line-height: 24px !important;
   font-family: 'GeneralSans-Variable', sans-serif !important;
 }
+.radio-buttons-group .MuiFormControlLabel-label {
+  color:#000 !important;
+  font-family: 'DM Sans', sans-serif !important;
+  font-size: 16px !important;
+  letter-spacing: -0.48px !important;
+}
+.css-1nrlq1o-MuiFormControl-root {
+  width: 100%;
+}
+.dashboard-select-field label {
+  color:#000;
+  font-weight: 500;
+  line-height: 40px;
+  font-family: 'DM Sans', sans-serif !important;
+}
+.dashboard-select-field .MuiSelect-select {
+  background: #F6F5FD !important;
+
+}
+
 input {
-  
+  padding:16.5px 16px !important;
 }
 .dashboard-search input {
   font-family: 'DM Sans', sans-serif !important;

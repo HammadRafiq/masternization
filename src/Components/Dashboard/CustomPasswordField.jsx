@@ -14,15 +14,13 @@ const CustomPasswordField = ({ register, errors, showPassword, handleClickShowPa
             </label>
             <TextField
                 id="password"
-                label=""
-                name={name}
+                name="Testingpassword"
                 fullWidth
                 sx={{
                     background: 'var(--light-purple)',
                     borderRadius: '8px',
-
                 }}
-                type={showPassword ? 'text' : 'password'}
+                type={showPassword ? name : 'password'}
                 error={!!errors.password}
                 {...register('password', {
                     required: 'Password is required',

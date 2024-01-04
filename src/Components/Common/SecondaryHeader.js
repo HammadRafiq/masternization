@@ -4,14 +4,37 @@ import LoadButton from '../../Components/Common/LoadButton';
 import CustomTextField from '../../Components/Common/CustomTextField';
 import ArrowDown from '../../Assets/arrow-down.svg'
 import Typography from '@mui/material/Typography';
+import { useForm } from 'react-hook-form';
+import CustomSelectField from '../Common/CustomSelectField'
+import FilterSelectField from './FilterSelectField';
+
+const selectOptions = [
+  { value: 'option1', label: 'Option 1' },
+  { value: 'option2', label: 'Option 2' },
+  { value: 'option3', label: 'Option 3' },
+];
 
 const SecondaryHeader = ({ title }) => {
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
+    defaultValues: {
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log('Form Data', data);
+  };
   return (
     <>
       <Box
         sx={{
           display: 'flex',
-          alignItems:'start',
+          alignItems: 'start',
           marginBottom: {
             xs: '20px',
             md: '30px',
@@ -72,27 +95,46 @@ const SecondaryHeader = ({ title }) => {
         <h3 className="center">{title}</h3>
         <p className="center p-primary mt-16 mb-40">Blogging is a way of creating and sharing content on the internet to connect with an audience.</p>
       </Box>
-      <Box className="secondary-header" sx={{ display: { xs: 'block', md: 'flex' }, justifyContent: 'space-between', alignItems: 'center', marginBottom: { xs: '50px', md: '72px' } }}>
-        <Box></Box>
-        <Box sx={{
-          display: {
-            lg: 'flex',
-            md: 'flex',
-            xs: 'block'
-          }, maxHeight: {
-            md: '60px',
-            lg: '60px'
-          }, minWidth: {
-            xs: '100%',
-            md: '60%'
-          }, gap: '16px',
-          
-        }}>
-          <CustomTextField sx={{ maxHeight: '60px !important' }} placeholder={'Search courses'} borderRadius={'40px'} bgColor={'#EBEBEC'} paddingLeft={'0px'} />
-          <LoadButton text={'Search'} />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Box className="secondary-header" sx={{ display: { xs: 'block', md: 'flex' }, justifyContent: 'space-between', alignItems: 'center', marginBottom: { xs: '50px', md: '72px' } }}>
+          <Box></Box>
+          <Box sx={{
+            position: 'relative',
+            display: {
+              lg: 'flex',
+              md: 'flex',
+              xs: 'block'
+            }, maxHeight: {
+              md: '60px',
+              lg: '60px'
+            }, minWidth: {
+              xs: '100%',
+              md: '60%'
+            }, gap: '16px',
+
+          }}>
+
+            <CustomTextField
+              name={'searchcourse'}
+              label={''}
+              sx={{ maxHeight: '60px !important' }}
+              placeholder={'Search courses'}
+              borderRadius={'40px'}
+              bgColor={'#EBEBEC'}
+              paddingLeft={'20px'}
+              register={register}
+              required={true}
+              errors={errors}
+              styles={{ position: 'absolute', top: '-15px', left: '50px' }}
+            />
+            <LoadButton text={'Search'} />
+
+          </Box>
+          <Box>
+            <FilterSelectField />
+          </Box>
         </Box>
-        <Box>Filter Bar</Box>
-      </Box>
+      </form>
     </>
   )
 }
