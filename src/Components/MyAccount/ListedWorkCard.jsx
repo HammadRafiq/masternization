@@ -122,8 +122,9 @@ const ListedWorkCard = () => {
                                             marginTop: '8px'
                                         }} variant="body2">Actions</Typography>
                                         <Box sx={{
-                                            display: 'flex',
+                                            display: {xs:'block',md:'flex'},
                                             alignItems: 'center',
+                                            textAlign:'center',
                                             gap: '13.55px',
                                             marginTop: '8px'
                                         }}>

@@ -13,7 +13,7 @@ const FilterSelectField = () => {
     };
 
     return (
-        <FormControl fullWidth sx={{ borderRadius: '76px', background: 'rgba(121, 120, 129, 0.15)' }}>
+        <FormControl className="select-field-custom-styling" fullWidth sx={{ marginTop:{xs:'15px', md:0}, borderRadius: '76px', background: 'rgba(121, 120, 129, 0.15)' }}>
             <InputLabel id="select-label"></InputLabel>
             <Select
                 labelId="select-label"
@@ -23,7 +23,7 @@ const FilterSelectField = () => {
                 displayEmpty
                 renderValue={(value) => (value ? value : 'Sort by')}
                 sx={{
-                    width: '200px',
+                    width: {xs:'100%', md:'200px'},
                     textAlign: 'center',
                     fontFamily: 'GeneralSans-Variable !important',
                     color: 'var(--body-text)',
@@ -34,10 +34,10 @@ const FilterSelectField = () => {
                 <MenuItem value="">
                     <em>Select your filter</em>
                 </MenuItem>
-                <MenuItem value={'option1'}>Ascending</MenuItem>
-                <MenuItem value={'option2'}>Decending</MenuItem>
-                <MenuItem value={'option3'}>Date</MenuItem>
-                <MenuItem value={'option3'}>Random</MenuItem>
+                <MenuItem value={'Ascending'}>Ascending</MenuItem>
+                <MenuItem value={'Decending'}>Decending</MenuItem>
+                <MenuItem value={'Date'}>Date</MenuItem>
+                <MenuItem value={'Random'}>Random</MenuItem>
             </Select>
         </FormControl>
     );

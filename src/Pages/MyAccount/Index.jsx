@@ -42,14 +42,14 @@ const MyAccount = () => {
             <Box className="pl-100 pr-100" sx={{ flexGrow: 1, paddingTop: '80px' }}>
                 <Box sx={{ display: 'flex', alignItems: 'start', justifyContent: 'center', flexDirection: 'column', border: '1px solid var(--stroke-card)', borderRadius: '16px', padding: '40px' }}>
                     <h5 class="small-tagline mb-16">Hello!</h5>
-                    <Box sx={{ width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                    <Box sx={{ width: '100%', display: { xs: 'block', md: 'flex' }, alignItems: 'center', justifyContent: 'space-between' }}>
                         <Box>
-                            <Typography variant="h2" sx={{ fontSize: '40px', fontWeight: 700, letterSpacing: '-1.2px', lineHeight: '72px' }}>
+                            <Typography variant="h2" sx={{ fontSize: { xs: '32px', md: '40px' }, fontWeight: 700, letterSpacing: '-1.2px', lineHeight: { xs: '46px', md: '72px' } }}>
                                 Welcome back, <br />Michael.
                             </Typography>
                         </Box>
                         <Box>
-                            <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'start' }}>
+                            <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'start', marginTop:{xs:'25px', md:0} }}>
                                 <img src={CalendarIcon} alt="Calendar" />
                                 <Typography variant="h6" sx={{
                                     color: 'var(--body-text)',
@@ -57,7 +57,8 @@ const MyAccount = () => {
                                     fontWeight: 400,
                                     letterSpacing: '-0.6px',
                                     textTransform: 'capitalize',
-                                    lineHeight: '24px'
+                                    lineHeight: '24px',
+                                    
                                 }}>
                                     Saturday, 24th August 2023
                                 </Typography>
@@ -78,7 +79,7 @@ const MyAccount = () => {
                         </Box>
                     </Box>
                 </Box>
-                <Box sx={{ border: '1px solid var(--stroke-card)', borderRadius: '16px', padding: '40px', marginTop: '40px' }}>
+                <Box sx={{ border: '1px solid var(--stroke-card)', borderRadius: '16px', padding: {xs:'25px', md:'40px'}, marginTop: '40px' }}>
                     <Typography variant="h2" sx={{ fontSize: '40px', fontWeight: 700, letterSpacing: '-1.2px', lineHeight: '48px', marginBottom: '24px' }}>
                         Your Offers
                     </Typography>
@@ -88,7 +89,7 @@ const MyAccount = () => {
                         <OffersCard />
                     </Grid>
                 </Box>
-                <Box sx={{ border: '1px solid var(--stroke-card)', borderRadius: '16px', padding: '40px', marginTop: '40px' }}>
+                <Box sx={{ border: '1px solid var(--stroke-card)', borderRadius: '16px', padding: {xs:'25px', md:'40px'}, marginTop: '40px' }}>
                     <Box sx={{ borderBottom: '1px solid rgba(38, 38, 38, 0.30)', paddingBottom: '40px' }}>
                         <Typography variant="h2" sx={{ fontSize: '40px', fontWeight: 700, letterSpacing: '-1.2px', lineHeight: '48px', marginBottom: '16px' }}>
                             Your Vault
@@ -132,12 +133,12 @@ const MyAccount = () => {
                     marginTop: '40px'
                 }}>
                     <Box sx={{
-                        padding: '40px',
+                        padding: {xs:'25px', md:'40px'}
                     }}>
                         <Typography variant="h2" sx={{
-                            fontSize: '64px',
+                            fontSize: {xs:'48px', md:'64px'},
+                            lineHeight: {xs:'56px',md:'72px'},
                             fontWeight: 700,
-                            lineHeight: '72px',
                             letterSpacing: '-1.92px'
                         }}>
                             Creator Dashboard
@@ -153,13 +154,13 @@ const MyAccount = () => {
                     </Box>
                     <Box sx={{
                         background: 'var(--dark-purple)',
-                        padding: '40px 40px 100px',
+                        padding: {xs:'25px', md:'40px 40px 100px'},
                         borderRadius: '16px'
                     }}>
                         <Typography variant="h2" sx={{
-                            fontSize: '64px',
+                            fontSize: {xs:'48px', md:'64px'},
+                            lineHeight: {xs:'56px',md:'72px'},
                             fontWeight: 700,
-                            lineHeight: '72px',
                             letterSpacing: '-1.92px',
                             color: '#fff'
                         }}>
@@ -210,7 +211,7 @@ const MyAccount = () => {
 
                                     </Grid>
                                     <Grid item xs={12} md={6}>
-                                        <Typography variant="h5" sx={{ fontSize: '32px', fontWeight: 700, lineHeight: '24px', color: '#fff', margin: '16px 0 24px' }}>
+                                        <Typography variant="h5" sx={{ fontSize: {xs:'20px', md:'32px'}, fontWeight: 700, lineHeight: '24px', color: '#fff', margin: '16px 0 24px' }}>
                                             Work Confirmation Step
                                         </Typography>
                                         <p className="p-14">

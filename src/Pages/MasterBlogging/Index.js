@@ -131,9 +131,9 @@ const MasterBlogging = () => {
         <>
 
             <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'center', gap: '12px', margin: '100px 0 32px' }}>
-                    <LoadButton text={'Master Blogging'} styleProps={{ fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height:'44px', minWidth:'160px' }} />
-                    <LoadButton text={'Become a Blogger'} styleProps={{ background: 'var(--dark-purple)', fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height:'44px', minWidth:'160px' }} />
+                <Box sx={{ display: { xs: 'block', md: 'flex' }, textAlign: 'center', justifyContent: 'center', gap: '12px', margin: '100px 0 32px' }}>
+                    <LoadButton text={'Master Blogging'} styleProps={{ fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
+                    <LoadButton text={'Become a Blogger'} styleProps={{ background: 'var(--dark-purple)', fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
                 </Box>
                 <Box>
                     <h2 className="center main-heading">Master Blogging</h2>

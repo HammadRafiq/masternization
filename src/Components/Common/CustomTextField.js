@@ -20,7 +20,7 @@ const CustomTextField = ({ name, label, placeholder, borderRadius, bgColor, padd
             backgroundColor: bgColor,
             borderRadius: borderRadius,
             outline: 'none !Important',
-            paddingLeft: paddingLeft,
+            paddingLeft: {xs:0, md:paddingLeft},
             marginBottom:marginBottom
           }}
           error={!!errors[name]}
