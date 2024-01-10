@@ -125,12 +125,12 @@ const SecondaryHeader = ({ title }) => {
               register={register}
               required={true}
               errors={errors}
-              styles={{ position: 'absolute', top: '-15px', left: {xs:'25px', md:'50px'} }}
+              styles={{ position: 'absolute', top: '-15px', left: { xs: '25px', md: '50px' } }}
             />
             <LoadButton text={'Search'} />
 
           </Box>
-          <Box>
+          <Box className="filter-select-bar">
             <FilterSelectField />
           </Box>
         </Box>

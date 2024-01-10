@@ -70,7 +70,8 @@ form {
 p,
 input,
 button,
-label {
+label,
+li.MuiButtonBase-root {
   font-family: 'GeneralSans-Variable', sans-serif !important;
 }
 

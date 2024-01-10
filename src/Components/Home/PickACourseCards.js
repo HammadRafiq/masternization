@@ -7,11 +7,11 @@ import { ReactComponent as HeartIcon } from '../../Assets/courses/heart.svg'
 import Arrow from '../../Assets/Arrow.svg'
 
 
-const PickACourseCards = ({ course }) => {
+const PickACourseCards = ({ key, course }) => {
   const [heart, setHeart] = useState("inactive")
 
   return (
-    <Grid item xs={12} md={6} lg={4}>
+    <Grid id={course.id} item xs={12} md={6} lg={4}>
       <Box sx={{
         borderRadius: '16px',
         border: '1px solid rgba(38, 38, 38, 0.10)',
@@ -37,8 +37,8 @@ const PickACourseCards = ({ course }) => {
             }}
           />
         </Box>
-        <h2 class="card-heading">{course.title}</h2>
-        <p class="card-description">Master the art of web development with our expert-led courses.</p>
+        <h2 className="card-heading">{course.title}</h2>
+        <p className="card-description">Master the art of web development with our expert-led courses.</p>
         <Box sx={{
           display: 'flex',
           justifyContent: 'flex-end',

@@ -135,8 +135,10 @@ const Home = () => {
 
   const onSubmit = (data) => {
     console.log('Form Data', data);
+
   };
   return (
+
     <Box>
       <Box position="relative">
         <Grid container space={2}>
@@ -187,25 +189,28 @@ const Home = () => {
           <h5 className="center small-tagline">Explore Opportunities</h5>
           <h2 className="center main-heading">Pick a Course. <br />Master a Skill.</h2>
           <p className="center p-primary padding-40">Explore boundless opportunities for personal and professional growth through expert-led courses, tutorials, and mentorship with Pineapple.</p>
-          <Box>
-            <Grid container spacing={{ xs: 1, md: 4 }} sx={{ display: 'flex', alignItems: 'center' }}>
-              <Grid item xs={12} md={9}>
-                <CustomTextField
-                  name={'searchcourses'}
-                  
-                  placeholder={'Search courses'}
-                  borderRadius={'40px'}
-                  bgColor={'#EBEBEC'}
-                  paddingLeft={'15px'}
-                  register={register}
-                  required={true}
-                  errors={errors}
-                />
+          <Box sx={{ position: 'relative' }}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={{ xs: 1, md: 4 }} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Grid item xs={12} md={9}>
+                  <CustomTextField
+                    name={'searchcourses'}
+                    label=""
+                    placeholder={'Search courses'}
+                    borderRadius={'40px'}
+                    bgColor={'#EBEBEC'}
+                    paddingLeft={'15px'}
+                    register={register}
+                    required={true}
+                    errors={errors}
+                    styles={{ position: 'absolute', top: '0px', left: { xs: '25px', md: '30px' } }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <LoadButton text={'Search'} />
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={3}>
-                <LoadButton text={'Search'} />
-              </Grid>
-            </Grid>
+            </form>
           </Box>
         </Box>
         <Grid container spacing={2.5}>
@@ -231,6 +236,7 @@ const Home = () => {
         placeholder2={'Paste the URL of the course here'}
       />
     </Box>
+
   )
 }
 
