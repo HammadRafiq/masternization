@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Select, MenuItem, InputBase, FormControl, InputLabel, FormHelperText } from '@mui/material';
 import { Controller } from 'react-hook-form';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Typography from '@mui/material/Typography';
 
 const CustomSelectField = ({ name, label, control, defaultValue, options, errors }) => {
-    const [selectedOption, setSelectedOption] = useState('test');
+    const [selectedOption, setSelectedOption] = React.useState('');
 
     const selectStyles = {
         width: '100%',
@@ -28,7 +28,15 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
 
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
+        console.log(event);
+        console.log('testing');
+        alert('test');
+
+        const selectedValue = event.target.value;
+        setSelectedOption(selectedValue);
+        alert(`Selected value for ${label}: ${selectedValue}`);
     };
+
     return (
 
         <>
@@ -41,19 +49,17 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
                     render={({ field }) => (
                         <Select
                             labelId={`${name}-label`}
-
                             value={selectedOption}
                             displayEmpty
                             fullWidth
+                            onChange={handleChange}
                             IconComponent={ArrowDropDownIcon}
                             input={<InputBase />}
                             renderValue={(value) => (value ? value : 'Select category of your work')}
                             sx={selectStyles}
-                            onChange={handleChange}
                             error={!!errors[name]}
                             id={name}
                             {...field}
-
                         >
                             {options.map((option) => (
                                 <MenuItem key={option.value} value={option.value}>

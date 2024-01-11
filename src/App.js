@@ -22,7 +22,9 @@ import Creators from './Pages/Dashboard/InnerPages/Creators'
 import SavedWorks from './Pages/Dashboard/InnerPages/SavedWorks'
 import Content from './Pages/Dashboard/InnerPages/Content'
 import MyAccount from './Pages/MyAccount/Index';
-
+import ListedContent from './Pages/Dashboard/InnerPages/ListedContent';
+import AddMasterCourse from './Pages/Dashboard/InnerPages/AddMasterCourse';
+import ListedMasterCourses from './Pages/Dashboard/InnerPages/ListedMasterCourses';
 
 function App() {
 
@@ -62,6 +64,21 @@ function App() {
       path: "/dashboard/content",
       element: Content,
       layout: DashboardLayout
+    },
+    {
+      path:"/dashboard/listed-works",
+      element:ListedContent,
+      layout:DashboardLayout
+    },
+    {
+      path:"/dashboard/add-master-course",
+      element:AddMasterCourse,
+      layout:DashboardLayout
+    },
+    {
+      path:"/dashboard/listed-master-courses",
+      element:ListedMasterCourses,
+      layout:DashboardLayout
     },
     {
       path: "/courses",

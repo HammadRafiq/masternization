@@ -349,6 +349,15 @@ input {
   font-weight: 500;
   line-height: 100%;
 }
+.dashboard-menu-dropdown span {
+  font-size: 18px;
+  line-height: 18px;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+}
+.dasboard-dropdown-list a {
+  font-size: 16px;
+}
 
 @media only screen and (max-width:600px) {
   .padding-all {

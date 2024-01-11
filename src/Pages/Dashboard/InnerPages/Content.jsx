@@ -22,10 +22,31 @@ const typeOptions = [
   { value: 'resource', label: 'Resource' },
 ];
 
-const selectOptions = [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-  { value: 'option3', label: 'Option 3' },
+const masterCourses = [
+  { value: 'blogging', label: 'Blogging' },
+  { value: 'webdevelopment', label: 'Web Development' },
+  { value: 'datamining', label: 'Data Mining' },
+  { value: 'animation', label: 'Animation' },
+  { value: 'photoshop', label: 'Photoshop' },
+  { value: 'graphicdesign', label: 'Graphic Design' },
+];
+
+const subPages = [
+  { value: 'dashboard', label: 'Dashboard'},
+  { value: 'courses', label: 'Courses' },
+  { value: 'tutorials', label: 'Tutorials' },
+  { value: 'books', label: 'Books' },
+  { value: 'tools', label: 'Tools' },
+  { value: 'youtubechannels', label: 'Youtube Channels' },
+  { value: 'groups', label: 'Groups' },
+  { value: 'jobs', label: 'Jobs' },
+];
+
+const chooseSection = [
+  { value: 'bloggingsuccessstores', label: 'Blogging Success Stories' },
+  { value: 'startblogging', label: 'Start Blogging' },
+  { value: 'bloggingjobs', label: 'Blogging Jobs' },
+  { value: 'bloggingbusinesses', label: 'Blogging Businesses' },
 ];
 
 
@@ -45,9 +66,9 @@ const Content = () => {
   });
 
   const onSubmit = (data) => {
-    alert(JSON.stringify(data, null, 2))
+    //alert(JSON.stringify(data, null, 2))
     console.log('Form Data', data);
-    console.log('Uploaded files:', files);
+    //console.log('Uploaded files:', files);
 
   };
 
@@ -87,11 +108,33 @@ const Content = () => {
 
                 <Box className="dashboard-select-field">
                   <CustomSelectField
-                    name="selectCategory"
-                    label="Category"
+                    name="mastercourse"
+                    label="Choose Master Course"
                     control={control}
                     defaultValue=""
-                    options={selectOptions}
+                    options={masterCourses}
+                    errors={!!errors.name}
+                  />
+                </Box>
+
+                <Box sx={{marginTop:'16px'}} className="dashboard-select-field">
+                  <CustomSelectField
+                    name="choosepage"
+                    label="Choose Page"
+                    control={control}
+                    defaultValue=""
+                    options={subPages}
+                    errors={!!errors.name}
+                  />
+                </Box>
+
+                <Box sx={{marginTop:'16px'}} className="dashboard-select-field">
+                  <CustomSelectField
+                    name="choosesection"
+                    label="Choose Section"
+                    control={control}
+                    defaultValue=""
+                    options={chooseSection}
                     errors={!!errors.name}
                   />
                 </Box>
