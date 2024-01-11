@@ -10,6 +10,19 @@ import LoadButton from '../../Components/Common/LoadButton';
 import Logo from '../../Assets/dashboard/Logo.svg'
 import CustomEmailField from '../../Components/Dashboard/Common/CustomEmailField';
 import CustomPasswordField from '../../Components/Dashboard/CustomPasswordField';
+import { useMutation, gql } from '@apollo/client';
+import { getToken, setSession } from '../../Helpers/Utils';
+import { useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
+
+const LOGIN = gql`
+  mutation($email: String!, $password: String!){
+    login(email: $email, password: $password) {
+      token
+    }
+}
+`
+
 
 const Login = () => {
   const {
@@ -19,6 +32,12 @@ const Login = () => {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
+  const navigate = useNavigate()
+  const { enqueueSnackbar } = useSnackbar()
+
+  const [login, { loading, data }] = useMutation(LOGIN, {
+    refetchQueries: "all"
+  })
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
@@ -29,8 +48,23 @@ const Login = () => {
   };
 
   const onSubmit = (data) => {
-    console.log(data); // Logs form data to console
+    login({
+      variables: {
+        email: "hammadrafiq1@gmail.com",
+        password: "hammadzzz"
+      },
+      onCompleted: (data) => {
+        setSession(data?.login?.token)
+        navigate("/home")
+      },
+      onError: (err) => {
+        enqueueSnackbar(err?.message || "An error occured", {
+          variant: "error"
+        })
+      }
+    })
   };
+
 
   return (
     <Box className="dashboard-logins-styles">
@@ -75,8 +109,7 @@ const Login = () => {
           handleMouseDownPassword={handleMouseDownPassword}
           label={'Password'}
         />
-
-        <LoadButton text={'Login'} padding={'10px 112px'} />
+        <LoadButton text={'Login'} padding={'10px 112px'} loading={loading} />
       </form>
     </Box>
   );

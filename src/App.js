@@ -22,6 +22,10 @@ import Creators from './Pages/Dashboard/InnerPages/Creators'
 import SavedWorks from './Pages/Dashboard/InnerPages/SavedWorks'
 import Content from './Pages/Dashboard/InnerPages/Content'
 import MyAccount from './Pages/MyAccount/Index';
+
+import GuestGuard from './Components/Auth/GuestGuard';
+import AuthGuard from './Components/Auth/AuthGuard';
+import Auth from './Components/Auth/Auth';
 import ListedContent from './Pages/Dashboard/InnerPages/ListedContent';
 import AddMasterCourse from './Pages/Dashboard/InnerPages/AddMasterCourse';
 import ListedMasterCourses from './Pages/Dashboard/InnerPages/ListedMasterCourses';
@@ -32,7 +36,8 @@ function App() {
     {
       path: "/home",
       element: Home,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     
     {
@@ -83,57 +88,68 @@ function App() {
     {
       path: "/courses",
       element: Courses,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/tutorials",
       element: Tutorials,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/books",
       element: Books,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/tools",
       element: Tools,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/youtube-channels",
       element: YoutubeChannels,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/groups-forums",
       element: BloggingGroups,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/jobs",
       element: BloggingJobs,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/master-blogging",
       element: MasterBlogging,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
-      path:"/my-account",
-      element:MyAccount,
-      layout:Layout
+      path: "/my-account",
+      element: MyAccount,
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/login",
       element: Login,
-      layout: null
+      layout: null,
+      guard: GuestGuard
     },
     {
       path: "/registration",
       element: Registration,
-      layout: null
+      layout: null,
+      guard: GuestGuard
     },
     {
       path: "/",
@@ -141,20 +157,24 @@ function App() {
     },
   ]
 
-
   return (
     <>
       <Routes>
         {routes?.map((route, index) => {
           const Layout = route?.layout || Fragment
+          const Guard = route?.guard || Fragment
           return (
             <Route
               key={index}
               path={route.path}
               element={
-                <Layout>
-                  <route.element />
-                </Layout>
+                <Guard>
+                  <Layout>
+                    <Auth>
+                      <route.element />
+                    </Auth>
+                  </Layout>
+                </Guard>
               }
             />
           )
