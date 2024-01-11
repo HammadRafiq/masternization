@@ -1,15 +1,21 @@
 import React from 'react'
 import Button, { ButtonProps } from '@mui/material/Button';
+import { LoadingButton } from '@mui/lab';
 
 const LoadButton = (
   {
     text,
-    styleProps = {}
+    styleProps = {},
+    onClick = () => null,
+    loading = false,
+    ...rest
   }
 ) => {
   return (
-    <Button
+    <LoadingButton
       type='submit'
+      onClick={onClick}
+      loading={loading}
       sx={{
         backgroundColor: 'var(--purple)',
         color: 'var(--white)',
@@ -34,7 +40,7 @@ const LoadButton = (
       }}
     >
       {text}
-    </Button>
+    </LoadingButton>
   )
 }
 

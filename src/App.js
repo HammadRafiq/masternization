@@ -22,6 +22,10 @@ import AccountSettings from './Pages/Dashboard/InnerPages/AccountSettings';
 import Creators from './Pages/Dashboard/InnerPages/Creators'
 import SavedWorks from './Pages/Dashboard/InnerPages/SavedWorks'
 import Content from './Pages/Dashboard/InnerPages/Content'
+import GuestGuard from './Components/Auth/GuestGuard';
+import AuthGuard from './Components/Auth/AuthGuard';
+import Auth from './Components/Auth/Auth';
+
 
 function App() {
 
@@ -29,7 +33,8 @@ function App() {
     {
       path: "/home",
       element: Home,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/dashboard/overview",
@@ -64,52 +69,62 @@ function App() {
     {
       path: "/courses",
       element: Courses,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/tutorials",
       element: Tutorials,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/books",
       element: Books,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/tools",
       element: Tools,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/youtube-channels",
       element: YoutubeChannels,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/groups-forums",
       element: BloggingGroups,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/jobs",
       element: BloggingJobs,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/master-blogging",
       element: MasterBlogging,
-      layout: Layout
+      layout: Layout,
+      guard: AuthGuard
     },
     {
       path: "/login",
       element: Login,
-      layout: null
+      layout: null,
+      guard: GuestGuard
     },
     {
       path: "/registration",
       element: Registration,
-      layout: null
+      layout: null,
+      guard: GuestGuard
     },
     {
       path: "/",
@@ -117,20 +132,24 @@ function App() {
     },
   ]
 
-
   return (
     <>
       <Routes>
         {routes?.map((route, index) => {
           const Layout = route?.layout || Fragment
+          const Guard = route?.guard || Fragment
           return (
             <Route
               key={index}
               path={route.path}
               element={
-                <Layout>
-                  <route.element />
-                </Layout>
+                <Guard>
+                  <Layout>
+                    <Auth>
+                      <route.element />
+                    </Auth>
+                  </Layout>
+                </Guard>
               }
             />
           )

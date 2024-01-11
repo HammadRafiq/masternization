@@ -6,6 +6,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import CustomMenu from '../Components/Common/CustomMenu';
 import Footer from '../Components/Footer/Footer';
+import { setSession } from '../Helpers/Utils';
 
 const pages = [
     {
@@ -84,6 +85,10 @@ const Layout = ({ children }) => {
                     </Box>
                     <LoadButton
                         text={'Logout'}
+                        onClick={() => {
+                            setSession(null)
+                            navigate('/login')    
+                        }}
                         styleProps={{
                             minWidth: {
                                 xs: '110px',
