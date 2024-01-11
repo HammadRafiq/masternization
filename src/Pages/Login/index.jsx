@@ -51,7 +51,7 @@ const Login = () => {
     login({
       variables: {
         email: "hammadrafiq1@gmail.com",
-        password: "hammadzzz"
+        password: "hammad"
       },
       onCompleted: (data) => {
         setSession(data?.login?.token)
