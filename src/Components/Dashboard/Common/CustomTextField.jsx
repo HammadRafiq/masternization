@@ -4,37 +4,36 @@ import { TextField, Button, IconButton, InputAdornment } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/system/Box';
 
-const CustomTextField = ({ register, errors, label, mt, type, requiredMsg, invalidMsg,name }) => {
+const CustomTextField = ({ name, label, type, register, required, errors, mt, multiline, rows }) => {
 
     const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
     return (
         <>
             <Box sx={{ marginTop: mt }}>
-                <label className="form-label" htmlFor="email">{label}</label>
+                <label className="form-label" htmlFor={name}>{label}</label>
                 <TextField
-                    id="email"
-                    type="text"
+                    id={name}
                     name={name}
+                    label=""
+                    type={type}
                     fullWidth
+                    multiline={multiline}
+                    rows={rows}
                     sx={{
                         background: 'var(--light-purple)',
                         borderRadius: '8px',
                     }}
-                    error={!!errors.email}
-                    //helperText={errors.email ? errors.email.message : ''}
-                    {...register(type, {
-                        required: requiredMsg,
-                        pattern: {
-                            value: emailRegex,
-                            message: invalidMsg
-                        }
-                    })}
+                    error={!!errors[name]}
+
+                    {...register(name, { required })}
                 />
+
+
             </Box>
-            {errors.email && (
+            {errors[name] && (
                 <Typography variant="body2" color="error">
-                    {errors.email.message}
+                    {errors[name] && `${label} is required`}
                 </Typography>
             )}
         </>

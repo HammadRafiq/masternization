@@ -20,6 +20,7 @@ import { ReactComponent as Social } from "../../Assets/courses/social.svg"
 import { ReactComponent as Animation } from "../../Assets/courses/animation.svg"
 import { ReactComponent as Freelance } from "../../Assets/courses/freelance.svg"
 import BannerBg from "../../Assets/banner-bg.png"
+import { useForm } from 'react-hook-form';
 
 
 const pickCourse = {
@@ -121,7 +122,23 @@ const pickCourse = {
 };
 
 const Home = () => {
+  const {
+    register,
+    reset,
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
+    defaultValues: {
+    },
+  });
+
+  const onSubmit = (data) => {
+    console.log('Form Data', data);
+
+  };
   return (
+
     <Box>
       <Box position="relative">
         <Grid container space={2}>
@@ -131,8 +148,8 @@ const Home = () => {
               Earn Your First Dollar... <br />Or Your First Million Starting From 0
             </Typography>
             <Typography variant="body1" sx={{
-              fontSize: {xs:'16px',md:'24px'},
-              lineHeight: {xs:'26px',md:'35px'},
+              fontSize: { xs: '16px', md: '24px' },
+              lineHeight: { xs: '26px', md: '35px' },
               margin: '30px 0 25px'
             }}>
               We give you all you need to become an expert in your field, whether you are starting from scratch or not - courses, tutorials, books, tools and much more.
@@ -157,7 +174,7 @@ const Home = () => {
       </Box>
       <Box className="padding-48 mastermode light-purple">
         <h3 className="center">#MasterMode</h3>
-        <Box sx={{ display: 'flex', alignItems: {xs:'start',md:'center'}, justifyContent: 'space-between', marginTop: {xs:'30px',md:'40px'}, flexWrap:'wrap' }}>
+        <Box sx={{ display: 'flex', alignItems: { xs: 'start', md: 'center' }, justifyContent: 'space-between', marginTop: { xs: '30px', md: '40px' }, flexWrap: 'wrap' }}>
           {
             pickCourse.mastermode.map((feature) => {
               return (
@@ -172,15 +189,28 @@ const Home = () => {
           <h5 className="center small-tagline">Explore Opportunities</h5>
           <h2 className="center main-heading">Pick a Course. <br />Master a Skill.</h2>
           <p className="center p-primary padding-40">Explore boundless opportunities for personal and professional growth through expert-led courses, tutorials, and mentorship with Pineapple.</p>
-          <Box>
-            <Grid container spacing={{xs:1,md:4}} sx={{ display: 'flex', alignItems: 'center' }}>
-              <Grid item xs={12} md={9}>
-                <CustomTextField placeholder={'Search courses'} borderRadius={'40px'} bgColor={'#EBEBEC'} paddingLeft={'0px'} />
+          <Box sx={{ position: 'relative' }}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <Grid container spacing={{ xs: 1, md: 4 }} sx={{ display: 'flex', alignItems: 'center' }}>
+                <Grid item xs={12} md={9}>
+                  <CustomTextField
+                    name={'searchcourses'}
+                    label=""
+                    placeholder={'Search courses'}
+                    borderRadius={'40px'}
+                    bgColor={'#EBEBEC'}
+                    paddingLeft={'15px'}
+                    register={register}
+                    required={true}
+                    errors={errors}
+                    styles={{ position: 'absolute', top: '0px', left: { xs: '25px', md: '30px' } }}
+                  />
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <LoadButton text={'Search'} />
+                </Grid>
               </Grid>
-              <Grid item xs={12} md={3}>
-                <LoadButton text={'More Courses'} />
-              </Grid>
-            </Grid>
+            </form>
           </Box>
         </Box>
         <Grid container spacing={2.5}>
@@ -206,6 +236,7 @@ const Home = () => {
         placeholder2={'Paste the URL of the course here'}
       />
     </Box>
+
   )
 }
 

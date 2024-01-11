@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 import { getToken, isAuthenticated } from "../../Helpers/Utils";
-import { SnackbarProvider } from 'notistack';
 
 
 const Auth = ({ children }) => {
@@ -26,11 +25,9 @@ const Auth = ({ children }) => {
     }
 
     return (
-        <SnackbarProvider maxSnack={1}>
-            <ApolloProvider client={client}>
-                {children}
-            </ApolloProvider>
-        </SnackbarProvider>
+        <ApolloProvider client={client}>
+            {children}
+        </ApolloProvider>
     )
 }
 

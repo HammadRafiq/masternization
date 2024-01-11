@@ -9,6 +9,7 @@ import Eye from '../../Assets/dashboard/eye.svg'
 import LoadButton from '../../Components/Common/LoadButton';
 import Logo from '../../Assets/dashboard/Logo.svg'
 import CustomTextField from '../../Components/Dashboard/Common/CustomTextField';
+import CustomEmailField from '../../Components/Dashboard/Common/CustomEmailField';
 import CustomPasswordField from '../../Components/Dashboard/CustomPasswordField';
 
 const Registration = () => {
@@ -61,7 +62,7 @@ const Registration = () => {
             </Box>
             <form onSubmit={handleSubmit(onSubmit)}>
 
-                <CustomTextField
+                <CustomEmailField
                     register={register}
                     errors={errors}
                     label={'Email'}
@@ -71,13 +72,13 @@ const Registration = () => {
                 />
 
                 <CustomTextField
+                    name="username"
+                    label="Username"
+                    type="text"
                     register={register}
+                    required={true}
                     errors={errors}
-                    label={'Username'}
                     mt={'16px'}
-                    type={'name'}
-                    requiredMsg={'Username is required'}
-                    invalidMsg={'Username should have at least 2 characters'}
                 />
 
 

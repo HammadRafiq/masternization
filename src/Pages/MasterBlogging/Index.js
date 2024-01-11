@@ -11,6 +11,7 @@ import JobCard from '../../Components/Jobs/JobCard';
 import StartBloggingCard from '../../Components/MasterBlogging/StartBloggingCard';
 import BloggingJobCard from '../../Components/MasterBlogging/BloggingJobCard';
 import BloggingBusinessCard from '../../Components/MasterBlogging/BloggingBusinessCard';
+import LoadButton from '../../Components/Common/LoadButton';
 
 const bloggingCourse = {
     "jobs": [
@@ -128,7 +129,21 @@ const bloggingCourse = {
 const MasterBlogging = () => {
     return (
         <>
+
             <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
+                <Box sx={{ display: { xs: 'block', md: 'flex' }, textAlign: 'center', justifyContent: 'center', gap: '12px', margin: '100px 0 32px' }}>
+                    <LoadButton text={'Master Blogging'} styleProps={{ fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
+                    <LoadButton text={'Become a Blogger'} styleProps={{ background: 'var(--dark-purple)', fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
+                </Box>
+                <Box>
+                    <h2 className="center main-heading">Master Blogging</h2>
+                </Box>
+                <Box className="center" sx={{ margin: '100px 0 84px' }}>
+                    <h3 className="mb-16">Introduction</h3>
+                    <p className="p-primary">
+                        Blogging is a way of creating and sharing content on the internet to connect with an audience. It involves regularly writing and publishing articles, called blog posts, on a website. These posts can cover various topics, such as personal interests, expertise, or products and services related to your business.
+                    </p>
+                </Box>
                 <Box sx={{ textAlign: 'center', marginBottom: '42px' }}>
                     <h5 className="small-tagline letting-spacing-6 mb-12">Get Inspired</h5>
                     <h3 className="mb-16">Blogging Success Stories</h3>

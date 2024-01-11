@@ -8,7 +8,7 @@ import Typography from '@mui/material/Typography';
 import Eye from '../../Assets/dashboard/eye.svg'
 import LoadButton from '../../Components/Common/LoadButton';
 import Logo from '../../Assets/dashboard/Logo.svg'
-import CustomTextField from '../../Components/Dashboard/Common/CustomTextField';
+import CustomEmailField from '../../Components/Dashboard/Common/CustomEmailField';
 import CustomPasswordField from '../../Components/Dashboard/CustomPasswordField';
 import { useMutation, gql } from '@apollo/client';
 import { getToken, setSession } from '../../Helpers/Utils';
@@ -92,7 +92,7 @@ const Login = () => {
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
 
-        <CustomTextField
+      <CustomEmailField
           register={register}
           errors={errors}
           label={'Email'}
