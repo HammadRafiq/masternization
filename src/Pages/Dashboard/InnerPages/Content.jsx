@@ -66,23 +66,30 @@ const Content = () => {
     defaultValues: {
 
     },
+    shouldUnregister: true
   });
 
   const masterCourse = watch("mastercourse");
   const choosePage = watch("choosepage");
   const chooseType = watch("type");
+  const chooseSection1 = watch("choosesection")
   
- 
 
-  useEffect(() => {
+  {/*
+useEffect(() => {
     if (choosePage !== "dashboard") {
       unregister("choosesection")
     }
-    if(choosePage === "dashboard") {
-      const chooseSection = watch("choosesection")
-      console.log(chooseSection);
-       alert(chooseSection)
+    if (chooseSection1 === "bloggingsuccessstories") {
+      unregister("description")
     }
+    if (chooseSection1 === "startblogging") {
+      unregister("workowner")
+    }
+    if (chooseSection1 === "bloggingbusinesses") {
+      unregister("workowner")
+    }
+
 
     if (choosePage === "jobs" || choosePage === "books") {
       unregister("description")
@@ -97,13 +104,21 @@ const Content = () => {
     if (choosePage !== "tools") {
       unregister("type")
     }
-  }, [choosePage], [chooseSection])
+     }, [choosePage, chooseSection1])
+  */}
+ useEffect(() => {
+if(chooseSection1 === "startblogging") {
+  
+}
+if (chooseSection1 !== "startblogging") {
+  
+  
+}
+ }, [chooseSection1])
 
   const onSubmit = (data) => {
     alert(JSON.stringify(data, null, 2))
     console.log('Form Data', data);
-    //console.log('Uploaded files:', files);
-
   };
 
   {/* Drop Zone Image Upload */ }
@@ -193,7 +208,7 @@ const Content = () => {
                   mt={'16px'}
                 />
 
-                {choosePage !== "youtubechannels" && (
+                {choosePage !== "youtubechannels" && chooseSection1 !== "startblogging" && chooseSection1 !== "bloggingbusinesses" && (
                   <CustomTextField
                     name="workowner"
                     label="Work Owner"
@@ -249,7 +264,7 @@ const Content = () => {
             </Grid>
 
             <Grid item xs={12} md={6}>
-              {(choosePage !== 'books' && choosePage !== 'jobs') && (
+              {(choosePage !== 'books' && choosePage !== 'jobs' && chooseSection1 !== "bloggingsuccessstories") && (
                 <CustomTextField
                   name="description"
                   label="Description"
@@ -280,30 +295,35 @@ const Content = () => {
 
 
               {/* Drop Zone Image Upload Code */}
-              <Box sx={{ display: 'flex', marginTop: '60px' }}>
-                <label class="form-label" for="workurl">Work URL</label>
-                <div {...getRootProps()} style={{ display: 'inline-block' }}>
-                  <input {...getInputProps()} />
-                  <Box>
-                    <img className="ml-16" src={AddCircle} style={{ cursor: 'pointer' }} alt="upload image" />
+              {chooseSection1 !== "startblogging" && (
+                <Box sx={{ display: 'flex', marginTop: '60px' }}>
+                  <label class="form-label" for="workurl">Work URL</label>
+                  <div {...getRootProps()} style={{ display: 'inline-block' }}>
+                    <input {...getInputProps()} name="featuredimage" />
+                    <Box>
+                      <img className="ml-16" src={AddCircle} style={{ cursor: 'pointer' }} alt="upload image" />
+                    </Box>
+                  </div>
+                  <Box className="testing123" sx={{ marginLeft: '20px' }}>
+
+
+                    {files.map((file) => (
+                      <img
+                        key={file.name}
+                        src={file.preview}
+                        alt={file.name}
+                        style={{ maxWidth: '200px', maxHeight: '200px' }}
+                      />
+                    ))}
+
+
                   </Box>
-                </div>
-                <Box className="testing123" sx={{ marginLeft: '20px' }}>
-
-
-                  {files.map((file) => (
-                    <img
-                      key={file.name}
-                      src={file.preview}
-                      alt={file.name}
-                      style={{ maxWidth: '200px', maxHeight: '200px' }}
-                    />
-                  ))}
-
-
                 </Box>
-              </Box>
+              
+
+              )}
               {errors.files && <span style={{ color: 'red' }}>Please upload an image</span>}
+
               {/* End of Image Drop Zone Section */}
 
             </Grid>
