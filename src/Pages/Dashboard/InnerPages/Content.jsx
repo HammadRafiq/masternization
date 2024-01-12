@@ -63,13 +63,59 @@ const Content = () => {
     defaultValues: {
 
     },
+    shouldUnregister: true
   });
+
+  const masterCourse = watch("mastercourse");
+  const choosePage = watch("choosepage");
+  const chooseType = watch("type");
+  const chooseSection1 = watch("choosesection")
+  
+
+  {/*
+useEffect(() => {
+    if (choosePage !== "dashboard") {
+      unregister("choosesection")
+    }
+    if (chooseSection1 === "bloggingsuccessstories") {
+      unregister("description")
+    }
+    if (chooseSection1 === "startblogging") {
+      unregister("workowner")
+    }
+    if (chooseSection1 === "bloggingbusinesses") {
+      unregister("workowner")
+    }
+
+
+    if (choosePage === "jobs" || choosePage === "books") {
+      unregister("description")
+
+    }
+    if (choosePage === 'youtubechannels') {
+      unregister("workowner")
+    }
+    if (choosePage !== "courses" && choosePage !== "tutorials") {
+      unregister("availability")
+    }
+    if (choosePage !== "tools") {
+      unregister("type")
+    }
+     }, [choosePage, chooseSection1])
+  */}
+ useEffect(() => {
+if(chooseSection1 === "startblogging") {
+  
+}
+if (chooseSection1 !== "startblogging") {
+  
+  
+}
+ }, [chooseSection1])
 
   const onSubmit = (data) => {
     //alert(JSON.stringify(data, null, 2))
     console.log('Form Data', data);
-    //console.log('Uploaded files:', files);
-
   };
 
   {/* Drop Zone Image Upload */ }
@@ -148,15 +194,19 @@ const Content = () => {
                   errors={errors}
                   mt={'16px'}
                 />
-                <CustomTextField
-                  name="workowner"
-                  label="Work Owner"
-                  type="text"
-                  register={register}
-                  required={true}
-                  errors={errors}
-                  mt={'16px'}
-                />
+
+                {choosePage !== "youtubechannels" && chooseSection1 !== "startblogging" && chooseSection1 !== "bloggingbusinesses" && (
+                  <CustomTextField
+                    name="workowner"
+                    label="Work Owner"
+                    type="text"
+                    register={register}
+                    required={true}
+                    errors={errors}
+                    mt={'16px'}
+                  />
+                )}
+
                 <CustomTextField
                   name="workurl"
                   label="Work URL"
@@ -199,52 +249,66 @@ const Content = () => {
             </Grid>
 
             <Grid item xs={12} md={6}>
-              <CustomTextField
-                name="description"
-                label="Description"
-                type="text"
-                register={register}
-                required={true}
-                errors={errors}
-                mt={'0px'}
-                multiline={true}
-                rows={6}
-              />
-              <CustomTextField
-                name="location"
-                label="Location"
-                type="text"
-                register={register}
-                required={true}
-                errors={errors}
-                mt={'16px'}
-              />
+              {(choosePage !== 'books' && choosePage !== 'jobs' && chooseSection1 !== "bloggingsuccessstories") && (
+                <CustomTextField
+                  name="description"
+                  label="Description"
+                  type="text"
+                  register={register}
+                  required={true}
+                  errors={errors}
+                  mt={'0px'}
+                  multiline={true}
+                  rows={6}
+                />
+              )}
+
+
+              {/*
+              {choosePage !== 'courses' && choosePage !== 'books' && (
+                <CustomTextField
+                  name="location"
+                  label="Location"
+                  type="text"
+                  register={register}
+                  required={true}
+                  errors={errors}
+                  mt={'16px'}
+                />
+              )}
+              */}
+
 
               {/* Drop Zone Image Upload Code */}
-              <Box sx={{ display: 'flex', marginTop: '60px' }}>
-                <label class="form-label" for="workurl">Work URL</label>
-                <div {...getRootProps()} style={{ display: 'inline-block' }}>
-                  <input {...getInputProps()} />
-                  <Box>
-                    <img className="ml-16" src={AddCircle} style={{ cursor: 'pointer' }} alt="upload image" />
+              {chooseSection1 !== "startblogging" && (
+                <Box sx={{ display: 'flex', marginTop: '60px' }}>
+                  <label class="form-label" for="workurl">Work URL</label>
+                  <div {...getRootProps()} style={{ display: 'inline-block' }}>
+                    <input {...getInputProps()} name="featuredimage" />
+                    <Box>
+                      <img className="ml-16" src={AddCircle} style={{ cursor: 'pointer' }} alt="upload image" />
+                    </Box>
+                  </div>
+                  <Box className="testing123" sx={{ marginLeft: '20px' }}>
+
+
+                    {files.map((file) => (
+                      <img
+                        key={file.name}
+                        src={file.preview}
+                        alt={file.name}
+                        style={{ maxWidth: '200px', maxHeight: '200px' }}
+                      />
+                    ))}
+
+
                   </Box>
-                </div>
-                <Box className="testing123" sx={{ marginLeft: '20px' }}>
-
-
-                  {files.map((file) => (
-                    <img
-                      key={file.name}
-                      src={file.preview}
-                      alt={file.name}
-                      style={{ maxWidth: '200px', maxHeight: '200px' }}
-                    />
-                  ))}
-
-
                 </Box>
-              </Box>
+              
+
+              )}
               {errors.files && <span style={{ color: 'red' }}>Please upload an image</span>}
+
               {/* End of Image Drop Zone Section */}
 
             </Grid>
