@@ -28,13 +28,9 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
 
     const handleChange = (event) => {
         setSelectedOption(event.target.value);
-        console.log(event);
-        console.log('testing');
-        alert('test');
-
-        const selectedValue = event.target.value;
-        setSelectedOption(selectedValue);
-        alert(`Selected value for ${label}: ${selectedValue}`);
+        console.log(selectedOption);
+        alert('working');
+        
     };
 
     return (
@@ -50,7 +46,7 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
                         <Select
                             labelId={`${name}-label`}
                             value={selectedOption}
-                            displayEmpty
+                            
                             fullWidth
                             onChange={handleChange}
                             IconComponent={ArrowDropDownIcon}

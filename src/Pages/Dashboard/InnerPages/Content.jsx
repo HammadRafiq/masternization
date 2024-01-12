@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import Typography from '@mui/material/Typography';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import CustomTextField from '../../../Components/Dashboard/Common/CustomTextField'
 import CustomSelectField from '../../../Components/Common/CustomSelectField';
 import CustomRadioField from '../../../Components/Dashboard/Common/CustomRadioField';
@@ -32,7 +32,7 @@ const masterCourses = [
 ];
 
 const subPages = [
-  { value: 'dashboard', label: 'Dashboard'},
+  { value: 'dashboard', label: 'Dashboard' },
   { value: 'courses', label: 'Courses' },
   { value: 'tutorials', label: 'Tutorials' },
   { value: 'books', label: 'Books' },
@@ -43,7 +43,7 @@ const subPages = [
 ];
 
 const chooseSection = [
-  { value: 'bloggingsuccessstores', label: 'Blogging Success Stories' },
+  { value: 'bloggingsuccessstories', label: 'Blogging Success Stories' },
   { value: 'startblogging', label: 'Start Blogging' },
   { value: 'bloggingjobs', label: 'Blogging Jobs' },
   { value: 'bloggingbusinesses', label: 'Blogging Businesses' },
@@ -55,18 +55,52 @@ const Content = () => {
 
   const {
     register,
+    unregister,
     reset,
+    watch,
     handleSubmit,
     formState: { errors },
     control,
+    setValue
   } = useForm({
     defaultValues: {
 
     },
   });
 
+  const masterCourse = watch("mastercourse");
+  const choosePage = watch("choosepage");
+  const chooseType = watch("type");
+  
+ 
+
+  useEffect(() => {
+    if (choosePage !== "dashboard") {
+      unregister("choosesection")
+    }
+    if(choosePage === "dashboard") {
+      const chooseSection = watch("choosesection")
+      console.log(chooseSection);
+       alert(chooseSection)
+    }
+
+    if (choosePage === "jobs" || choosePage === "books") {
+      unregister("description")
+
+    }
+    if (choosePage === 'youtubechannels') {
+      unregister("workowner")
+    }
+    if (choosePage !== "courses" && choosePage !== "tutorials") {
+      unregister("availability")
+    }
+    if (choosePage !== "tools") {
+      unregister("type")
+    }
+  }, [choosePage], [chooseSection])
+
   const onSubmit = (data) => {
-    //alert(JSON.stringify(data, null, 2))
+    alert(JSON.stringify(data, null, 2))
     console.log('Form Data', data);
     //console.log('Uploaded files:', files);
 
@@ -82,9 +116,16 @@ const Content = () => {
       preview: URL.createObjectURL(file),
     })));
 
-    acceptedFiles.forEach((file) => {
+    const lastFile = acceptedFiles[acceptedFiles.length - 1];
+    setValue('lastUploadedFile', lastFile);
+
+
+    {/* 
+   acceptedFiles.forEach((file) => {
       register(`file${file.name}`, { value: file });
     });
+    */}
+
 
   };
 
@@ -117,7 +158,7 @@ const Content = () => {
                   />
                 </Box>
 
-                <Box sx={{marginTop:'16px'}} className="dashboard-select-field">
+                <Box sx={{ marginTop: '16px' }} className="dashboard-select-field">
                   <CustomSelectField
                     name="choosepage"
                     label="Choose Page"
@@ -128,16 +169,19 @@ const Content = () => {
                   />
                 </Box>
 
-                <Box sx={{marginTop:'16px'}} className="dashboard-select-field">
-                  <CustomSelectField
-                    name="choosesection"
-                    label="Choose Section"
-                    control={control}
-                    defaultValue=""
-                    options={chooseSection}
-                    errors={!!errors.name}
-                  />
-                </Box>
+                {choosePage === 'dashboard' && (
+
+                  <Box sx={{ marginTop: '16px' }} className="dashboard-select-field">
+                    <CustomSelectField
+                      name="choosesection"
+                      label="Choose Section"
+                      control={control}
+                      defaultValue=""
+                      options={chooseSection}
+                      errors={!!errors.name}
+                    />
+                  </Box>
+                )}
 
                 <CustomTextField
                   name="worktitle"
@@ -148,15 +192,19 @@ const Content = () => {
                   errors={errors}
                   mt={'16px'}
                 />
-                <CustomTextField
-                  name="workowner"
-                  label="Work Owner"
-                  type="text"
-                  register={register}
-                  required={true}
-                  errors={errors}
-                  mt={'16px'}
-                />
+
+                {choosePage !== "youtubechannels" && (
+                  <CustomTextField
+                    name="workowner"
+                    label="Work Owner"
+                    type="text"
+                    register={register}
+                    required={true}
+                    errors={errors}
+                    mt={'16px'}
+                  />
+                )}
+
                 <CustomTextField
                   name="workurl"
                   label="Work URL"
@@ -168,29 +216,31 @@ const Content = () => {
                 />
                 {/* Custom Radio Field */}
 
-                <CustomRadioField
-                  name={'availability'}
-                  label={'Availability'}
-                  register={register}
-                  required={true}
-                  errors={errors}
-                  control={control}
-                  options={availabilityOptions}
-                />
-
-                <Box>
+                {(choosePage === "courses" || choosePage === "tutorials") && (
                   <CustomRadioField
-                    name={'type'}
-                    label={'Type'}
+                    name={'availability'}
+                    label={'Availability'}
                     register={register}
                     required={true}
                     errors={errors}
                     control={control}
-                    options={typeOptions}
+                    options={availabilityOptions}
                   />
-                </Box>
+                )}
 
-
+                {choosePage === "tools" && (
+                  <Box>
+                    <CustomRadioField
+                      name={'type'}
+                      label={'Type'}
+                      register={register}
+                      required={true}
+                      errors={errors}
+                      control={control}
+                      options={typeOptions}
+                    />
+                  </Box>
+                )}
 
                 <Box sx={{ marginTop: '32px' }}>
                   <LoadButton text={'Post Content'} padding={'10px 112px'} />
@@ -199,26 +249,35 @@ const Content = () => {
             </Grid>
 
             <Grid item xs={12} md={6}>
-              <CustomTextField
-                name="description"
-                label="Description"
-                type="text"
-                register={register}
-                required={true}
-                errors={errors}
-                mt={'0px'}
-                multiline={true}
-                rows={6}
-              />
-              <CustomTextField
-                name="location"
-                label="Location"
-                type="text"
-                register={register}
-                required={true}
-                errors={errors}
-                mt={'16px'}
-              />
+              {(choosePage !== 'books' && choosePage !== 'jobs') && (
+                <CustomTextField
+                  name="description"
+                  label="Description"
+                  type="text"
+                  register={register}
+                  required={true}
+                  errors={errors}
+                  mt={'0px'}
+                  multiline={true}
+                  rows={6}
+                />
+              )}
+
+
+              {/*
+              {choosePage !== 'courses' && choosePage !== 'books' && (
+                <CustomTextField
+                  name="location"
+                  label="Location"
+                  type="text"
+                  register={register}
+                  required={true}
+                  errors={errors}
+                  mt={'16px'}
+                />
+              )}
+              */}
+
 
               {/* Drop Zone Image Upload Code */}
               <Box sx={{ display: 'flex', marginTop: '60px' }}>
