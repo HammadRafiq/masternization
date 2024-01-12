@@ -27,8 +27,8 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
     };
 
     const handleChange = (event) => {
-        setSelectedOption(event.target.value);
-        console.log(event);
+        // setSelectedOption(event.target.value);
+        console.log("event: ", event);
         console.log('testing');
         alert('test');
 
@@ -46,7 +46,7 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
                     name={name}
                     control={control}
                     defaultValue={defaultValue}
-                    render={({ field }) => (
+                    render={({ field}) => (
                         <Select
                             labelId={`${name}-label`}
                             value={selectedOption}
@@ -59,6 +59,7 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
                             sx={selectStyles}
                             error={!!errors[name]}
                             id={name}
+                            name={name}
                             {...field}
                         >
                             {options.map((option) => (
