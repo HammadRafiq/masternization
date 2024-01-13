@@ -2,11 +2,11 @@ import React, { useMemo } from 'react'
 import Logo from '../Assets/Masternization.svg'
 import { useLocation, useNavigate } from "react-router-dom"
 import LoadButton from '../Components/Common/LoadButton'
-import Box from '@mui/material/Box';
+import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import CustomMenu from '../Components/Common/CustomMenu';
 import Footer from '../Components/Footer/Footer';
-import { setSession } from '../Helpers/Utils';
+import { isAuthenticated, setAdmin, setSession } from '../Helpers/Utils';
 
 const pages = [
     {
@@ -46,8 +46,8 @@ const pages = [
         link: "/jobs"
     },
     {
-        title:"My Account",
-        link:"/my-account"
+        title: "My Account",
+        link: "/my-account"
     }
 ]
 
@@ -55,6 +55,7 @@ const pages = [
 const Layout = ({ children }) => {
     const navigate = useNavigate()
     const location = useLocation()
+    const isLoggedIn = isAuthenticated()
 
     return (
         <Box>
@@ -65,43 +66,82 @@ const Layout = ({ children }) => {
                         width="100%"
                     />
                 </Box>
-                <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
-                    {pages.map((page) => {
-                        const isActiveMenu = location.pathname.includes(page.link)
-                        return (
-                            <Button
-                                key={page.link}
+                {isLoggedIn && (
+                    <>
+                        <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
+                            {pages.map((page) => {
+                                const isActiveMenu = location.pathname.includes(page.link)
+                                return (
+                                    <Button
+                                        key={page.link}
+                                        onClick={() => {
+                                            navigate(page.link)
+                                        }}
+                                        sx={{
+                                            my: 2, px: "6px", color: isActiveMenu ? "#6B63FB" : 'black', display: 'block', textTransform: "capitalize", fontWeight: isActiveMenu ? 700 : 400
+                                        }}
+                                    >
+                                        {page.title}
+                                    </Button>
+                                )
+                            })}
+                        </Box>
+                        <Box display="flex" gap="20px" alignItems="center">
+                            <Box sx={{ display: { xs: "flex", lg: "none" } }}>
+                                <CustomMenu options={pages} />
+                            </Box>
+                            <LoadButton
+                                text={'Logout'}
                                 onClick={() => {
-                                    navigate(page.link)
+                                    setSession(null)
+                                    setAdmin(null)
+                                    navigate('/login')
                                 }}
-                                sx={{
-                                    my: 2, px: "6px", color: isActiveMenu ? "#6B63FB" : 'black', display: 'block', textTransform: "capitalize", fontWeight: isActiveMenu ? 700 : 400
+                                styleProps={{
+                                    minWidth: {
+                                        xs: '110px',
+                                    },
+                                    height: "40px",
+                                    fontSize: "14px",
+                                    marginTop: 0
                                 }}
-                            >
-                                {page.title}
-                            </Button>
-                        )
-                    })}
-                </Box>
-                <Box display="flex" gap="20px" alignItems="center">
-                    <Box sx={{ display: { xs: "flex", lg: "none" } }}>
-                        <CustomMenu options={pages} />
+                            />
+                        </Box>
+                    </>
+                )}
+                {!isLoggedIn && (
+                    <Box display="flex" alignItems={"center"}>
+                        <Typography
+                            onClick={() => navigate("/login")}
+                            fontWeight={600}
+                            paddingRight={{
+                                xs: "5px",
+                                md: "20px"
+                            }}
+                            borderRight={"2px solid"}
+                            marginRight={{
+                                xs: "5px",
+                                md: "20px"
+                            }}
+                            sx={{ cursor: "pointer" }}
+                        >
+                            Sign In
+                        </Typography>
+                        <LoadButton
+                            text={'Sign Up'}
+                            onClick={() => {
+                            }}
+                            styleProps={{
+                                minWidth: {
+                                    xs: '110px',
+                                },
+                                height: "40px",
+                                fontSize: "14px",
+                                marginTop: 0
+                            }}
+                        />
                     </Box>
-                    <LoadButton
-                        text={'Logout'}
-                        onClick={() => {
-                            setSession(null)
-                            navigate('/login')    
-                        }}
-                        styleProps={{
-                            minWidth: {
-                                xs: '110px',
-                            },
-                            height: "40px",
-                            fontSize: "14px",
-                            marginTop: 0
-                        }} />
-                </Box>
+                )}
             </Box>
             <Box>
                 {children}

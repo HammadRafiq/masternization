@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import Typography from '@mui/material/Typography';
@@ -32,7 +32,7 @@ const masterCourses = [
 ];
 
 const subPages = [
-  { value: 'dashboard', label: 'Dashboard'},
+  { value: 'dashboard', label: 'Dashboard' },
   { value: 'courses', label: 'Courses' },
   { value: 'tutorials', label: 'Tutorials' },
   { value: 'books', label: 'Books' },
@@ -55,13 +55,12 @@ const Content = () => {
 
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
     control,
+    watch
   } = useForm({
     defaultValues: {
-
     },
     shouldUnregister: true
   });
@@ -70,7 +69,7 @@ const Content = () => {
   const choosePage = watch("choosepage");
   const chooseType = watch("type");
   const chooseSection1 = watch("choosesection")
-  
+
 
   {/*
 useEffect(() => {
@@ -103,15 +102,15 @@ useEffect(() => {
     }
      }, [choosePage, chooseSection1])
   */}
- useEffect(() => {
-if(chooseSection1 === "startblogging") {
-  
-}
-if (chooseSection1 !== "startblogging") {
-  
-  
-}
- }, [chooseSection1])
+  useEffect(() => {
+    if (chooseSection1 === "startblogging") {
+
+    }
+    if (chooseSection1 !== "startblogging") {
+
+
+    }
+  }, [chooseSection1])
 
   const onSubmit = (data) => {
     //alert(JSON.stringify(data, null, 2))
@@ -163,7 +162,7 @@ if (chooseSection1 !== "startblogging") {
                   />
                 </Box>
 
-                <Box sx={{marginTop:'16px'}} className="dashboard-select-field">
+                <Box sx={{ marginTop: '16px' }} className="dashboard-select-field">
                   <CustomSelectField
                     name="choosepage"
                     label="Choose Page"
@@ -174,7 +173,7 @@ if (chooseSection1 !== "startblogging") {
                   />
                 </Box>
 
-                <Box sx={{marginTop:'16px'}} className="dashboard-select-field">
+                <Box sx={{ marginTop: '16px' }} className="dashboard-select-field">
                   <CustomSelectField
                     name="choosesection"
                     label="Choose Section"
@@ -240,8 +239,6 @@ if (chooseSection1 !== "startblogging") {
                   />
                 </Box>
 
-
-
                 <Box sx={{ marginTop: '32px' }}>
                   <LoadButton text={'Post Content'} padding={'10px 112px'} />
                 </Box>
@@ -304,7 +301,7 @@ if (chooseSection1 !== "startblogging") {
 
                   </Box>
                 </Box>
-              
+
 
               )}
               {errors.files && <span style={{ color: 'red' }}>Please upload an image</span>}

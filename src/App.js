@@ -29,6 +29,9 @@ import Auth from './Components/Auth/Auth';
 import ListedContent from './Pages/Dashboard/InnerPages/ListedContent';
 import AddMasterCourse from './Pages/Dashboard/InnerPages/AddMasterCourse';
 import ListedMasterCourses from './Pages/Dashboard/InnerPages/ListedMasterCourses';
+import AdminLogin from './Pages/Login/Admin';
+import AdminGuard from './Components/Auth/AdminGuard';
+
 
 function App() {
 
@@ -39,10 +42,16 @@ function App() {
       layout: Layout,
       guard: AuthGuard
     },
-    
+    {
+      path: "/home-guest",
+      element: Home,
+      layout: Layout,
+      guard: GuestGuard
+    },
     {
       path: "/dashboard/overview",
       element: Dashboard,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/users",
@@ -71,19 +80,19 @@ function App() {
       layout: DashboardLayout
     },
     {
-      path:"/dashboard/listed-works",
-      element:ListedContent,
-      layout:DashboardLayout
+      path: "/dashboard/listed-works",
+      element: ListedContent,
+      layout: DashboardLayout
     },
     {
-      path:"/dashboard/add-master-course",
-      element:AddMasterCourse,
-      layout:DashboardLayout
+      path: "/dashboard/add-master-course",
+      element: AddMasterCourse,
+      layout: DashboardLayout
     },
     {
-      path:"/dashboard/listed-master-courses",
-      element:ListedMasterCourses,
-      layout:DashboardLayout
+      path: "/dashboard/listed-master-courses",
+      element: ListedMasterCourses,
+      layout: DashboardLayout
     },
     {
       path: "/courses",
@@ -142,6 +151,12 @@ function App() {
     {
       path: "/login",
       element: Login,
+      layout: null,
+      guard: GuestGuard
+    },
+    {
+      path: `admin/0ae8a5aa-1d34-45a4-9b2d-73429c255f52`,
+      element: AdminLogin,
       layout: null,
       guard: GuestGuard
     },

@@ -6,8 +6,13 @@ import SearchFieldIcon from '../../Assets/dashboard/search-normal.svg'
 import UserIcon from '../../Assets/dashboard/user-icon.svg'
 import LogOut from '../../Assets/dashboard/logout.svg'
 import Typography from '@mui/material/Typography';
+import { setAdmin, setSession } from '../../Helpers/Utils';
+import { useNavigate } from "react-router";
+
 
 const DashboardHeader = () => {
+  const navigate = useNavigate()
+
   return (
     <Box className="dashboard-search" sx={{
       background: '#e9e8fe',
@@ -22,7 +27,7 @@ const DashboardHeader = () => {
           borderRadius: '40px',
           color: 'var(--body-text)',
           width: '484px',
-          paddingLeft:'16px'
+          paddingLeft: '16px'
         }}
           placeholder="Search"
           variant="outlined"
@@ -46,7 +51,14 @@ const DashboardHeader = () => {
           </Typography>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', marginLeft:'24px' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', marginLeft: '24px', cursor: "pointer"}}
+          onClick={() => {
+            setSession(null)
+            setAdmin(null)
+            navigate("/admin/0ae8a5aa-1d34-45a4-9b2d-73429c255f52")
+          }}
+        >
           <img src={LogOut} alt="Logout Icon" />
           <Typography sx={{
             marginLeft: '8px',

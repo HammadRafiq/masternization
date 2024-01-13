@@ -10,7 +10,7 @@ const Auth = ({ children }) => {
     const client = new ApolloClient({
         cache: new InMemoryCache(),
         link: createUploadLink({
-            uri: 'https://masternization-backend.df.r.appspot.com',
+            uri: 'http://localhost:4000',
             headers: {
                 authorization: isAuthenticated() ? `Bearer ${getToken()}` : "",
             }
