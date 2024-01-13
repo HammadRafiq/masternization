@@ -155,7 +155,7 @@ function App() {
       guard: GuestGuard
     },
     {
-      path: `admin/0ae8a5aa-1d34-45a4-9b2d-73429c255f52`,
+      path: `/admin`,
       element: AdminLogin,
       layout: null,
       guard: GuestGuard
