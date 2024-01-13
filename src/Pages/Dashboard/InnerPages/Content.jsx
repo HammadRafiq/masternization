@@ -53,9 +53,12 @@ const chooseSection = [
 
 const Content = () => {
 
+  const [selectError, setSelectError] = useState(false);
+
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
     control,
     watch
@@ -70,38 +73,6 @@ const Content = () => {
   const chooseType = watch("type");
   const chooseSection1 = watch("choosesection")
 
-
-  {/*
-useEffect(() => {
-    if (choosePage !== "dashboard") {
-      unregister("choosesection")
-    }
-    if (chooseSection1 === "bloggingsuccessstories") {
-      unregister("description")
-    }
-    if (chooseSection1 === "startblogging") {
-      unregister("workowner")
-    }
-    if (chooseSection1 === "bloggingbusinesses") {
-      unregister("workowner")
-    }
-
-
-    if (choosePage === "jobs" || choosePage === "books") {
-      unregister("description")
-
-    }
-    if (choosePage === 'youtubechannels') {
-      unregister("workowner")
-    }
-    if (choosePage !== "courses" && choosePage !== "tutorials") {
-      unregister("availability")
-    }
-    if (choosePage !== "tools") {
-      unregister("type")
-    }
-     }, [choosePage, chooseSection1])
-  */}
   useEffect(() => {
     if (chooseSection1 === "startblogging") {
 
@@ -113,7 +84,16 @@ useEffect(() => {
   }, [chooseSection1])
 
   const onSubmit = (data) => {
-    //alert(JSON.stringify(data, null, 2))
+    const chooseMasterCourse = watch("mastercourse");
+    const choosePage = watch("choosepage");
+
+    if (!chooseMasterCourse || !choosePage ) {
+      !chooseMasterCourse? alert('Master course is required') : alert('Choose page is required')
+      return;
+    }
+
+    
+    alert(JSON.stringify(data, null, 2))
     console.log('Form Data', data);
   };
 
@@ -159,6 +139,8 @@ useEffect(() => {
                     defaultValue=""
                     options={masterCourses}
                     errors={!!errors.name}
+                    
+
                   />
                 </Box>
 
@@ -318,3 +300,39 @@ useEffect(() => {
 }
 
 export default Content
+
+
+
+
+
+{/*
+useEffect(() => {
+    if (choosePage !== "dashboard") {
+      unregister("choosesection")
+    }
+    if (chooseSection1 === "bloggingsuccessstories") {
+      unregister("description")
+    }
+    if (chooseSection1 === "startblogging") {
+      unregister("workowner")
+    }
+    if (chooseSection1 === "bloggingbusinesses") {
+      unregister("workowner")
+    }
+
+
+    if (choosePage === "jobs" || choosePage === "books") {
+      unregister("description")
+
+    }
+    if (choosePage === 'youtubechannels') {
+      unregister("workowner")
+    }
+    if (choosePage !== "courses" && choosePage !== "tutorials") {
+      unregister("availability")
+    }
+    if (choosePage !== "tools") {
+      unregister("type")
+    }
+     }, [choosePage, chooseSection1])
+  */}
