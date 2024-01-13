@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Typography from '@mui/material/Typography';
 
-const CustomSelectField = ({ name, label, control, defaultValue, options, errors }) => {
+const CustomSelectField = ({ name, label, control, defaultValue, options, errors, validation, selectError }) => {
     const [selectedOption, setSelectedOption] = React.useState('');
 
     const selectStyles = {
@@ -30,7 +30,7 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
         setSelectedOption(event.target.value);
         console.log(selectedOption);
         alert('working');
-        
+
     };
 
     return (
@@ -65,7 +65,7 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
                         </Select>
                     )}
                 />
-
+                
                 {errors[name] && (
                     <Typography variant="body2" color="error">
                         {errors[name] && `${label} is required`}
