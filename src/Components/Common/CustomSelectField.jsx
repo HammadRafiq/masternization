@@ -4,7 +4,7 @@ import { Controller } from 'react-hook-form';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Typography from '@mui/material/Typography';
 
-const CustomSelectField = ({ name, label, control, defaultValue, options, errors, validation, selectError }) => {
+const CustomSelectField = ({ name, label, control, defaultValue, options = [], required = false, errors, validation, selectError }) => {
     const [selectedOption, setSelectedOption] = React.useState('');
 
     const selectStyles = {
@@ -42,36 +42,39 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
                     name={name}
                     control={control}
                     defaultValue={defaultValue}
-                    render={({ field}) => (
-                        <Select
-                            labelId={`${name}-label`}
-                            value={selectedOption}
-                            
-                            fullWidth
-                            onChange={handleChange}
-                            IconComponent={ArrowDropDownIcon}
-                            input={<InputBase />}
-                            renderValue={(value) => (value ? value : 'Select category of your work')}
-                            sx={selectStyles}
-                            error={!!errors[name]}
-                            id={name}
-                            name={name}
-                            {...field}
-                        >
-                            {options.map((option) => (
-                                <MenuItem key={option.value} value={option.value}>
-                                    {option.label}
-                                </MenuItem>
-                            ))}
-                        </Select>
+                    rules={{
+                        required: required
+                    }}
+                    render={({ field, fieldState: { invalid } }) => (
+                        <>
+                            <Select
+                                labelId={`${name}-label`}
+                                value={selectedOption}
+                                fullWidth
+                                onChange={handleChange}
+                                IconComponent={ArrowDropDownIcon}
+                                input={<InputBase />}
+                                renderValue={(value) => (value ? value : 'Select category of your work')}
+                                sx={selectStyles}
+                                error={!!errors[name]}
+                                id={name}
+                                name={name}
+                                {...field}
+                            >
+                                {options.map((option) => (
+                                    <MenuItem key={option.value} value={option.value}>
+                                        {option.label}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                            {invalid && (
+                                <Typography variant="body2" color="error">
+                                    {`${label} is required`}
+                                </Typography>
+                            )}
+                        </>
                     )}
                 />
-                
-                {errors[name] && (
-                    <Typography variant="body2" color="error">
-                        {errors[name] && `${label} is required`}
-                    </Typography>
-                )}
             </FormControl>
 
 

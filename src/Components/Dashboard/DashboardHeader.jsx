@@ -52,11 +52,11 @@ const DashboardHeader = () => {
         </Box>
 
         <Box
-          sx={{ display: 'flex', alignItems: 'center', marginLeft: '24px', cursor: "pointer"}}
+          sx={{ display: 'flex', alignItems: 'center', marginLeft: '24px', cursor: "pointer" }}
           onClick={() => {
             setSession(null)
             setAdmin(null)
-            navigate("/admin/0ae8a5aa-1d34-45a4-9b2d-73429c255f52")
+            navigate("/admin")
           }}
         >
           <img src={LogOut} alt="Logout Icon" />
