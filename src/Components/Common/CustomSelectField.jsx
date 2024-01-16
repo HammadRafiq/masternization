@@ -65,6 +65,7 @@ const CustomSelectField = ({ name, label, control, defaultValue, options, errors
                         </Select>
                     )}
                 />
+              
                 
                 {errors[name] && (
                     <Typography variant="body2" color="error">
