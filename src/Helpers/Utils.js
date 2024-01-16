@@ -22,7 +22,7 @@ export const setSession = (accessToken) => {
         localStorage.setItem("accessToken", accessToken)
     } else {
         localStorage.removeItem("accessToken")
-     }
+    }
 };
 
 export const isAuthenticated = () => !!getToken();
@@ -39,3 +39,16 @@ export const handleAuthentication = () => {
     }
     return !!getToken() // Returns a boolean
 };
+
+
+//////////// ADMIN AUTH FUNCTIONS ///////////////
+
+export const setAdmin = (value) => {
+    if (value) {
+        localStorage.setItem("isAdmin", value)
+    } else {
+        localStorage.removeItem("isAdmin")
+    }
+};
+
+export const isAdmin = () => !!localStorage.getItem("isAdmin")

@@ -1,16 +1,18 @@
-import { getToken, handleAuthentication, isAuthenticated } from "../../Helpers/Utils";
+import { getToken, handleAuthentication, isAdmin, isAuthenticated } from "../../Helpers/Utils";
 // import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 // import { DefaultLogo } from 'Config'
 
-function AuthGuard({ children }) {
+function AdminGuard({ children }) {
     const [isLoading, setLoading] = useState(true);
     const loggedIn = isAuthenticated()
+    const admin = isAdmin()
     const navigate = useNavigate();
+    console.log("admin guardd::")
 
     useEffect(() => {
-        if (!loggedIn) {
+        if (!loggedIn || !admin) {
             return navigate("/home-guest");
         }
         setLoading(false);
@@ -32,4 +34,4 @@ function AuthGuard({ children }) {
     return children;
 }
 
-export default AuthGuard;
+export default AdminGuard;

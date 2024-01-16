@@ -9,6 +9,10 @@ import CustomRadioField from '../../../Components/Dashboard/Common/CustomRadioFi
 import LoadButton from '../../../Components/Common/LoadButton';
 import { useDropzone } from 'react-dropzone';
 import AddCircle from '../../../Assets/dashboard/add-circle.svg'
+import { gql, useMutation, useQuery } from '@apollo/client';
+import { useSnackbar } from 'notistack';
+
+
 
 
 const availabilityOptions = [
@@ -32,28 +36,64 @@ const masterCourses = [
 ];
 
 const subPages = [
-  { value: 'dashboard', label: 'Dashboard' },
-  { value: 'courses', label: 'Courses' },
-  { value: 'tutorials', label: 'Tutorials' },
-  { value: 'books', label: 'Books' },
-  { value: 'tools', label: 'Tools' },
-  { value: 'youtubechannels', label: 'Youtube Channels' },
-  { value: 'groups', label: 'Groups' },
-  { value: 'jobs', label: 'Jobs' },
+  { value: 'DASHBOARD', label: 'Dashboard' },
+  { value: 'COURSES', label: 'Courses' },
+  { value: 'TUTORIALS', label: 'Tutorials' },
+  { value: 'BOOKS', label: 'Books' },
+  { value: 'TOOLS', label: 'Tools' },
+  { value: 'YOUTUBE_CHANNELS', label: 'Youtube Channels' },
+  { value: 'GROUPS', label: 'Groups' },
+  { value: 'JOBS', label: 'Jobs' },
 ];
 
 const chooseSection = [
-  { value: 'bloggingsuccessstories', label: 'Blogging Success Stories' },
-  { value: 'startblogging', label: 'Start Blogging' },
-  { value: 'bloggingjobs', label: 'Blogging Jobs' },
-  { value: 'bloggingbusinesses', label: 'Blogging Businesses' },
+  { value: 'SUCCESS_STORIES', label: 'Success Stories' },
+  { value: 'HOW_TO_START', label: 'How To Start' },
+  { value: 'HOW_TO_GET_JOB', label: 'How To Get Job' },
+  { value: 'HOW_TO_START_BUSINESS', label: 'How To Start Business' },
 ];
 
+const GET_MASTERCOURSES = gql`
+  query($limit: Int, $page: Int){
+  masterCourses(limit: $limit, page: $page) {
+    total
+    items {
+      _id
+      desc
+      name
+      icon {
+        alt
+        src
+      }
+    }
+  }
+}
+`
+
+const ADD_MASTERCOURSE = gql`
+  mutation($content: addContentPayload!){
+    addContent(content: $content) {
+      _id
+      availability
+      desc
+      location
+    }
+  }
+`
 
 
 const Content = () => {
 
-  const [selectError, setSelectError] = useState(false);
+  const { data, loading } = useQuery(GET_MASTERCOURSES, {
+    variables: {
+      page: 1,
+      limit: 30
+    }
+  })
+
+  const [addContent, { data: data1, loading: loading1 }] = useMutation(ADD_MASTERCOURSE, {
+    refetchQueries: "active"
+  })
 
   const {
     register,
@@ -67,61 +107,44 @@ const Content = () => {
     setValue
   } = useForm({
     defaultValues: {
-
     },
     shouldUnregister: true
   });
 
-  const masterCourse = watch("mastercourse");
-  const choosePage = watch("choosepage");
-  const chooseType = watch("type");
-  const chooseSection1 = watch("choosesection")
+  const { enqueueSnackbar } = useSnackbar()
 
-  useEffect(() => {
-    if (chooseSection1 === "startblogging") {
-
-    }
-    if (chooseSection1 !== "startblogging") {
-
-
-    }
-  }, [chooseSection1])
+  const choosePage = watch("page");
+  const chooseSection1 = watch("section")
 
   const onSubmit = (data) => {
-    const chooseMasterCourse = watch("mastercourse");
-    const choosePage = watch("choosepage");
-
-    if (!chooseMasterCourse || !choosePage ) {
-      !chooseMasterCourse? alert('Master course is required') : alert('Choose page is required')
-      return;
-    }
-
-    
-    alert(JSON.stringify(data, null, 2))
     console.log('Form Data', data);
-  };
+    addContent({
+      variables: {
+        content: data
+      },
+      onCompleted: (data) => {
+        enqueueSnackbar("Content added successfully", {
+          variant: "success"
+        })
+      },
+      onError: (err) => {
+        enqueueSnackbar(err?.message || "An error occured", {
+          variant: "error"
+        })
+      }
+    })
+  }
 
   {/* Drop Zone Image Upload */ }
 
   const [files, setFiles] = React.useState([]);
 
   const onDrop = (acceptedFiles) => {
-
     setFiles(acceptedFiles.map((file) => Object.assign(file, {
       preview: URL.createObjectURL(file),
     })));
-
     const lastFile = acceptedFiles[acceptedFiles.length - 1];
-    setValue('lastUploadedFile', lastFile);
-
-
-    {/* 
-   acceptedFiles.forEach((file) => {
-      register(`file${file.name}`, { value: file });
-    });
-    */}
-
-
+    setValue('icon', lastFile);
   };
 
   const { getRootProps, getInputProps } = useDropzone({
@@ -137,40 +160,43 @@ const Content = () => {
       <Typography variant="h3" sx={{ fontSize: '24px', fontWeight: 500, lineHeight: '28px', letterSpacing: '-0.72px' }}>
         Upload New Content
         <Box className="dashboard-content" sx={{ padding: '24px 24px 32px', margin: '20px 0', border: '1px solid var(--stroke-card)', borderRadius: '16px' }}>
-
           <Grid container spacing={2.5}>
             <Grid item xs={12} md={6}>
               <form onSubmit={handleSubmit(onSubmit)}>
-
                 <Box className="dashboard-select-field">
                   <CustomSelectField
-                    name="mastercourse"
+                    name="masterCourseId"
                     label="Choose Master Course"
+                    register={register}
                     control={control}
                     defaultValue=""
-                    options={masterCourses}
+                    required={true}
+                    options={data?.masterCourses?.items?.map(item => ({
+                      value: item._id,
+                      label: item.name
+                    }))}
                     errors={!!errors.name}
-                    
-
                   />
                 </Box>
 
                 <Box sx={{ marginTop: '16px' }} className="dashboard-select-field">
                   <CustomSelectField
-                    name="choosepage"
+                    name="page"
                     label="Choose Page"
+                    register={register}
                     control={control}
                     defaultValue=""
+                    required={true}
                     options={subPages}
                     errors={!!errors.name}
                   />
                 </Box>
 
-                {choosePage === 'dashboard' && (
-
+                {choosePage === 'DASHBOARD' && (
                   <Box sx={{ marginTop: '16px' }} className="dashboard-select-field">
                     <CustomSelectField
-                      name="choosesection"
+                      name="section"
+                      register={register}
                       label="Choose Section"
                       control={control}
                       defaultValue=""
@@ -181,7 +207,7 @@ const Content = () => {
                 )}
 
                 <CustomTextField
-                  name="worktitle"
+                  name="title"
                   label="Work Title"
                   type="text"
                   register={register}
@@ -190,9 +216,9 @@ const Content = () => {
                   mt={'16px'}
                 />
 
-                {choosePage !== "youtubechannels" && chooseSection1 !== "startblogging" && chooseSection1 !== "bloggingbusinesses" && (
+                {choosePage !== "YOUTUBE_CHANNELS" && chooseSection1 !== "HOW_TO_START" && chooseSection1 !== "HOW_TO_START_BUSINESS" && (
                   <CustomTextField
-                    name="workowner"
+                    name="owner"
                     label="Work Owner"
                     type="text"
                     register={register}
@@ -203,7 +229,7 @@ const Content = () => {
                 )}
 
                 <CustomTextField
-                  name="workurl"
+                  name="url"
                   label="Work URL"
                   type="text"
                   register={register}
@@ -213,7 +239,7 @@ const Content = () => {
                 />
                 {/* Custom Radio Field */}
 
-                {(choosePage === "courses" || choosePage === "tutorials") && (
+                {(choosePage === "COURSES" || choosePage === "TUTORIALS") && (
                   <CustomRadioField
                     name={'availability'}
                     label={'Availability'}
@@ -225,7 +251,7 @@ const Content = () => {
                   />
                 )}
 
-                {choosePage === "tools" && (
+                {choosePage === "TOOLS" && (
                   <Box>
                     <CustomRadioField
                       name={'type'}
@@ -240,15 +266,15 @@ const Content = () => {
                 )}
 
                 <Box sx={{ marginTop: '32px' }}>
-                  <LoadButton text={'Post Content'} padding={'10px 112px'} />
+                  <LoadButton text={'Post Content'} padding={'10px 112px'} loading={loading1} />
                 </Box>
               </form>
             </Grid>
 
             <Grid item xs={12} md={6}>
-              {(choosePage !== 'books' && choosePage !== 'jobs' && chooseSection1 !== "bloggingsuccessstories") && (
+              {(choosePage !== 'BOOKS' && choosePage !== 'JOBS' && chooseSection1 !== "SUCCESS_STORIES") && (
                 <CustomTextField
-                  name="description"
+                  name="desc"
                   label="Description"
                   type="text"
                   register={register}
@@ -277,11 +303,11 @@ const Content = () => {
 
 
               {/* Drop Zone Image Upload Code */}
-              {chooseSection1 !== "startblogging" && (
+              {chooseSection1 !== "HOW_TO_START" && (
                 <Box sx={{ display: 'flex', marginTop: '60px' }}>
                   <label class="form-label" for="workurl">Work URL</label>
                   <div {...getRootProps()} style={{ display: 'inline-block' }}>
-                    <input {...getInputProps()} name="featuredimage" />
+                    <input {...getInputProps()} name="icon" />
                     <Box>
                       <img className="ml-16" src={AddCircle} style={{ cursor: 'pointer' }} alt="upload image" />
                     </Box>
@@ -318,39 +344,3 @@ const Content = () => {
 }
 
 export default Content
-
-
-
-
-
-{/*
-useEffect(() => {
-    if (choosePage !== "dashboard") {
-      unregister("choosesection")
-    }
-    if (chooseSection1 === "bloggingsuccessstories") {
-      unregister("description")
-    }
-    if (chooseSection1 === "startblogging") {
-      unregister("workowner")
-    }
-    if (chooseSection1 === "bloggingbusinesses") {
-      unregister("workowner")
-    }
-
-
-    if (choosePage === "jobs" || choosePage === "books") {
-      unregister("description")
-
-    }
-    if (choosePage === 'youtubechannels') {
-      unregister("workowner")
-    }
-    if (choosePage !== "courses" && choosePage !== "tutorials") {
-      unregister("availability")
-    }
-    if (choosePage !== "tools") {
-      unregister("type")
-    }
-     }, [choosePage, chooseSection1])
-  */}
