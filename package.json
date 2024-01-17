@@ -17,6 +17,7 @@
     "graphql": "^16.8.1",
     "jwt-decode": "^4.0.0",
     "notistack": "^3.0.1",
+    "rc-table": "^7.37.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
