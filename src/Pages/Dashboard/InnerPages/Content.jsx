@@ -12,24 +12,16 @@ import AddCircle from '../../../Assets/dashboard/add-circle.svg'
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useSnackbar } from 'notistack';
 
+
 const availabilityOptions = [
-  { value: 'free', label: 'Free' },
-  { value: 'freemium', label: 'Freemium' },
-  { value: 'paid', label: 'Paid' },
+  { value: 'FREE', label: 'Free' },
+  { value: 'FREEMIUM', label: 'Freemium' },
+  { value: 'PAID', label: 'Paid' },
 ];
 
 const typeOptions = [
-  { value: 'tool', label: 'Tool' },
-  { value: 'resource', label: 'Resource' },
-];
-
-const masterCourses = [
-  { value: 'blogging', label: 'Blogging' },
-  { value: 'webdevelopment', label: 'Web Development' },
-  { value: 'datamining', label: 'Data Mining' },
-  { value: 'animation', label: 'Animation' },
-  { value: 'photoshop', label: 'Photoshop' },
-  { value: 'graphicdesign', label: 'Graphic Design' },
+  { value: 'TOOL', label: 'Tool' },
+  { value: 'RESOURCE', label: 'Resource' },
 ];
 
 const subPages = [
