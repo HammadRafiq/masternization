@@ -12,9 +12,6 @@ import AddCircle from '../../../Assets/dashboard/add-circle.svg'
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useSnackbar } from 'notistack';
 
-
-
-
 const availabilityOptions = [
   { value: 'free', label: 'Free' },
   { value: 'freemium', label: 'Freemium' },
