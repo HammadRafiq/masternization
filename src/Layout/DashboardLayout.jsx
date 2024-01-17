@@ -1,16 +1,8 @@
 
 import React, { useMemo } from 'react'
-import Logo from '../Assets/Masternization.svg'
-import { useLocation, useNavigate } from "react-router-dom"
-import LoadButton from '../Components/Common/LoadButton'
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import CustomMenu from '../Components/Common/CustomMenu';
-import Footer from '../Components/Footer/Footer';
 import DashboardHeader from '../Components/Dashboard/DashboardHeader';
 import NavigationBar from '../Components/Dashboard/NavigationBar';
-import Grid from '@mui/system/Unstable_Grid';
-import Typography from '@mui/material/Typography';
 
 const DashboardLayout = ({ children }) => {
     return (
