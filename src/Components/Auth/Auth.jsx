@@ -1,24 +1,38 @@
 import { useEffect, useState } from "react";
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
+import { ApolloClient, InMemoryCache, ApolloProvider, from } from '@apollo/client';
 import createUploadLink from "apollo-upload-client/createUploadLink.mjs"
 import { getToken, isAuthenticated } from "../../Helpers/Utils";
+import { onError } from "@apollo/client/link/error";
+import { useSnackbar } from "notistack";
 
 
 const Auth = ({ children }) => {
     const [loading, setLoading] = useState(false)
+    const { enqueueSnackbar } = useSnackbar()
 
-    const client = new ApolloClient({
-        cache: new InMemoryCache(),
-        link: createUploadLink({
-            uri: 'https://masternization-backend.df.r.appspot.com',
-            headers: {
-                authorization: isAuthenticated() ? `Bearer ${getToken()}` : "",
-            }
+    const errorLink = onError(({ graphQLErrors, networkError }) => {
+        if (graphQLErrors)
+            graphQLErrors.forEach(({ message, locations, path }) =>
+                enqueueSnackbar(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`, {
+                    variant: "error"
+                })
+            );
+        if (networkError) enqueueSnackbar(`[Network error]: ${networkError}`, {
+            variant: "error"
         })
     })
 
-    useEffect(() => {
-    }, [])
+    const uploadLink = createUploadLink({
+        uri: 'http://localhost:4000',
+        headers: {
+            authorization: isAuthenticated() ? `Bearer ${getToken()}` : "",
+        }
+    })
+
+    const client = new ApolloClient({
+        cache: new InMemoryCache(),
+        link: from([errorLink, uploadLink])
+    })
 
     if (loading) {
         return <div>Loading...</div>

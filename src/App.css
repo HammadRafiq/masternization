@@ -63,6 +63,7 @@ p {
   font-weight: 400;
   color: var(--body-text);
 }
+
 form {
   width: 100%;
 }
@@ -80,29 +81,32 @@ label {
   font-size: 18px;
   font-weight: 700;
   line-height: 250%;
-  
+
 }
+
 .dashboard-logins-styles {
   max-width: 40vw;
-  margin:0 auto;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: start;
   min-height: 100vh;
   flex-direction: column;
-  padding:80px 0;
+  padding: 80px 0;
 }
+
 .dashboard-logins-styles button[type="submit"] {
-  padding:10px 112px;
-  margin-top:32px;
+  padding: 10px 112px;
+  margin-top: 32px;
   font-weight: 700;
 }
+
 .form-label {
-  color:#000;
+  color: #000;
   font-size: 18px;
   font-weight: 500;
   line-height: 40px;
-  letter-spacing: -0.54px; 
+  letter-spacing: -0.54px;
   margin-bottom: 12px;
 }
 
@@ -139,10 +143,11 @@ label {
   font-size: 16px !important;
   line-height: 150% !important;
 }
+
 .p-14 {
   font-size: 14px;
   line-height: 24px;
-  color:#fff;
+  color: #fff;
   margin-bottom: 16px;
 }
 
@@ -163,6 +168,7 @@ label {
   letter-spacing: -0.72px;
   margin-top: 17px;
 }
+
 .card-heading-inner {
   font-size: 22px;
 }
@@ -203,6 +209,7 @@ label {
 .margin-8 {
   margin-bottom: 8px;
 }
+
 .mr-8 {
   margin-right: 8px;
 }
@@ -226,6 +233,7 @@ label {
 .mb-16 {
   margin-bottom: 16px;
 }
+
 .ml-16 {
   margin-left: 16px;
 }
@@ -260,35 +268,40 @@ label {
 .MuiOutlinedInput-notchedOutline {
   border: none !important;
 }
+
 .css-ahj2mt-MuiTypography-root {
   font-size: 14px !important;
   line-height: 24px !important;
   font-family: 'GeneralSans-Variable', sans-serif !important;
 }
+
 .radio-buttons-group .MuiFormControlLabel-label {
-  color:#000 !important;
+  color: #000 !important;
   font-family: 'DM Sans', sans-serif !important;
   font-size: 16px !important;
   letter-spacing: -0.48px !important;
 }
+
 .css-1nrlq1o-MuiFormControl-root {
   width: 100%;
 }
 
 .dashboard-select-field label {
-  color:#000;
+  color: #000;
   font-weight: 500;
   line-height: 40px;
   font-family: 'DM Sans', sans-serif !important;
 }
+
 .dashboard-select-field .MuiSelect-select {
   background: #F6F5FD !important;
 
 }
 
 input {
-  padding:16.5px 16px !important;
+  padding: 16.5px 16px !important;
 }
+
 .dashboard-search input {
   font-family: 'DM Sans', sans-serif !important;
 }
@@ -323,7 +336,7 @@ input {
   padding-right: 100px !important;
 }
 
-.pt-50{
+.pt-50 {
   padding-top: 20px !important;
 }
 
@@ -334,27 +347,31 @@ input {
 .heart-icon.active path {
   stroke: var(--purple)
 }
+
 .blogging-job-card h2 {
-  margin:0;
+  margin: 0;
   font-weight: 500;
 }
+
 .list-style-none {
   list-style: none;
 }
 
 .dashboard-menu-item a {
-  color:#fff;
+  color: #fff;
   text-decoration: none;
   font-size: 18px;
   font-weight: 500;
   line-height: 100%;
 }
+
 .dashboard-menu-dropdown span {
   font-size: 18px;
   line-height: 18px;
   font-weight: 500;
   font-family: 'DM Sans', sans-serif;
 }
+
 .dasboard-dropdown-list a {
   font-size: 16px;
 }
@@ -363,6 +380,7 @@ input {
   .padding-all {
     padding: 50px 20px;
   }
+
   h2.main-heading {
     font-size: 48px;
     line-height: 100%;
@@ -392,21 +410,49 @@ input {
   .pr-100 {
     padding-right: 20px !important;
   }
+
   .padding-48 {
-    padding:48px 20px;
+    padding: 48px 20px;
   }
+
   .mastermode h6 {
     line-height: 28px;
   }
+
   .master-features-box:last-child {
     margin-bottom: 0;
-    flex:100%;
+    flex: 100%;
   }
-  .hero-heading  {
+
+  .hero-heading {
     font-size: 30px;
     line-height: 150%;
   }
+
   .pr-m {
     padding-right: 20px !important;
   }
+}
+
+.custom-rc-pagination .rc-pagination-prev {
+  margin-bottom: 7px;
+}
+
+.custom-rc-pagination .rc-pagination-next {
+  margin-bottom: 7px;
+}
+
+.custom-rc-pagination .rc-pagination-item-active,
+.custom-rc-pagination .rc-pagination-item-active:focus,
+.custom-rc-pagination .rc-pagination-item-active:hover,
+.custom-rc-pagination .rc-pagination-item:hover {
+  /* border-color: var(--dark-purple); */
+}
+
+.custom-rc-pagination .rc-pagination-item-active a,
+.custom-rc-pagination .rc-pagination-item-active a:hover,
+.custom-rc-pagination .rc-pagination-item-active a:focus,
+.custom-rc-pagination .rc-pagination-item-active a:active,
+.custom-rc-pagination .rc-pagination-item a:hover {
+  /* color: var(--dark-purple); */
 }

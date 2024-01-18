@@ -1,27 +1,18 @@
 import { Box } from '@mui/material'
-import Table from 'rc-table'
-import IsLoading from "../../Components/Common/IsLoading"
 import Pagination from 'rc-pagination';
 import '../../rc-pagination.css'
 import { ReactComponent as IconPrev } from "../../Assets/pagination-prev.svg"
 import { ReactComponent as IconNext } from "../../Assets/pagination-next.svg"
 
-const CustomTable = ({
-    data = [],
-    columns = [],
-    loading = false,
-    paginationAlign = "center",
+
+const CustomPagination = ({
+    align = "center",
     total = 0,
     limit = 10,
     onChange = () => null
 }) => {
     return (
-        <Box position="relative">
-            <Table
-                columns={columns}
-                data={data}
-                className='primary-table'
-            />
+        <Box>
             <Pagination
                 className='custom-rc-pagination'
                 prevIcon={<IconPrev />}
@@ -30,12 +21,11 @@ const CustomTable = ({
                 total={total}
                 onChange={onChange}
                 style={{
-                    textAlign: paginationAlign
+                    textAlign: align
                 }}
             />
-            <IsLoading isLoading={loading} />
         </Box>
     )
 }
 
-export default CustomTable
+export default CustomPagination

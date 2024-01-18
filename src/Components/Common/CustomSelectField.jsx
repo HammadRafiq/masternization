@@ -30,7 +30,6 @@ const CustomSelectField = ({ name, label, control, defaultValue, options = [], r
         setSelectedOption(event.target.value);
         console.log(selectedOption);
         alert('working');
-
     };
 
     return (

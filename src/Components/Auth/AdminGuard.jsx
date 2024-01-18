@@ -9,7 +9,6 @@ function AdminGuard({ children }) {
     const loggedIn = isAuthenticated()
     const admin = isAdmin()
     const navigate = useNavigate();
-    console.log("admin guardd::")
 
     useEffect(() => {
         if (!loggedIn || !admin) {
