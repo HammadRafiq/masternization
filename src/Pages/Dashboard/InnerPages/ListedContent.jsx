@@ -1,5 +1,5 @@
 import { Box } from '@mui/material'
-import React from 'react'
+import React, { useState } from 'react'
 import CustomTable from '../../../Components/Common/CustomTable';
 import { ReactComponent as TrashIcon } from "../../../Assets/trash.svg"
 import { ReactComponent as EditIcon } from "../../../Assets/edit.svg"
@@ -9,6 +9,7 @@ import { useSnackbar } from 'notistack';
 const ALL_CONTENTS = gql`
 query($page: Int, $limit: Int, $screen: String, $section: String, $masterCourseId: ID){
   contents(page: $page, limit: $limit, screen: $screen, section: $section, masterCourseId: $masterCourseId) {
+    total
     items {
       _id
       availability
@@ -24,8 +25,7 @@ query($page: Int, $limit: Int, $screen: String, $section: String, $masterCourseI
       icon {
         alt
         src
-      }
-      
+      }      
     }
   }
 }
@@ -37,9 +37,16 @@ mutation($id: ID){
 }
 `
 
+const limit = 5
+
 const ListedContent = () => {
+  const [currentPage, setCurrentPage] = useState(1)
+
   const { loading, data, refetch } = useQuery(ALL_CONTENTS, {
-    variables: {},
+    variables: {
+      page: currentPage,
+      limit: limit
+    },
     notifyOnNetworkStatusChange: true
   })
   const { enqueueSnackbar } = useSnackbar()
@@ -89,12 +96,20 @@ const ListedContent = () => {
     },
   ];
 
+  const onPageChange = (current, pageSize) => {
+    setCurrentPage(current)
+  }
+
+
   return (
     <Box>
       <CustomTable
         data={data?.contents?.items}
         columns={columns}
         loading={loading}
+        onChange={onPageChange}
+        total={data?.contents?.total}
+        limit={limit}
       />
     </Box>
   )
