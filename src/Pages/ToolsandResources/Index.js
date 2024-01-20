@@ -14,103 +14,61 @@ import BookCard from '../../Components/Books/BookCard';
 import { Form } from 'react-router-dom';
 import ToolImg from '../../Assets/ToolIcon.svg'
 import ToolsCard from '../../Components/Tools/ToolsCard';
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
+import SkeltonLoader from '../../Components/Common/SkeltonLoader';
 
-const bloggingTutorials = {
-    "tools": [
-        {
-            "id": 1,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 2,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 3,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 4,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 5,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 6,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 7,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 8,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 9,
-            "title": "Blogging",
-            "instructor": 'Dale Strong',
-            "imageURL": BookImg,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "courseLink": "http://localhost:3000/",
-        },
-    ],
-};
+const GET_TOOLS = gql`
+query($masterCourseId: ID, $screen: String){
+    contents(masterCourseId: $masterCourseId, screen: $screen) {
+      items {
+        _id
+        icon {
+          src
+          alt
+        }
+        title
+        availability
+        owner
+        desc
+        url
+        page
+        type
+        section
+      }
+      total
+    }
+  }
+`
 
 const Tools = () => {
+
+    const { masterCourseId } = useParams();
+
+    const { data, loading, error } = useQuery(GET_TOOLS, {
+        variables: {
+            masterCourseId: masterCourseId,
+            screen: "TOOLS"
+        }
+    })
+
+    //if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+    console.log("Fetched Data", data);
+
     return (
         <>
             <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
                 <SecondaryHeader title={'Blogging Tools & Resources'} />
+                {
+                    loading && <SkeltonLoader />
+                }
                 <Grid container spacing={2.5}>
                     {
-                        bloggingTutorials.tools.map((tool) => {
-                            return (
-                                <ToolsCard />
+                        data?.contents.items.map((item) => {
+                            return(
+                                <ToolsCard key={item._key} item={item} />
                             )
                         })
                     }

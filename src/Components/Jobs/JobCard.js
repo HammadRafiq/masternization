@@ -19,7 +19,7 @@ import UserIcon from '../../Assets/blogging_course.svg'
 import CurveBg from '../../Assets/curved-background.svg'
 import Ellipse from '../../Assets/ellipse.svg'
 
-const JobCard = () => {
+const JobCard = ({item}) => {
   return (
     <>
     <Grid item  xs={12} md={6} lg={4}>
@@ -30,7 +30,7 @@ const JobCard = () => {
             boxShadow:'0px 1px 7px 0px rgba(0, 0, 0, 0.10)',
             }}>
                 <Box className="curved-bg" sx={{padding:'24px 32px 28px'}} >
-                    <img src={Ellipse} alt="Ellipse" />
+                    <img src={item.icon.src} alt={item.icon.alt} />
                     <Typography variant='h2' sx={{
                         fontSize:'20px',
                         lineHeight:'140%',
@@ -39,7 +39,7 @@ const JobCard = () => {
                         color:'#fff',
                         paddingTop:'16px'
                     }}>
-                        How I Built, Ranked & Flipped A 17 Months Old Site For $190K+
+                        {item.title}
                     </Typography>
                 </Box>
                 <Box sx={{
@@ -49,7 +49,7 @@ const JobCard = () => {
                     lineHeight:'160%',
                     padding:'14px 32px 24px'
                 }}>
-                    Abdul Majeed Siddiqui
+                    {item.owner}
                 </Box>
         </Box>
     </Grid>

@@ -3,7 +3,7 @@ import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import Typography from '@mui/material/Typography';
 
-const StartBloggingCard = () => {
+const StartBloggingCard = ({item}) => {
     return (
         <>
             <Grid item xs={12} md={6} lg={4}>
@@ -23,8 +23,8 @@ const StartBloggingCard = () => {
                         display: 'inline-block',
                         padding: '9px 12px'
                     }} variant="body2">Opportunities</Typography>
-                    <h2 class="card-heading">Create Your Own Blogs</h2>
-                    <p class="card-description">Just click & drag to create beautiful pages in a matter of minutes. No designer talent or coding skills necessary.</p>
+                    <h2 class="card-heading">{item.title}</h2>
+                    <p class="card-description">{item.desc}</p>
                 </Box>
             </Grid>
         </>

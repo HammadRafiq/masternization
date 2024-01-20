@@ -376,6 +376,32 @@ input {
   font-size: 16px;
 }
 
+.rc-table-content table {
+  width: 100%;
+}
+
+.rc-table-content th {
+  text-align: left;
+  color: var(--body-text);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 24px;
+}
+.rc-table-content th {
+  padding-bottom: 16px;
+  border-bottom: 1px solid #6B63FB;
+  
+}
+.primary-table {
+ 
+}
+.rc-table-cell {
+  padding:12px 0;
+}
+.rc-table-tbody .rc-table-row:first-child .rc-table-cell {
+  padding-top:32px;
+}
+
 @media only screen and (max-width:600px) {
   .padding-all {
     padding: 50px 20px;

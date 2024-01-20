@@ -12,133 +12,63 @@ import Heart from '../../Assets/heart.svg'
 import InfoCircle from '../../Assets/info-circle.svg'
 import SecondaryHeader from '../../Components/Common/SecondaryHeader';
 import BloggingTutorialsCard from '../../Components/Tutorials/BloggingTutorialsCard';
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/client';
+import SkeltonLoader from '../../Components/Common/SkeltonLoader';
+import { useMutation, gql } from '@apollo/client';
 
-const bloggingTutorials = {
-  "courses": [
-    {
-      "id": 1,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 2,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": PercentageCircle,
-      "coursemodecolor": '#009217;',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 3,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 4,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 5,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 6,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 7,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 8,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 9,
-      "title": "Project 25",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-  ],
-};
+const GET_TUTORIALS = gql`
+query($masterCourseId: ID, $screen: String){
+    contents(masterCourseId: $masterCourseId, screen: $screen) {
+      items {
+        _id
+        icon {
+          src
+          alt
+        }
+        title
+        availability
+        owner
+        desc
+        url
+        page
+        section
+      }
+      total
+    }
+  }
+`
 
 const Tutorials = () => {
+
+  const { masterCourseId } = useParams();
+
+  const { data, loading, error } = useQuery(GET_TUTORIALS, {
+    variables: {
+      masterCourseId: masterCourseId,
+      screen: "TUTORIALS"
+    }
+  })
+
+  //if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  console.log("Fetched Data", data);
+
   return (
     <>
       <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
         <SecondaryHeader title={'Blogging Tutorials'} />
+        {
+          loading && <SkeltonLoader />
+        }
         <Grid container spacing={2.5}>
-          {
-            bloggingTutorials.courses.map((tutorial) => {
-              return (
-                <BloggingTutorialsCard />
-              )
-            })
-          }
+         {
+          data?.contents.items.map((item) => {
+            return(
+              <BloggingTutorialsCard key={item._id} item={item} />
+            )
+          })
+         }
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
           <LoadButton text={'More Tutorials'} />

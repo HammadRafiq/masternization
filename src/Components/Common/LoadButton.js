@@ -8,6 +8,7 @@ const LoadButton = (
     styleProps = {},
     onClick = () => null,
     loading = false,
+    disabled,
     ...rest
   }
 ) => {
@@ -16,6 +17,7 @@ const LoadButton = (
       type='submit'
       onClick={onClick}
       loading={loading}
+      disabled={disabled}
       sx={{
         backgroundColor: 'var(--purple)',
         color: 'var(--white)',

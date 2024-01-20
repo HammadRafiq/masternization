@@ -95,7 +95,7 @@ const ListedContent = () => {
       render: (text, record) => (
         <Box>
           <EditIcon style={{ cursor: "pointer" }} />
-          <TrashIcon style={{ cursor: "pointer" }} onClick={() => deleteContentHandler(record._id)} />
+          <TrashIcon style={{ cursor: "pointer", marginLeft:'15px' }} onClick={() => deleteContentHandler(record._id)} />
         </Box>
       )
     },

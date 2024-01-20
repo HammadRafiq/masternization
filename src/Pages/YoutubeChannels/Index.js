@@ -14,6 +14,32 @@ import SecondaryHeader from '../../Components/Common/SecondaryHeader';
 import BloggingTutorialsCard from '../../Components/Tutorials/BloggingTutorialsCard';
 import Youtubechannelimg from '../../Assets/youtube_channel_icon.svg'
 import YoutubeChannelCard from '../../Components/YoutubeChannels/YoutubeChannelCard';
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
+import SkeltonLoader from '../../Components/Common/SkeltonLoader';
+
+const GET_YOUTUBE_CHANNELS = gql`
+query($masterCourseId: ID, $screen: String){
+    contents(masterCourseId: $masterCourseId, screen: $screen) {
+      items {
+        _id
+        icon {
+          src
+          alt
+        }
+        title
+        availability
+        owner
+        desc
+        url
+        page
+        section
+      }
+      total
+    }
+  }
+`
 
 const bloggingTutorials = {
   "youtube": [
@@ -129,15 +155,32 @@ const bloggingTutorials = {
 };
 
 const YoutubeChannels = () => {
+
+  const { masterCourseId } = useParams();
+
+  const { data, loading, error } = useQuery(GET_YOUTUBE_CHANNELS, {
+    variables: {
+      masterCourseId: masterCourseId,
+      screen: "YOUTUBE_CHANNELS"
+    }
+  })
+
+  //if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+  console.log("Fetched Data", data);
+
   return (
     <>
       <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
         <SecondaryHeader title={'Blogging Youtube Channels'} />
+        {
+          loading && <SkeltonLoader />
+        }
         <Grid container spacing={2.5}>
           {
-            bloggingTutorials.youtube.map((course) => {
-              return (
-                <YoutubeChannelCard />
+            data?.contents.items.map((item) => {
+              return(
+                <YoutubeChannelCard key={item._key} item={item} />
               )
             })
           }

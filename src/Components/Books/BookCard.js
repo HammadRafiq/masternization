@@ -19,7 +19,7 @@ const BookCard = ({ book }) => {
                     position: 'relative',
                     padding: '24px'
                 }}>
-                    <img className="max-width-100" src={book.imageURL} alt="Book Img" />
+                    <img className="max-width-100" src={book.icon.src} alt="Book Img" />
                     <h2 class="card-heading card-heading-inner">{book.title}</h2>
                     <Box sx={{
                         margin: '8px 0 24px',
@@ -38,7 +38,7 @@ const BookCard = ({ book }) => {
                             fontWeight: 500,
                             fontSize: '16px',
                             lineHeight: '150%',
-                        }} variant="body2">Dale Strong</Typography>
+                        }} variant="body2">{book.owner}</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                         <img src={BookLinkIcon} alt="Book Link" />

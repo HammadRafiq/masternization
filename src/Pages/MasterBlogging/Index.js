@@ -1,132 +1,80 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import FormFooter from '../../Components/Common/FormFooter';
-import DollarCircle from '../../Assets/dollar-circle.svg'
-import PercentageCircle from '../../Assets/percentage-circle.svg'
-import BloggingIcon from '../../Assets/blogging_course.svg'
-import Heart from '../../Assets/heart.svg'
-import InfoCircle from '../../Assets/info-circle.svg'
 import JobCard from '../../Components/Jobs/JobCard';
 import StartBloggingCard from '../../Components/MasterBlogging/StartBloggingCard';
 import BloggingJobCard from '../../Components/MasterBlogging/BloggingJobCard';
 import BloggingBusinessCard from '../../Components/MasterBlogging/BloggingBusinessCard';
 import LoadButton from '../../Components/Common/LoadButton';
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/client';
+import SkeltonLoader from '../../Components/Common/SkeltonLoader';
+import { useMutation, gql } from '@apollo/client';
+import { GlobalInfo } from '../../App';
 
-const bloggingCourse = {
-    "jobs": [
-        {
-            "id": 1,
-            "title": "Project 24",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": DollarCircle,
-            "coursemodecolor": 'var(--purple)',
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 2,
-            "title": "Project 24",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": PercentageCircle,
-            "coursemodecolor": '#009217;',
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 3,
-            "title": "Project 24",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": DollarCircle,
-            "coursemodecolor": 'var(--purple)',
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 4,
-            "title": "Project 24",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": DollarCircle,
-            "coursemodecolor": 'var(--purple)',
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 5,
-            "title": "Project 24",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": DollarCircle,
-            "coursemodecolor": 'var(--purple)',
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 6,
-            "title": "Project 24",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": DollarCircle,
-            "coursemodecolor": 'var(--purple)',
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 7,
-            "title": "Project 24",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": DollarCircle,
-            "coursemodecolor": 'var(--purple)',
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 8,
-            "title": "Project 24",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": DollarCircle,
-            "coursemodecolor": 'var(--purple)',
-            "courseLink": "http://localhost:3000/",
-        },
-        {
-            "id": 9,
-            "title": "Project 25",
-            "instructor": 'Income School',
-            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-            "imageURL": BloggingIcon,
-            "favorite": Heart,
-            "info": InfoCircle,
-            "coursemode": DollarCircle,
-            "coursemodecolor": 'var(--purple)',
-            "courseLink": "http://localhost:3000/",
-        },
-    ],
-};
+const GET_SUCCESS_STORIES = gql`
+query($masterCourseId: ID, $screen: String, $section: String){
+    contents(masterCourseId: $masterCourseId, screen: $screen, section: $section) {
+      items {
+        _id
+        owner
+        icon {
+          src
+          alt
+        }
+        title
+        desc
+        url
+        page
+        section
+      }
+      total
+    }
+  }
+`
 
 const MasterBlogging = () => {
+
+    const { globalMasterCourseId, setGlobalMasterCourseId } = useContext(GlobalInfo)
+
+    const { masterCourseId } = useParams();
+
+    const { data: data1, loading: loading1, error: error1 } = useQuery(GET_SUCCESS_STORIES, {
+        variables: {
+            masterCourseId: masterCourseId,
+            screen: "DASHBOARD",
+            section: "SUCCESS_STORIES"
+        }
+    })
+
+    const { data: data2, loading: loading2, error: error2 } = useQuery(GET_SUCCESS_STORIES, {
+        variables: {
+            masterCourseId: masterCourseId,
+            screen: "DASHBOARD",
+            section: "HOW_TO_START"
+        }
+    })
+
+    const { data: data3, loading: loading3, error: error3 } = useQuery(GET_SUCCESS_STORIES, {
+        variables: {
+            masterCourseId: masterCourseId,
+            screen: "DASHBOARD",
+            section: "HOW_TO_GET_JOB"
+        }
+    })
+
+    const { data: data4, loading: loading4, error: error4 } = useQuery(GET_SUCCESS_STORIES, {
+        variables: {
+            masterCourseId: masterCourseId,
+            screen: "DASHBOARD",
+            section: "HOW_TO_START_BUSINESS"
+        }
+    })
+
+    if (error4) return <p>Error: {error4.message}</p>;
+    console.log("Fetched Data", data4);
+
     return (
         <>
 
@@ -151,12 +99,17 @@ const MasterBlogging = () => {
                         Blogging is a way of creating and sharing content on the internet to connect with an audience.
                     </p>
                 </Box>
+                {
+                    loading1 && <SkeltonLoader />
+                }
                 <Grid container spacing={2.5}>
 
                     {
-                        bloggingCourse.jobs.map((job) => {
+                        data1?.contents.items.map((item) => {
                             return (
-                                <JobCard />
+                                <>
+                                    <JobCard item={item} />
+                                </>
                             )
                         })
                     }
@@ -171,11 +124,14 @@ const MasterBlogging = () => {
                             Blogging is a way of creating and sharing content on the internet to connect with an audience.
                         </p>
                     </Box>
+                    {
+                        loading2 && <SkeltonLoader />
+                    }
                     <Grid container spacing={2.5}>
                         {
-                            bloggingCourse.jobs.map((job) => {
+                            data2?.contents.items.map((item) => {
                                 return (
-                                    <StartBloggingCard />
+                                    <StartBloggingCard item={item} />
                                 )
                             })
                         }
@@ -188,11 +144,14 @@ const MasterBlogging = () => {
                         Blogging is a way of creating and sharing content on the internet to connect with an audience.
                     </p>
                 </Box>
+                {
+                    loading3 && <SkeltonLoader />
+                }
                 <Grid container spacing={2.5}>
                     {
-                        bloggingCourse.jobs.map((job) => {
+                        data3?.contents.items.map((item) => {
                             return (
-                                <BloggingJobCard />
+                                <BloggingJobCard item={item} />
                             )
                         })
                     }
@@ -205,11 +164,14 @@ const MasterBlogging = () => {
                             Blogging is a way of creating and sharing content on the internet to connect with an audience.
                         </p>
                     </Box>
+                    {
+                        loading4 && <SkeltonLoader />
+                    }
                     <Grid container spacing={2.5}>
                         {
-                            bloggingCourse.jobs.map((job) => {
+                            data4?.contents.items.map((item) => {
                                 return (
-                                    <BloggingBusinessCard />
+                                    <BloggingBusinessCard item={item} />
                                 )
                             })
                         }
