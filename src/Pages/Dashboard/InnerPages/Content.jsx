@@ -59,7 +59,7 @@ const GET_MASTERCOURSES = gql`
 }
 `
 
-const ADD_MASTERCOURSE = gql`
+const ADD_CONTENT = gql`
   mutation($content: addContentPayload!){
     addContent(content: $content) {
       _id
@@ -80,17 +80,14 @@ const Content = () => {
     }
   })
 
-  const [addContent, { data: data1, loading: loading1 }] = useMutation(ADD_MASTERCOURSE, {
+  const [addContent, { data: data1, loading: loading1 }] = useMutation(ADD_CONTENT, {
     refetchQueries: "active"
   })
 
   const {
     register,
-    unregister,
-    reset,
     watch,
     handleSubmit,
-    setError,
     formState: { errors },
     control,
     setValue
@@ -106,7 +103,6 @@ const Content = () => {
   const chooseSection1 = watch("section")
 
   const onSubmit = (data) => {
-    console.log('Form Data', data);
     addContent({
       variables: {
         content: data

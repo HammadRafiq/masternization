@@ -9,6 +9,8 @@ import CustomRadioField from '../../../Components/Dashboard/Common/CustomRadioFi
 import LoadButton from '../../../Components/Common/LoadButton';
 import { useDropzone } from 'react-dropzone';
 import AddCircle from '../../../Assets/dashboard/add-circle.svg'
+import { gql, useMutation } from '@apollo/client';
+import { useSnackbar } from 'notistack';
 
 
 const availabilityOptions = [
@@ -28,27 +30,46 @@ const selectOptions = [
     { value: 'option3', label: 'Option 3' },
 ];
 
+const ADD_MASTERCOURSE = gql`
+    mutation ADD_MASTER_COURSE($name: String!, $desc: String!, $icon: Upload){
+    addMasterCourse(name: $name, desc: $desc, icon: $icon) {
+        _id
+        desc
+        name
+        icon {
+        alt
+        src
+        }
+    }
+    }
+`
 
 
 const AddMasterCourse = () => {
 
+    const [addMasterCourse, { loading, data }] = useMutation(ADD_MASTERCOURSE)
+    const { enqueueSnackbar } = useSnackbar()
+
     const {
         register,
-        reset,
         handleSubmit,
         formState: { errors },
-        control,
+        setValue
     } = useForm({
         defaultValues: {
-
         },
     });
 
     const onSubmit = (data) => {
-        alert(JSON.stringify(data, null, 2))
-        console.log('Form Data', data);
-        console.log('Uploaded files:', files);
-
+        addMasterCourse({
+            variables: data,
+            onCompleted: (data) => {
+                enqueueSnackbar("Master course added successfully", {
+                    variant: "success"
+                })
+            },
+            onError: () => { }
+        })
     };
 
     {/* Drop Zone Image Upload */ }
@@ -56,15 +77,11 @@ const AddMasterCourse = () => {
     const [files, setFiles] = React.useState([]);
 
     const onDrop = (acceptedFiles) => {
-
         setFiles(acceptedFiles.map((file) => Object.assign(file, {
             preview: URL.createObjectURL(file),
         })));
-
-        acceptedFiles.forEach((file) => {
-            register(`file${file.name}`, { value: file });
-        });
-
+        const lastFile = acceptedFiles[acceptedFiles.length - 1];
+        setValue('icon', lastFile)
     };
 
     const { getRootProps, getInputProps } = useDropzone({
@@ -83,12 +100,8 @@ const AddMasterCourse = () => {
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <Grid container spacing={2.5}>
                             <Grid item xs={12} md={6}>
-
-
-
-
                                 <CustomTextField
-                                    name="mastercoursename"
+                                    name="name"
                                     label="Master Course Name"
                                     type="text"
                                     register={register}
@@ -127,7 +140,7 @@ const AddMasterCourse = () => {
 
                             <Grid item xs={12} md={6}>
                                 <CustomTextField
-                                    name="mastercoursedescription"
+                                    name="desc"
                                     label="Description"
                                     type="text"
                                     register={register}
@@ -137,8 +150,8 @@ const AddMasterCourse = () => {
                                     multiline={true}
                                     rows={6}
                                 />
-                                <Box sx={{ marginTop: '16px', display:'flex', justifyContent:'end' }}>
-                                    <LoadButton text={'Create'} padding={'10px 112px'} />
+                                <Box sx={{ marginTop: '16px', display: 'flex', justifyContent: 'end' }}>
+                                    <LoadButton text={'Create'} padding={'10px 112px'} loading={loading} />
                                 </Box>
 
                             </Grid>

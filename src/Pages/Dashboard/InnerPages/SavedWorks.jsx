@@ -9,7 +9,7 @@ const SavedWorks = () => {
     <>
       <Box sx={{ padding: '40px' }}>
         <Grid container spacing={2.5}>
-        <StatsCard numbers={'1,762'} title={'Saved Works'} increment={'-21% than last week'} />
+          <StatsCard numbers={'1,762'} title={'Saved Works'} increment={'-21% than last week'} />
         </Grid>
       </Box>
     </>
