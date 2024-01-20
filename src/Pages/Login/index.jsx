@@ -49,10 +49,7 @@ const Login = () => {
 
   const onSubmit = (data) => {
     login({
-      variables: {
-        email: "hammadrafiq1@gmail.com",
-        password: "hammad"
-      },
+      variables: data,
       onCompleted: (data) => {
         setSession(data?.login?.token)
         navigate("/home")
@@ -63,7 +60,7 @@ const Login = () => {
         })
       }
     })
-  };
+  }
 
 
   return (

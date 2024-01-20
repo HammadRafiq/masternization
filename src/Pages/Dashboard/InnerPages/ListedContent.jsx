@@ -5,6 +5,7 @@ import { ReactComponent as TrashIcon } from "../../../Assets/trash.svg"
 import { ReactComponent as EditIcon } from "../../../Assets/edit.svg"
 import { gql, useMutation, useQuery } from '@apollo/client';
 import { useSnackbar } from 'notistack';
+import moment from 'moment/moment';
 
 const ALL_CONTENTS = gql`
 query($page: Int, $limit: Int, $screen: String, $section: String, $masterCourseId: ID){
@@ -22,6 +23,8 @@ query($page: Int, $limit: Int, $screen: String, $section: String, $masterCourseI
       title
       type
       url
+      date
+      status
       icon {
         alt
         src
@@ -79,10 +82,12 @@ const ListedContent = () => {
     {
       title: 'Listing Date',
       dataIndex: 'date',
+      render: (text) => <div>{moment(text).format("LL")}</div>
     },
     {
       title: 'Live Status',
       dataIndex: 'status',
+      render: (text) => <div>{text?.toString()}</div>
     },
     {
       title: 'Actions',
