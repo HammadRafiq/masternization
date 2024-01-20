@@ -77,7 +77,7 @@ const ListedContent = () => {
     },
     {
       title: 'Type',
-      dataIndex: 'type',
+      dataIndex: 'page',
     },
     {
       title: 'Listing Date',
