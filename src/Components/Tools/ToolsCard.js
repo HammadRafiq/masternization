@@ -7,7 +7,7 @@ import Typography from '@mui/material/Typography';
 import ToolImg from '../../Assets/ToolIcon.svg'
 
 
-const ToolsCard = () => {
+const ToolsCard = ({item}) => {
   return (
     <>
      <Grid item xs={12} md={6} lg={4}>
@@ -18,9 +18,9 @@ const ToolsCard = () => {
             position:'relative',
             padding:'12px'
               }}>
-            <img className="max-width-100" src={ToolImg} alt="Book Img" />
+            <img className="max-width-100" src={item.icon.src} alt="Book Img" />
             <Box sx={{padding:' 7px 0 0 12px'}}>
-                <h2 class="card-heading card-heading-inner">CMS Hub</h2>
+                <h2 class="card-heading card-heading-inner">{item.title}</h2>
                 <Box sx={{
                     margin:'8px 0 24px',
                     }}>
@@ -29,11 +29,11 @@ const ToolsCard = () => {
                         fontWeight:500,
                         fontSize:'16px',
                         lineHeight:'150%',
-                        }} variant="body2">Tool</Typography>
+                        }} variant="body2">{item.type}</Typography>
 
                     <Box sx={{display:'flex',alignItems:'center',justifyContent:'space-between',}}>
                         <p class="card-description maxwidth-85">
-                        With CMS Hub, you'll get a blogging platform that's fully integrated with HubSpot...
+                        {item.desc}
                         </p>
                         <Box sx={{position:'absolute',right:'16px',bottom:'11px'}}>
                             <img src={Heart} alt="Heart" />

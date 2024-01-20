@@ -7,8 +7,12 @@ import Button from '@mui/material/Button';
 import CustomMenu from '../Components/Common/CustomMenu';
 import Footer from '../Components/Footer/Footer';
 import { isAuthenticated, setAdmin, setSession } from '../Helpers/Utils';
+import { useParams } from 'react-router-dom'
+
+
 
 const pages = [
+
     {
         title: "Home",
         link: "/home"
@@ -57,6 +61,9 @@ const Layout = ({ children }) => {
     const location = useLocation()
     const isLoggedIn = isAuthenticated()
 
+    const { masterCourseId } = useParams();
+    console.log("Master", masterCourseId)
+
     return (
         <Box>
             <Box className="pl-100 pr-100" sx={{ paddingTop: "15px", paddingBottom: "15px", display: "flex", justifyContent: "space-between", alignItems: "center" }}> {/* HEADER */}
@@ -72,17 +79,34 @@ const Layout = ({ children }) => {
                             {pages.map((page) => {
                                 const isActiveMenu = location.pathname.includes(page.link)
                                 return (
-                                    <Button
-                                        key={page.link}
-                                        onClick={() => {
-                                            navigate(page.link)
-                                        }}
-                                        sx={{
-                                            my: 2, px: "6px", color: isActiveMenu ? "#6B63FB" : 'black', display: 'block', textTransform: "capitalize", fontWeight: isActiveMenu ? 700 : 400
-                                        }}
-                                    >
-                                        {page.title}
-                                    </Button>
+                                    <>
+                                        {
+                                            (page.title === 'Home' || page.title === 'My Account') ?
+                                                <Button
+                                                    key={page.link}
+                                                    onClick={() => {
+                                                        navigate(`${page.link}`);
+                                                    }}
+                                                    sx={{
+                                                        my: 2, px: "6px", color: isActiveMenu ? "#6B63FB" : 'black', display: 'block', textTransform: "capitalize", fontWeight: isActiveMenu ? 700 : 400
+                                                    }}
+                                                >
+                                                    {page.title}
+                                                </Button> :
+                                                <Button
+                                                    key={page.link}
+                                                    onClick={() => {
+                                                        navigate(`${page.link}/${masterCourseId}`);
+                                                    }}
+                                                    sx={{
+                                                        my: 2, px: "6px", color: isActiveMenu ? "#6B63FB" : 'black', display: 'block', textTransform: "capitalize", fontWeight: isActiveMenu ? 700 : 400
+                                                    }}
+                                                >
+                                                    {page.title}
+                                                </Button>
+                                        }
+
+                                    </>
                                 )
                             })}
                         </Box>

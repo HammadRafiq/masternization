@@ -4,7 +4,7 @@ import Grid from '@mui/system/Unstable_Grid';
 import Typography from '@mui/material/Typography';
 import BusinessIcon from '../../Assets/business_icon.svg'
 
-const BloggingBusinessCard = () => {
+const BloggingBusinessCard = ({item}) => {
     return (
         <>
             <Grid item xs={12} md={6} lg={4}>
@@ -15,7 +15,7 @@ const BloggingBusinessCard = () => {
                     padding: '24px 32px 24px'
                 }}>
                     <Box sx={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
-                        <img src={BusinessIcon} alt="Business Icon" />
+                        <img src={item.icon.src} alt="Business Icon" />
                         <Typography variant="h2" sx={{
                             fontSize: '20px',
                             fontWeight: 500,
@@ -23,7 +23,7 @@ const BloggingBusinessCard = () => {
                             letterSpacing: '-0.6px',
                             color: 'var(--black)'
                         }}>
-                            How to start a blogging business in 7 steps
+                            {item.title}
                         </Typography>
                     </Box>
                     <Typography variant="body2" sx={{
@@ -31,7 +31,7 @@ const BloggingBusinessCard = () => {
                         fontSize: '14px',
                         lineHeight: '22px'
                     }}>
-                        Blogging is a way of creating and sharing content on the internet to connect with an audience.
+                        {item.desc}
                     </Typography>
                     <Box>
                         <Typography sx={{

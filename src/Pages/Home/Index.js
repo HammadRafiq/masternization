@@ -1,94 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import PickACourseCards from '../../Components/Home/PickACourseCards';
-import IconImg from '../../Assets/icon_skill.png'
 import LoadButton from '../../Components/Common/LoadButton';
 import MasterFeatures from '../../Components/Home/MasterFeatures';
 import Typography from '@mui/material/Typography';
 import CustomTextField from '../../Components/Common/CustomTextField';
 import FormFooter from '../../Components/Common/FormFooter';
-import { ReactComponent as BgRight } from "../../Assets/gradient-bg-right.svg"
-import { ReactComponent as BgLeft } from "../../Assets/gradient-bg-left.svg"
-import { ReactComponent as WebDev } from "../../Assets/courses/web-dev.svg"
-import { ReactComponent as UI } from "../../Assets/courses/ui.svg"
-import { ReactComponent as GraphicDesign } from "../../Assets/courses/graphic-design.svg"
-import { ReactComponent as Blogging } from "../../Assets/courses/blogging.svg"
-import { ReactComponent as Blockchain } from "../../Assets/courses/blockchain.svg"
-import { ReactComponent as Photoshop } from "../../Assets/courses/photoshop.svg"
-import { ReactComponent as Social } from "../../Assets/courses/social.svg"
-import { ReactComponent as Animation } from "../../Assets/courses/animation.svg"
-import { ReactComponent as Freelance } from "../../Assets/courses/freelance.svg"
+import Pagination from 'rc-pagination';
 import BannerBg from "../../Assets/banner-bg.png"
 import { useForm } from 'react-hook-form';
+import { useMutation, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import SkeltonLoader from '../../Components/Common/SkeltonLoader';
+
+
+
+
+
+const GET_MASTERCOURSES = gql`
+  query($limit: Int, $page: Int){
+  masterCourses(limit: $limit, page: $page) {
+    total
+    items {
+      _id
+      desc
+      name
+      icon {
+        alt
+        src
+      }
+    }
+  }
+}
+`
+
 
 
 const pickCourse = {
-  "courses": [
-    {
-      "id": 1,
-      "title": "Web Development",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": WebDev,
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 2,
-      "title": "UI/UX Design",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": UI,
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 3,
-      "title": "Graphic Design",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": GraphicDesign,
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 4,
-      "title": "Blogging",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": Blogging,
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 5,
-      "title": "Blockchain Development",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": Blockchain,
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 6,
-      "title": "Photoshop",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": Photoshop,
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 7,
-      "title": "Social Media Management",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": Social,
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 8,
-      "title": "Animation",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": Animation,
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 9,
-      "title": "Freelance Writing",
-      "description": "Master the art of web development with our expert-led courses.",
-      "imageURL": Freelance,
-      "courseLink": "http://localhost:3000/",
-    },
-  ],
   "mastermode": [
     {
       "number": 910,
@@ -122,6 +71,9 @@ const pickCourse = {
 };
 
 const Home = () => {
+
+  const [loading1,setLoading1] = useState(false);
+
   const {
     register,
     reset,
@@ -135,8 +87,53 @@ const Home = () => {
 
   const onSubmit = (data) => {
     console.log('Form Data', data);
-
   };
+
+  const [limit, setLimit] = useState(1);
+  const [page, setPage] = useState(2)
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data, loading, error, fetchMore } = useQuery(GET_MASTERCOURSES, {
+    variables: {
+      page: 1,
+      limit: 3
+    }
+  });
+
+
+  const handleLoadMore = () => {
+   
+    setPage(prev => prev+1);
+    setLoading1(true);
+    fetchMore({
+      variables: {
+        page: page,
+        limit: 3
+      },
+      updateQuery: (prevResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prevResult;
+        setLoading1(false);
+        return {
+          
+          masterCourses: {
+            
+            total: fetchMoreResult.masterCourses.total,
+            limit: fetchMoreResult.masterCourses.limit,
+            page: fetchMoreResult.masterCourses.page,
+            items: [...prevResult.masterCourses.items, ...fetchMoreResult.masterCourses.items],
+          },
+        };
+        
+      },
+    });
+  };
+
+  console.log("Data:", data);
+  //if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
+
+  const allCoursesDisplayed = data?.masterCourses.items.length >= data?.masterCourses.total;
+
   return (
 
     <Box>
@@ -172,6 +169,7 @@ const Home = () => {
           </Grid>
         </Grid>
       </Box>
+
       <Box className="padding-48 mastermode light-purple">
         <h3 className="center">#MasterMode</h3>
         <Box sx={{ display: 'flex', alignItems: { xs: 'start', md: 'center' }, justifyContent: 'space-between', marginTop: { xs: '30px', md: '40px' }, flexWrap: 'wrap' }}>
@@ -207,24 +205,38 @@ const Home = () => {
                   />
                 </Grid>
                 <Grid item xs={12} md={3}>
-                  <LoadButton text={'Search'} />
+                  <LoadButton text={'Search'}  />
                 </Grid>
               </Grid>
             </form>
           </Box>
         </Box>
+        {
+          loading && <SkeltonLoader />
+        }
+
         <Grid container spacing={2.5}>
+
           {
-            pickCourse.courses.map((course) => {
+            data?.masterCourses.items.map((item) => {
               return (
-                <PickACourseCards key={course.id} course={course} />
+                <>
+                  <PickACourseCards key={item._id} item={item} />
+                </>
               )
             })
           }
         </Grid>
+
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
-          <LoadButton text={'More Courses'} />
+          
+          <LoadButton onClick={handleLoadMore} text={'More Courses'} disabled={allCoursesDisplayed || loading || loading1} loading={loading1} />
+          
         </Box>
+        {/* Message when all courses are displayed */}
+        {allCoursesDisplayed && <Typography variant="body2" sx={{
+          textAlign:'center'
+        }}>All courses have been displayed.</Typography>}
       </Box>
       <FormFooter
         title={'Submit a Course'}

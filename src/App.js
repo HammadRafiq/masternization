@@ -30,10 +30,15 @@ import ListedContent from './Pages/Dashboard/InnerPages/ListedContent';
 import AddMasterCourse from './Pages/Dashboard/InnerPages/AddMasterCourse';
 import ListedMasterCourses from './Pages/Dashboard/InnerPages/ListedMasterCourses';
 import AdminLogin from './Pages/Login/Admin';
+import React, { useState, createContext } from 'react';
 import AdminGuard from './Components/Auth/AdminGuard';
+
+export const GlobalInfo = createContext();
 
 
 function App() {
+
+  const [globalMasterCourseId, setGlobalMasterCourseId] = useState('fahad123');
 
   const routes = [
     {
@@ -95,49 +100,49 @@ function App() {
       layout: DashboardLayout
     },
     {
-      path: "/courses",
+      path: "/courses/:masterCourseId",
       element: Courses,
       layout: Layout,
       guard: AuthGuard
     },
     {
-      path: "/tutorials",
+      path: "/tutorials/:masterCourseId",
       element: Tutorials,
       layout: Layout,
       guard: AuthGuard
     },
     {
-      path: "/books",
+      path: "/books/:masterCourseId",
       element: Books,
       layout: Layout,
       guard: AuthGuard
     },
     {
-      path: "/tools",
+      path: "/tools/:masterCourseId",
       element: Tools,
       layout: Layout,
       guard: AuthGuard
     },
     {
-      path: "/youtube-channels",
+      path: "/youtube-channels/:masterCourseId",
       element: YoutubeChannels,
       layout: Layout,
       guard: AuthGuard
     },
     {
-      path: "/groups-forums",
+      path: "/groups-forums/:masterCourseId",
       element: BloggingGroups,
       layout: Layout,
       guard: AuthGuard
     },
     {
-      path: "/jobs",
+      path: "/jobs/:masterCourseId",
       element: BloggingJobs,
       layout: Layout,
       guard: AuthGuard
     },
     {
-      path: "/master-blogging",
+      path: "/master-blogging/:masterCourseId",
       element: MasterBlogging,
       layout: Layout,
       guard: AuthGuard
@@ -174,6 +179,7 @@ function App() {
 
   return (
     <>
+      <GlobalInfo.Provider value={{ globalMasterCourseId, setGlobalMasterCourseId }}>
       <Routes>
         {routes?.map((route, index) => {
           const Layout = route?.layout || Fragment
@@ -196,6 +202,7 @@ function App() {
         }
         )}
       </Routes>
+    </GlobalInfo.Provider >
     </>
   );
 }

@@ -4,7 +4,7 @@ import Grid from '@mui/system/Unstable_Grid';
 import Typography from '@mui/material/Typography';
 import AnimationIcon from '../../Assets/courses/animation.svg'
 
-const BloggingJobCard = () => {
+const BloggingJobCard = ({item}) => {
   return (
     <>
     <Grid item xs={12} md={6} lg={4}>
@@ -15,17 +15,17 @@ const BloggingJobCard = () => {
                 padding:'24px 32px 32px'
                 }}>
                 <Box sx={{display:'flex',gap:'15px'}}>
-                    <img src={AnimationIcon} width="50px" height="auto" alt="Animation Icon"/>
+                    <img src={item.icon?.src} width="50px" height="auto" alt="Animation Icon"/>
                     <Box sx={{display:'flex',flexDirection:'column',justifyContent:'center'}}>
-                        <h2 class="card-heading card-heading-inner">Blogging Writing Job</h2>
+                        <h2 class="card-heading card-heading-inner">{item.title}</h2>
                         <Typography sx={{fontSize:'18px',marginTop:'5px'}} variant="body2">
-                        Deloitte - Chicago IL
+                       {item.owner}
                         </Typography>
                     </Box>
 
                 </Box>
                 <Box sx={{marginTop:'70px'}}>
-                    <p class="card-description">Blogging is a way of creating and sharing content on the internet to connect with an audience.</p>
+                    <p class="card-description">{item.desc}</p>
                 </Box>
         </Box>
     </Grid>

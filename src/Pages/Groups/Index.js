@@ -17,153 +17,195 @@ import YoutubeChannelCard from '../../Components/YoutubeChannels/YoutubeChannelC
 import Typography from '@mui/material/Typography';
 import UserIcon from '../../Assets/blogging_course.svg'
 import GroupCard from '../../Components/Groups/GroupCard';
+import { useParams } from 'react-router-dom'
+import { useQuery } from '@apollo/client';
+import { useMutation, gql } from '@apollo/client';
+import SkeltonLoader from '../../Components/Common/SkeltonLoader';
+
+const GET_GROUPS = gql`
+query($masterCourseId: ID, $screen: String){
+    contents(masterCourseId: $masterCourseId, screen: $screen) {
+      items {
+        _id
+        icon {
+          src
+          alt
+        }
+        title
+        availability
+        owner
+        desc
+        url
+        page
+        section
+      }
+      total
+    }
+  }
+`
 
 const bloggingCourse = {
     "groups": [
-      {
-        "id": 1,
-        "title": "Project 24",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":DollarCircle,
-        "coursemodecolor":'var(--purple)',
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 2,
-        "title": "Project 24",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":PercentageCircle,
-        "coursemodecolor":'#009217;',
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 3,
-        "title": "Project 24",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":DollarCircle,
-        "coursemodecolor":'var(--purple)',
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 4,
-        "title": "Project 24",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":DollarCircle,
-        "coursemodecolor":'var(--purple)',
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 5,
-        "title": "Project 24",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":DollarCircle,
-        "coursemodecolor":'var(--purple)',
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 6,
-        "title": "Project 24",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":DollarCircle,
-        "coursemodecolor":'var(--purple)',
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 7,
-        "title": "Project 24",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":DollarCircle,
-        "coursemodecolor":'var(--purple)',
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 8,
-        "title": "Project 24",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":DollarCircle,
-        "coursemodecolor":'var(--purple)',
-        "courseLink":"http://localhost:3000/",
-    },
-    {
-        "id": 9,
-        "title": "Project 25",
-        "instructor":'Income School',
-        "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-        "imageURL": BloggingIcon,
-        "favorite":Heart,
-        "info":InfoCircle,
-        "coursemode":DollarCircle,
-        "coursemodecolor":'var(--purple)',
-        "courseLink":"http://localhost:3000/",
-    },
-  ],
-  };
+        {
+            "id": 1,
+            "title": "Project 24",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": DollarCircle,
+            "coursemodecolor": 'var(--purple)',
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 2,
+            "title": "Project 24",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": PercentageCircle,
+            "coursemodecolor": '#009217;',
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 3,
+            "title": "Project 24",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": DollarCircle,
+            "coursemodecolor": 'var(--purple)',
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 4,
+            "title": "Project 24",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": DollarCircle,
+            "coursemodecolor": 'var(--purple)',
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 5,
+            "title": "Project 24",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": DollarCircle,
+            "coursemodecolor": 'var(--purple)',
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 6,
+            "title": "Project 24",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": DollarCircle,
+            "coursemodecolor": 'var(--purple)',
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 7,
+            "title": "Project 24",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": DollarCircle,
+            "coursemodecolor": 'var(--purple)',
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 8,
+            "title": "Project 24",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": DollarCircle,
+            "coursemodecolor": 'var(--purple)',
+            "courseLink": "http://localhost:3000/",
+        },
+        {
+            "id": 9,
+            "title": "Project 25",
+            "instructor": 'Income School',
+            "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
+            "imageURL": BloggingIcon,
+            "favorite": Heart,
+            "info": InfoCircle,
+            "coursemode": DollarCircle,
+            "coursemodecolor": 'var(--purple)',
+            "courseLink": "http://localhost:3000/",
+        },
+    ],
+};
 
 
 const BloggingGroups = () => {
-  return (
-    <>
-    <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow:1 }}>
-        <SecondaryHeader title={'Blogging Groups & Forums'} />
-        <Grid container spacing={2.5}>
-        
-            {
-                bloggingCourse.groups.map((group) => {
-                    return(
-                        <GroupCard />
-                    )
-                })
-            }
 
-        </Grid>
-        <Box sx={{display:'flex',alignItems:'center',justifyContent:'center',marginTop:'49px'}}>
-        <LoadButton text={'More Groups & Forums'} />
-      </Box>
-    </Box>
+    const { masterCourseId } = useParams();
 
-    <FormFooter
-    title={'Submit a Group or Forum'}
-    description1={'If you wish to submit a group or forum for potential listing on Masternization, kindly fill the form below.'}
-    description2={'(If you are the creator of the group or forum, please submit it using the Creator Dashboard in My Account page)'}
-    label1={'Group name'}
-    placeholder1={'Enter the name of the group or forum'}
-    label2={'Group URL'}
-    placeholder2={'Paste the URL of the group of forum here'}
-    />
-    </>
-  )
+    const { data, loading, error } = useQuery(GET_GROUPS, {
+        variables: {
+            masterCourseId: masterCourseId,
+            screen: "GROUPS"
+        }
+    })
+
+    //if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
+    console.log("Fetched Data", data);
+    return (
+        <>
+            <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
+                <SecondaryHeader title={'Blogging Groups & Forums'} />
+                {
+                    loading && <SkeltonLoader />
+                }
+                <Grid container spacing={2.5}>
+
+                    {
+                        data?.contents.items.map((item) => {
+                            return(
+                                <GroupCard key={item._id} item={item} />
+                            )
+                        })
+                    }
+
+                </Grid>
+                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
+                    <LoadButton text={'More Groups & Forums'} />
+                </Box>
+            </Box>
+
+            <FormFooter
+                title={'Submit a Group or Forum'}
+                description1={'If you wish to submit a group or forum for potential listing on Masternization, kindly fill the form below.'}
+                description2={'(If you are the creator of the group or forum, please submit it using the Creator Dashboard in My Account page)'}
+                label1={'Group name'}
+                placeholder1={'Enter the name of the group or forum'}
+                label2={'Group URL'}
+                placeholder2={'Paste the URL of the group of forum here'}
+            />
+        </>
+    )
 }
 
 export default BloggingGroups

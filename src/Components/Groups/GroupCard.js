@@ -17,7 +17,7 @@ import YoutubeChannelCard from '../../Components/YoutubeChannels/YoutubeChannelC
 import Typography from '@mui/material/Typography';
 import UserIcon from '../../Assets/blogging_course.svg'
 
-const GroupCard = () => {
+const GroupCard = ({item}) => {
   return (
     <>
     <Grid item  xs={12} md={6} lg={4}>
@@ -33,17 +33,17 @@ const GroupCard = () => {
                 alignItems:'center',
                 justifyContent:'space-between',
                 }}>
-                <img src={UserIcon} alt="Blogging Icon" />
+                <img src={item.icon.src} alt={item.icon.alt} />
             </Box>
-            <h2 class="card-heading">Project 24</h2>
+            <h2 class="card-heading">{item.title}</h2>
             <Typography sx={{
                 color:'var(--purple)',
                 fontWeight:500,
                 fontSize:'16px',
                 lineHeight:'150%',
                 margin:'8px 0 16px'
-            }} variant="body2">Income School</Typography>
-            <p class="card-description maxwidth-85">Many people were hoping that if the Democrats won control of Congress they would reverse the online</p>
+            }} variant="body2">{item.owner}</Typography>
+            <p class="card-description maxwidth-85">{item.desc}</p>
             <Box sx={{position:'absolute',right:'16px',bottom:'11px'}}>
                 <img src={Heart} alt="Heart" />
                 <img className="marginleft-8" src={InfoCircle} alt="Info Circle" />
