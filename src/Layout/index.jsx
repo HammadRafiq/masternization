@@ -9,8 +9,6 @@ import Footer from '../Components/Footer/Footer';
 import { isAuthenticated, setAdmin, setSession, setUser } from '../Helpers/Utils';
 import { useParams } from 'react-router-dom'
 
-
-
 const pages = [
 
     {
@@ -62,7 +60,14 @@ const Layout = ({ children }) => {
     const isLoggedIn = isAuthenticated()
 
     const { masterCourseId } = useParams();
-    console.log("Master", masterCourseId)
+
+    const isHomePage = location.pathname.endsWith('/home');
+    const isHomeGuest = location.pathname.endsWith('/home-guest');
+    const isMyAccount = location.pathname.endsWith('/my-account');
+
+    const isMasterCourseIdStored = localStorage.getItem('selectedMasterCourseId') !== null;
+
+
 
     return (
         <Box>
@@ -73,67 +78,111 @@ const Layout = ({ children }) => {
                         width="100%"
                     />
                 </Box>
-                {isLoggedIn && (
+                {!isHomePage && !isHomeGuest && isMasterCourseIdStored && (
                     <>
                         <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
-                            {pages.map((page) => {
-                                const isActiveMenu = location.pathname.includes(page.link)
-                                return (
-                                    <>
-                                        {
-                                            (page.title === 'Home' || page.title === 'My Account') ?
-                                                <Button
-                                                    key={page.link}
-                                                    onClick={() => {
-                                                        navigate(`${page.link}`);
-                                                    }}
-                                                    sx={{
-                                                        my: 2, px: "6px", color: isActiveMenu ? "#6B63FB" : 'black', display: 'block', textTransform: "capitalize", fontWeight: isActiveMenu ? 700 : 400
-                                                    }}
-                                                >
-                                                    {page.title}
-                                                </Button> :
-                                                <Button
-                                                    key={page.link}
-                                                    onClick={() => {
-                                                        navigate(`${page.link}/${masterCourseId}`);
-                                                    }}
-                                                    sx={{
-                                                        my: 2, px: "6px", color: isActiveMenu ? "#6B63FB" : 'black', display: 'block', textTransform: "capitalize", fontWeight: isActiveMenu ? 700 : 400
-                                                    }}
-                                                >
-                                                    {page.title}
-                                                </Button>
-                                        }
 
-                                    </>
-                                )
-                            })}
+
+                            {pages
+                                .filter((page) => page.title !== 'My Account' || isLoggedIn)
+                                .map((page) => {
+                                    const isActiveMenu = location.pathname.includes(page.link);
+
+                                    return (
+                                        <Button
+                                            key={page.link}
+                                            onClick={() => {
+                                                if (page.title === 'Home' || page.title === 'My Account') {
+                                                    navigate(page.link);
+                                                } else {
+                                                    navigate(`${page.link}/${masterCourseId}`);
+                                                }
+                                            }}
+                                            sx={{
+                                                my: 2,
+                                                px: '6px',
+                                                color: isActiveMenu ? '#6B63FB' : 'black',
+                                                display: 'block',
+                                                textTransform: 'capitalize',
+                                                fontWeight: isActiveMenu ? 700 : 400,
+                                            }}
+                                        >
+                                            {page.title}
+                                        </Button>
+                                    );
+                                })}
+
+
+
                         </Box>
-                        <Box display="flex" gap="20px" alignItems="center">
-                            <Box sx={{ display: { xs: "flex", lg: "none" } }}>
-                                <CustomMenu options={pages} />
-                            </Box>
-                            <LoadButton
-                                text={'Logout'}
-                                onClick={() => {
-                                    setSession(null)
-                                    setAdmin(null)
-                                    setUser(null)
-                                    navigate('/login')
-                                }}
-                                styleProps={{
-                                    minWidth: {
-                                        xs: '110px',
-                                    },
-                                    height: "40px",
-                                    fontSize: "14px",
-                                    marginTop: 0
-                                }}
-                            />
-                        </Box>
+
+
+                        {
+                            isLoggedIn && (
+                                <>
+                                    <Box display="flex" gap="20px" alignItems="center">
+                                        <Box sx={{ display: { xs: "flex", lg: "none" } }}>
+                                            <CustomMenu options={pages} />
+                                        </Box>
+                                        <LoadButton
+                                            text={'Logout'}
+                                            onClick={() => {
+                                                setSession(null)
+                                                setAdmin(null)
+                                                navigate('/login')
+                                            }}
+                                            styleProps={{
+                                                minWidth: {
+                                                    xs: '110px',
+                                                },
+                                                height: "40px",
+                                                fontSize: "14px",
+                                                marginTop: 0
+                                            }}
+                                        />
+                                    </Box>
+                                </>
+                            )
+                        }
                     </>
                 )}
+
+                {
+
+                    isHomePage && (
+                        <>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '15px' }}>
+                                <Button
+                                    key="my-account"
+                                    onClick={() => {
+                                        navigate('/my-account');
+                                    }}
+                                    sx={{
+                                        my: 2, px: "6px", display: 'block', textTransform: "capitalize", color: '#000', fontWeight: 500
+                                    }}
+                                >
+                                    My Account
+                                </Button>
+                                <LoadButton
+                                    text={'Logout'}
+                                    onClick={() => {
+                                        setSession(null)
+                                        setAdmin(null)
+                                        navigate('/login')
+                                    }}
+                                    styleProps={{
+                                        minWidth: {
+                                            xs: '110px',
+                                        },
+                                        height: "40px",
+                                        fontSize: "14px",
+                                        marginTop: 0
+                                    }}
+                                />
+                            </Box>
+                        </>
+                    )
+                }
                 {!isLoggedIn && (
                     <Box display="flex" alignItems={"center"}>
                         <Typography
@@ -155,6 +204,7 @@ const Layout = ({ children }) => {
                         <LoadButton
                             text={'Sign Up'}
                             onClick={() => {
+                                navigate("/registration")
                             }}
                             styleProps={{
                                 minWidth: {
@@ -167,6 +217,42 @@ const Layout = ({ children }) => {
                         />
                     </Box>
                 )}
+                {
+                    isMyAccount && !isMasterCourseIdStored && (
+                        <>
+                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '15px' }}>
+                                <Button
+                                    key="my-account"
+                                    onClick={() => {
+                                        navigate('/');
+                                    }}
+                                    sx={{
+                                        my: 2, px: "6px", display: 'block', textTransform: "capitalize", color: '#000', fontWeight: 500
+                                    }}
+                                >
+                                    Home
+                                </Button>
+                                <LoadButton
+                                    text={'Logout'}
+                                    onClick={() => {
+                                        setSession(null)
+                                        setAdmin(null)
+                                        navigate('/login')
+                                    }}
+                                    styleProps={{
+                                        minWidth: {
+                                            xs: '110px',
+                                        },
+                                        height: "40px",
+                                        fontSize: "14px",
+                                        marginTop: 0
+                                    }}
+                                />
+
+                            </Box>
+                        </>
+                    )
+                }
             </Box>
             <Box>
                 {children}

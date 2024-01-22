@@ -404,6 +404,20 @@ input {
   padding-top: 32px;
 }
 
+.master-dashboard .rc-pagination-item a {
+  color: #000;
+  font-size: 22px;
+  line-height: 28px;
+  font-weight: 400;
+  letter-spacing: -0.66px;
+}
+.master-dashboard .rc-pagination-prev {
+  margin-right: 24px;
+}
+.master-dashboard .rc-pagination-next {
+  margin-left: 16px;
+}
+
 .rc-table-thead {
   text-align: left;
 }

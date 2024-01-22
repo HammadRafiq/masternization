@@ -12,9 +12,13 @@ const PickACourseCards = ({ key, item }) => {
   const [heart, setHeart] = useState("inactive")
   const masterCourseId = item._id;
 
+  const handleOnClick = () => {
+    localStorage.setItem('selectedMasterCourseId', item._id);
+  }
+  
   const linkStyles = {
-    textDecoration: 'none', // Set text decoration to none
-    color: 'inherit', // Inherit the color from the parent
+    textDecoration: 'none',
+    color: 'inherit',
   };
 
   return (
@@ -29,6 +33,7 @@ const PickACourseCards = ({ key, item }) => {
           alignItems: 'start',
           justifyContent: 'space-between',
         }}>
+        
           <img class="box-img" src={item.icon?.src} />
 
           <HeartIcon
@@ -46,7 +51,7 @@ const PickACourseCards = ({ key, item }) => {
         </Box>
         <h2 className="card-heading">{item.name}</h2>
         <p className="card-description">{item.desc}</p>
-        <Link style={linkStyles} to={`/master-blogging/${masterCourseId}`}>
+        <Link onClick={handleOnClick} style={linkStyles} to={`/master-blogging/${masterCourseId}`}>
           <Box sx={{
             display: 'flex',
             justifyContent: 'flex-end',

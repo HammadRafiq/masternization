@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import DollarCircle from '../../Assets/dollar-circle.svg'
@@ -6,11 +6,30 @@ import Heart from '../../Assets/heart.svg'
 import InfoCircle from '../../Assets/info-circle.svg'
 import NoteBookIcon from '../../Assets/notebook_icon.svg'
 import Typography from '@mui/material/Typography';
-
+import LoginPrompt from '../Common/LoginPrompt';
+import { Link } from 'react-router-dom';
+import { Dialog, Button } from '@mui/material';
+import { isAuthenticated, setAdmin, setSession } from '../../Helpers/Utils'
 import PercentageCircle from '../../Assets/percentage-circle.svg'
 
 
 const BloggingTutorialsCard = ({ item }) => {
+
+    const isLoggedIn = isAuthenticated()
+
+    const [isPopupOpen, setPopupOpen] = useState(false);
+
+    const handleLinkClick = (e) => {
+        if (!isLoggedIn) {
+            e.preventDefault(); // Prevent the default behavior (opening the link in a new tab)
+            setPopupOpen(true);
+        }
+        // If user is logged in, the link will open as usual
+    };
+
+    const handleClosePopup = () => {
+        setPopupOpen(false);
+    };
 
     let availabilityColor;
 
@@ -58,7 +77,24 @@ const BloggingTutorialsCard = ({ item }) => {
                         </Box>
                     </Box>
                     <Box sx={{ padding: '7px 24px 24px' }}>
-                        <h2 class="card-heading card-heading-inner">{item.title}</h2>
+                        <Box>
+                            <Link
+                                to={isLoggedIn ? item.url : '/your-actual-link'}
+                                onClick={handleLinkClick}
+                                href={isLoggedIn ? item.url : undefined}
+                                target="_blank"
+                                style={{ textDecoration: 'none' }}
+                            >
+                                <h2 class="card-heading card-heading-inner">{item.title}</h2>
+                            </Link>
+
+                            {!isLoggedIn && (
+                                <Dialog open={isPopupOpen} onClose={handleClosePopup}>
+                                    <LoginPrompt />
+                                    <Button onClick={handleClosePopup}>Close</Button>
+                                </Dialog>
+                            )}
+                        </Box>
                         <Typography sx={{
                             color: 'var(--purple)',
                             fontWeight: 500,

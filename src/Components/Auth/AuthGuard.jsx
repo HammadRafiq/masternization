@@ -9,6 +9,18 @@ function AuthGuard({ children }) {
     const loggedIn = isAuthenticated()
     const user = isUser()
     const navigate = useNavigate();
+    /**
+        useEffect(() => {
+            
+            if (!loggedIn) {
+                return navigate("/home-guest");
+            }
+             
+             
+            setLoading(false);
+        }, [loggedIn, navigate]);
+    
+    */
 
     useEffect(() => {
         if (!user) {

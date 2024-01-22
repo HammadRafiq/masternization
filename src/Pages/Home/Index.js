@@ -13,10 +13,8 @@ import { useForm } from 'react-hook-form';
 import { useMutation, gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import SkeltonLoader from '../../Components/Common/SkeltonLoader';
-
-
-
-
+import Button from '@mui/material/Button';
+import { useNavigate } from 'react-router-dom';
 
 const GET_MASTERCOURSES = gql`
   query($limit: Int, $page: Int){
@@ -34,8 +32,6 @@ const GET_MASTERCOURSES = gql`
   }
 }
 `
-
-
 
 const pickCourse = {
   "mastermode": [
@@ -72,7 +68,8 @@ const pickCourse = {
 
 const Home = () => {
 
-  const [loading1,setLoading1] = useState(false);
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -89,6 +86,7 @@ const Home = () => {
     console.log('Form Data', data);
   };
 
+  const [loading1, setLoading1] = useState(false);
   const [limit, setLimit] = useState(1);
   const [page, setPage] = useState(2)
   const [currentPage, setCurrentPage] = useState(1);
@@ -100,10 +98,9 @@ const Home = () => {
     }
   });
 
-
   const handleLoadMore = () => {
-   
-    setPage(prev => prev+1);
+
+    setPage(prev => prev + 1);
     setLoading1(true);
     fetchMore({
       variables: {
@@ -114,23 +111,27 @@ const Home = () => {
         if (!fetchMoreResult) return prevResult;
         setLoading1(false);
         return {
-          
           masterCourses: {
-            
             total: fetchMoreResult.masterCourses.total,
             limit: fetchMoreResult.masterCourses.limit,
             page: fetchMoreResult.masterCourses.page,
             items: [...prevResult.masterCourses.items, ...fetchMoreResult.masterCourses.items],
           },
         };
-        
+
       },
     });
   };
 
-  console.log("Data:", data);
-  //if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
+
+  const handleButtonClick = () => {
+
+    const sectionElement = document.getElementById('explore-all-courses');
+
+    sectionElement.scrollIntoView({ behavior: 'smooth' });
+
+  };
 
   const allCoursesDisplayed = data?.masterCourses.items.length >= data?.masterCourses.total;
 
@@ -151,7 +152,31 @@ const Home = () => {
             }}>
               We give you all you need to become an expert in your field, whether you are starting from scratch or not - courses, tutorials, books, tools and much more.
             </Typography>
-            <LoadButton text={'Start Your Journey'} />
+            <Button sx={{
+              backgroundColor: 'var(--purple)',
+              color: 'var(--white)',
+              textTransform: 'capitalize',
+              borderRadius: '76px',
+              padding: '10px 28px',
+              fontSize: '18px',
+              fontWeight: 500,
+              height: '60px',
+              marginTop: {
+                xs: '15px',
+                md: '0'
+              },
+              minWidth: {
+                xs: '100%',
+                md: '201px'
+              },
+              '&:hover': {
+                backgroundColor: 'var(--purple)',
+              },
+              
+            }} onClick={handleButtonClick}>
+              Start Your Journey
+            </Button>
+            
           </Grid>
           <Grid item xs={12} md={4.5}>
             <Box height="100%" position="relative">
@@ -182,7 +207,7 @@ const Home = () => {
           }
         </Box>
       </Box>
-      <Box className="padding-all" sx={{ flexGrow: 1 }}>
+      <Box id="explore-all-courses" className="padding-all" sx={{ flexGrow: 1 }}>
         <Box sx={{ maxWidth: '726px', margin: '0 auto 61px' }}>
           <h5 className="center small-tagline">Explore Opportunities</h5>
           <h2 className="center main-heading">Pick a Course. <br />Master a Skill.</h2>
@@ -205,7 +230,7 @@ const Home = () => {
                   />
                 </Grid>
                 <Grid item xs={12} md={3}>
-                  <LoadButton text={'Search'}  />
+                  <LoadButton text={'Search'} />
                 </Grid>
               </Grid>
             </form>
@@ -229,13 +254,17 @@ const Home = () => {
         </Grid>
 
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
-          
+
           <LoadButton onClick={handleLoadMore} text={'More Courses'} disabled={allCoursesDisplayed || loading || loading1} loading={loading1} />
-          
+
         </Box>
         {/* Message when all courses are displayed */}
         {allCoursesDisplayed && <Typography variant="body2" sx={{
-          textAlign:'center'
+          textAlign: 'center',
+          fontSize: '16px',
+          fontWeight: 500,
+          marginTop: '12px'
+
         }}>All courses have been displayed.</Typography>}
       </Box>
       <FormFooter

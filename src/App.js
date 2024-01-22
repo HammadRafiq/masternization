@@ -1,6 +1,6 @@
 import './Fonts/WEB/css/general-sans.css'
 import './App.css';
-import { Route, Routes, Navigate } from 'react-router-dom'
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom'
 import Courses from './Pages/Courses/Index';
 import Home from './Pages/Home/Index';
 import Tutorials from './Pages/Tutorials/Index';
@@ -39,6 +39,8 @@ export const GlobalInfo = createContext();
 function App() {
 
   const [globalMasterCourseId, setGlobalMasterCourseId] = useState('fahad123');
+
+  const location = useLocation();
 
   const routes = [
     {
@@ -193,29 +195,29 @@ function App() {
   return (
     <>
       <GlobalInfo.Provider value={{ globalMasterCourseId, setGlobalMasterCourseId }}>
-        <Routes>
-          {routes?.map((route, index) => {
-            const Layout = route?.layout || Fragment
-            const Guard = route?.guard || Fragment
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Guard>
-                    <Layout>
-                      <Auth>
-                        <route.element />
-                      </Auth>
-                    </Layout>
-                  </Guard>
-                }
-              />
-            )
-          }
-          )}
-        </Routes>
-      </GlobalInfo.Provider >
+      <Routes>
+        {routes?.map((route, index) => {
+          const Layout = route?.layout || Fragment
+          const Guard = route?.guard || Fragment
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Guard>
+                  <Layout>
+                    <Auth>
+                      <route.element />
+                    </Auth>
+                  </Layout>
+                </Guard>
+              }
+            />
+          )
+        }
+        )}
+      </Routes>
+    </GlobalInfo.Provider >
     </>
   );
 }
