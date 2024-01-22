@@ -11,7 +11,7 @@ import Logo from '../../Assets/dashboard/Logo.svg'
 import CustomEmailField from '../../Components/Dashboard/Common/CustomEmailField';
 import CustomPasswordField from '../../Components/Dashboard/CustomPasswordField';
 import { useMutation, gql } from '@apollo/client';
-import { getToken, setSession } from '../../Helpers/Utils';
+import { getToken, setSession, setUser } from '../../Helpers/Utils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
@@ -52,6 +52,7 @@ const Login = () => {
       variables: data,
       onCompleted: (data) => {
         setSession(data?.login?.token)
+        setUser(true)
         navigate("/home")
       },
       onError: (err) => {

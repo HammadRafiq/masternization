@@ -61,43 +61,50 @@ function App() {
     {
       path: "/dashboard/users",
       element: Users,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/account-settings",
       element: AccountSettings,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/creators",
       element: Creators,
-      layout: DashboardLayout
-
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/saved-works",
       element: SavedWorks,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/content",
       element: Content,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/listed-works",
       element: ListedContent,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/add-master-course",
       element: AddMasterCourse,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/listed-master-courses",
       element: ListedMasterCourses,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/courses/:masterCourseId",
@@ -178,7 +185,8 @@ function App() {
     {
       path: "/dashboard/edit-content/:contentId",
       element: Content,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
   ]
 

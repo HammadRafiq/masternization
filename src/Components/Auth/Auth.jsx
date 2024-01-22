@@ -13,7 +13,7 @@ const Auth = ({ children }) => {
     const errorLink = onError(({ graphQLErrors, networkError }) => {
         if (graphQLErrors)
             graphQLErrors.forEach(({ message, locations, path }) =>
-                enqueueSnackbar(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`, {
+                enqueueSnackbar(`${message}`, {
                     variant: "error"
                 })
             );

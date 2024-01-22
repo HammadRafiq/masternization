@@ -11,11 +11,11 @@ function AdminGuard({ children }) {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (!loggedIn || !admin) {
+        if (!admin) {
             return navigate("/home-guest");
         }
         setLoading(false);
-    }, [loggedIn, navigate]);
+    }, [admin]);
 
     if (isLoading) {
         return (

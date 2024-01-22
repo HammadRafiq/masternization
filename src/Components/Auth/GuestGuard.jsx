@@ -1,4 +1,4 @@
-import { handleAuthentication, isAuthenticated } from "../../Helpers/Utils";
+import { handleAuthentication, isAdmin, isAuthenticated, isUser } from "../../Helpers/Utils";
 // import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -8,13 +8,18 @@ function GuestGuard({ children }) {
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate();
     const loggedIn = isAuthenticated()
+    const user = isUser()
+    const admin = isAdmin()
 
     useEffect(() => {
-        if (loggedIn) {
+        if (user) {
             return navigate("/home");
         }
+        else if(admin){
+            return navigate("/dashboard/overview")
+        }
         setLoading(false)
-    }, [loggedIn]);
+    }, [user, admin]);
 
     if (loading) {
         return (

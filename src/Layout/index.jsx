@@ -6,7 +6,7 @@ import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import CustomMenu from '../Components/Common/CustomMenu';
 import Footer from '../Components/Footer/Footer';
-import { isAuthenticated, setAdmin, setSession } from '../Helpers/Utils';
+import { isAuthenticated, setAdmin, setSession, setUser } from '../Helpers/Utils';
 import { useParams } from 'react-router-dom'
 
 
@@ -119,6 +119,7 @@ const Layout = ({ children }) => {
                                 onClick={() => {
                                     setSession(null)
                                     setAdmin(null)
+                                    setUser(null)
                                     navigate('/login')
                                 }}
                                 styleProps={{
