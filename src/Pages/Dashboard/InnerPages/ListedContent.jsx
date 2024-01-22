@@ -87,25 +87,6 @@ const ListedContent = () => {
     })
   }
 
-  const updateLiveStatus = (id, status) => {
-    setStatusLoading(id)
-    updateStatusContent({
-      variables: {
-        id,
-        status
-      },
-      onCompleted: () => {
-        enqueueSnackbar("Content status updated successfully", {
-          variant: "success"
-        })
-        setStatusLoading("")
-      },
-      onError: () => {
-        setStatusLoading("")
-      },
-    })
-  }
-
   const {
     watch,
     handleSubmit,
@@ -118,6 +99,26 @@ const ListedContent = () => {
     },
     shouldUnregister: true
   })
+
+  const updateLiveStatus = (id, status) => {
+    setStatusLoading(id)
+    updateStatusContent({
+      variables: {
+        id,
+        status
+      },
+      onCompleted: (data) => {
+        enqueueSnackbar("Content status updated successfully", {
+          variant: "success"
+        })
+        setValue(id, data?.updateStatusContent?.status)
+        setStatusLoading("")
+      },
+      onError: () => {
+        setStatusLoading("")
+      },
+    })
+  }
 
   // useEffect(() => {
   //   const subscription = watch((values, { name, type }) => {
@@ -165,7 +166,11 @@ const ListedContent = () => {
       title: 'Live Status',
       dataIndex: 'status',
       width: "10%",
-      render: (text, record) => (
+      render: (text, record) => statusLoading === record._id ? (
+        <Box py={"8px"}>
+          <CircularProgress size={20} />
+        </Box>
+      ) : (
         <FormControlLabel
           control={
             <Controller

@@ -10,7 +10,6 @@ import { isAuthenticated, setAdmin, setSession, setUser } from '../Helpers/Utils
 import { useParams } from 'react-router-dom'
 
 const pages = [
-
     {
         title: "Home",
         link: "/home"
@@ -129,6 +128,7 @@ const Layout = ({ children }) => {
                                             onClick={() => {
                                                 setSession(null)
                                                 setAdmin(null)
+                                                setUser(null)
                                                 navigate('/login')
                                             }}
                                             styleProps={{
