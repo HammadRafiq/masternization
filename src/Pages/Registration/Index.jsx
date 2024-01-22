@@ -11,6 +11,7 @@ import Logo from '../../Assets/dashboard/Logo.svg'
 import CustomTextField from '../../Components/Dashboard/Common/CustomTextField';
 import CustomEmailField from '../../Components/Dashboard/Common/CustomEmailField';
 import CustomPasswordField from '../../Components/Dashboard/CustomPasswordField';
+import {Link} from 'react-router-dom';
 
 const Registration = () => {
 
@@ -56,7 +57,7 @@ const Registration = () => {
                     lineHeight: 'normal',
                     margin: '0 0 32px'
                 }}>
-                    Create an account or login
+                    Create an account or <Link to="/login" style={{textDecoration:'none', color:'var(--purple)'}}>Login</Link>
                 </Typography>
 
             </Box>

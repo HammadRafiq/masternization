@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import FormFooter from '../../Components/Common/FormFooter';
@@ -12,10 +12,13 @@ import { useQuery } from '@apollo/client';
 import SkeltonLoader from '../../Components/Common/SkeltonLoader';
 import { useMutation, gql } from '@apollo/client';
 import { GlobalInfo } from '../../App';
+import { useNavigate } from 'react-router-dom';
+import Pagination from 'rc-pagination';
+import CustomPagination from '../../Components/Common/CustomPagination';
 
 const GET_SUCCESS_STORIES = gql`
-query($masterCourseId: ID, $screen: String, $section: String){
-    contents(masterCourseId: $masterCourseId, screen: $screen, section: $section) {
+query($masterCourseId: ID, $screen: String, $section: String, $page: Int, $limit: Int){
+    contents(masterCourseId: $masterCourseId, screen: $screen, section: $section, page: $page, limit: $limit) {
       items {
         _id
         owner
@@ -36,41 +39,119 @@ query($masterCourseId: ID, $screen: String, $section: String){
 
 const MasterBlogging = () => {
 
-    const { globalMasterCourseId, setGlobalMasterCourseId } = useContext(GlobalInfo)
+    const [limit, setLimit] = useState(1);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [currentPage2, setCurrentPage2] = useState(1);
+    const [currentPage3, setCurrentPage3] = useState(1);
+    const [currentPage4, setCurrentPage4] = useState(1);
 
     const { masterCourseId } = useParams();
 
-    const { data: data1, loading: loading1, error: error1 } = useQuery(GET_SUCCESS_STORIES, {
+    const navigate = useNavigate();
+
+    const selectedMastercourseId = localStorage.getItem('selectedMasterCourseId');
+    console.log("Fetched ID", selectedMastercourseId);
+
+    useEffect(() => {
+
+        const currentPath = window.location.pathname;
+        const sectionElement = document.getElementById('master-dashboard');
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+
+        if (currentPath.endsWith('/undefined')) {
+
+            const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
+            navigate(updatedPath, { replace: true });
+        }
+    }, [navigate]);
+
+
+
+    /* SUCCESS STORIES API Fetching */
+
+    const { data: data1, loading: loading1, error: error1, fetchMore } = useQuery(GET_SUCCESS_STORIES, {
         variables: {
             masterCourseId: masterCourseId,
             screen: "DASHBOARD",
-            section: "SUCCESS_STORIES"
+            section: "SUCCESS_STORIES",
+            page: currentPage,
+            limit: 2
         }
     })
 
-    const { data: data2, loading: loading2, error: error2 } = useQuery(GET_SUCCESS_STORIES, {
+    const handlePageChange1 = (page) => {
+        setCurrentPage(page);
+        fetchMore({
+            variables: { page: currentPage, limit: 2 },
+        });
+    };
+
+
+
+    /* How To START API Fetching */
+
+    const { data: data2, loading: loading2, error: error2, fetchMore: fetchMore2 } = useQuery(GET_SUCCESS_STORIES, {
         variables: {
             masterCourseId: masterCourseId,
             screen: "DASHBOARD",
-            section: "HOW_TO_START"
+            section: "HOW_TO_START",
+            page: currentPage2,
+            limit: 2
+
         }
     })
 
-    const { data: data3, loading: loading3, error: error3 } = useQuery(GET_SUCCESS_STORIES, {
-        variables: {
-            masterCourseId: masterCourseId,
-            screen: "DASHBOARD",
-            section: "HOW_TO_GET_JOB"
-        }
-    })
+    const handlePageChange2 = (page) => {
+        setCurrentPage2(page);
+        fetchMore2({
+            variables: { page: currentPage2, limit: 2 },
+        });
+    };
 
-    const { data: data4, loading: loading4, error: error4 } = useQuery(GET_SUCCESS_STORIES, {
+
+
+
+    /* How To GET JOB SECTION */
+
+    const { data: data3, loading: loading3, error: error3, fetchMore: fetchMore3 } = useQuery(GET_SUCCESS_STORIES, {
         variables: {
             masterCourseId: masterCourseId,
             screen: "DASHBOARD",
-            section: "HOW_TO_START_BUSINESS"
+            section: "HOW_TO_GET_JOB",
+            page: currentPage3,
+            limit: 2
         }
-    })
+    });
+
+    const handlePageChange3 = (page) => {
+        setCurrentPage3(page);
+        fetchMore3({
+            variables: { page: currentPage3, limit: 2 },
+        });
+    };
+
+    /** How to Start Business Section */
+
+    const { data: data4, loading: loading4, error: error4, fetchMore: fetchMore4 } = useQuery(GET_SUCCESS_STORIES, {
+        variables: {
+            masterCourseId: masterCourseId,
+            screen: "DASHBOARD",
+            section: "HOW_TO_START_BUSINESS",
+            page: currentPage4,
+            limit: 2
+        }
+    });
+
+    const handlePageChange4 = (page) => {
+        setCurrentPage4(page);
+        fetchMore4({
+            variables: { page: currentPage4, limit: 2 },
+        });
+    };
 
     if (error4) return <p>Error: {error4.message}</p>;
     console.log("Fetched Data", data4);
@@ -78,7 +159,7 @@ const MasterBlogging = () => {
     return (
         <>
 
-            <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
+            <Box id="master-dashboard" className="master-dashboard pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
                 <Box sx={{ display: { xs: 'block', md: 'flex' }, textAlign: 'center', justifyContent: 'center', gap: '12px', margin: '100px 0 32px' }}>
                     <LoadButton text={'Master Blogging'} styleProps={{ fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
                     <LoadButton text={'Become a Blogger'} styleProps={{ background: 'var(--dark-purple)', fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
@@ -116,6 +197,10 @@ const MasterBlogging = () => {
 
                 </Grid>
 
+                <Box sx={{ marginTop: '50px' }}>
+                    <CustomPagination total={data1?.contents.total} onChange={handlePageChange1} />
+                </Box>
+
                 <Box>
                     <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                         <h5 className="small-tagline letting-spacing-6 mb-12">Explore</h5>
@@ -136,6 +221,11 @@ const MasterBlogging = () => {
                             })
                         }
                     </Grid>
+
+                    <Box sx={{ marginTop: '50px' }}>
+                        <CustomPagination total={data2?.contents.total} onChange={handlePageChange2} />
+                    </Box>
+
                 </Box>
                 <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                     <h5 className="small-tagline letting-spacing-6 mb-12">Find jobs</h5>
@@ -156,6 +246,9 @@ const MasterBlogging = () => {
                         })
                     }
                 </Grid>
+                <Box sx={{ marginTop: '50px' }}>
+                        <CustomPagination total={data3?.contents.total} onChange={handlePageChange3} />
+                    </Box>
                 <Box>
                     <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                         <h5 className="small-tagline letting-spacing-6 mb-12">Be independent</h5>
@@ -176,6 +269,9 @@ const MasterBlogging = () => {
                             })
                         }
                     </Grid>
+                    <Box sx={{ marginTop: '50px' }}>
+                        <CustomPagination total={data4?.contents.total} onChange={handlePageChange4} />
+                    </Box>
                 </Box>
             </Box>
 

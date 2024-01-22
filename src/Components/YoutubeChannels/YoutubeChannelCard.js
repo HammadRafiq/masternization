@@ -1,19 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
-import LoadButton from '../../Components/Common/LoadButton';
-import CustomTextField from '../../Components/Common/CustomTextField';
-import FormFooter from '../../Components/Common/FormFooter';
 import Heart from '../../Assets/heart.svg'
 import InfoCircle from '../../Assets/info-circle.svg'
-import SecondaryHeader from '../../Components/Common/SecondaryHeader';
-import BookImg from '../../Assets/book_icon.svg'
-import Typography from '@mui/material/Typography';
-import BookLinkIcon from '../../Assets/book_link_icon.svg'
-import Youtubechannelimg from '../../Assets/youtube_channel_icon.svg'
 import YoutubeChannelLinkIcon from '../../Assets/youtube_channel_link_icon.svg'
+import { isAuthenticated, setAdmin, setSession } from '../../Helpers/Utils'
+import LoginPrompt from '../../Components/Common/LoginPrompt'
+import { Link } from 'react-router-dom';
+import { Dialog, Button } from '@mui/material';
 
 const YoutubeChannelCard = ({ item }) => {
+
+
+
+  const isLoggedIn = isAuthenticated()
+
+  const [isPopupOpen, setPopupOpen] = useState(false);
+
+  const handleLinkClick = (e) => {
+    if (!isLoggedIn) {
+      e.preventDefault(); // Prevent the default behavior (opening the link in a new tab)
+      setPopupOpen(true);
+    }
+    // If user is logged in, the link will open as usual
+  };
+
+  const handleClosePopup = () => {
+    setPopupOpen(false);
+  };
+
+
   return (
     <>
       <Grid item xs={12} md={6} lg={4}>
@@ -35,9 +51,27 @@ const YoutubeChannelCard = ({ item }) => {
                 <img src={Heart} alt="Heart" />
                 <img className="marginleft-8" src={InfoCircle} alt="Info Circle" />
               </Box>
-              <a href={item.url} target="_blank" rel="noopener noreferrer">
-                <img src={YoutubeChannelLinkIcon} alt="Book Link" />
-              </a>
+
+
+              <Box>
+                <Link
+                  to={isLoggedIn ? item.url : '/your-actual-link'}
+                  onClick={handleLinkClick}
+                  href={isLoggedIn ? item.url : undefined}
+                  target="_blank"
+                >
+                  <img src={YoutubeChannelLinkIcon} alt="Book Link" />
+                </Link>
+
+                {!isLoggedIn && (
+                  <Dialog open={isPopupOpen} onClose={handleClosePopup}>
+                    <LoginPrompt />
+                    <Button onClick={handleClosePopup}>Close</Button>
+                  </Dialog>
+                )}
+              </Box>
+
+
             </Box>
           </Box>
 
@@ -48,3 +82,12 @@ const YoutubeChannelCard = ({ item }) => {
 }
 
 export default YoutubeChannelCard
+
+{
+  /**
+   * 
+   *   <a href={item.url} target="_blank" rel="noopener noreferrer">
+                <img src={YoutubeChannelLinkIcon} alt="Book Link" />
+              </a>
+   */
+}

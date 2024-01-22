@@ -14,6 +14,7 @@ import { useMutation, gql } from '@apollo/client';
 import { getToken, setSession } from '../../Helpers/Utils';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
+import { Link } from 'react-router-dom';
 
 const LOGIN = gql`
   mutation($email: String!, $password: String!){
@@ -86,7 +87,7 @@ const Login = () => {
           lineHeight: 'normal',
           margin: '0 0 32px'
         }}>
-          Login to your account or Create an account
+          Login to your account or <Link to="/registration" style={{textDecoration:'none', color:'var(--purple)'}}>Create an account</Link> 
         </Typography>
 
       </Box>

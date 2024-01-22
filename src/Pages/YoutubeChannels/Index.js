@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import LoadButton from '../../Components/Common/LoadButton';
@@ -18,10 +18,11 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/client';
 import { useMutation, gql } from '@apollo/client';
 import SkeltonLoader from '../../Components/Common/SkeltonLoader';
+import { useNavigate } from 'react-router-dom';
 
 const GET_YOUTUBE_CHANNELS = gql`
-query($masterCourseId: ID, $screen: String){
-    contents(masterCourseId: $masterCourseId, screen: $screen) {
+query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int){
+    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page) {
       items {
         _id
         icon {
@@ -41,133 +42,74 @@ query($masterCourseId: ID, $screen: String){
   }
 `
 
-const bloggingTutorials = {
-  "youtube": [
-    {
-      "id": 1,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 2,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": PercentageCircle,
-      "coursemodecolor": '#009217;',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 3,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 4,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 5,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 6,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 7,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 8,
-      "title": "Project 24",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-    {
-      "id": 9,
-      "title": "Project 25",
-      "instructor": 'Income School',
-      "description": "Many people were hoping that if the Democrats won control of Congress they would reverse the online",
-      "imageURL": BloggingIcon,
-      "favorite": Heart,
-      "info": InfoCircle,
-      "coursemode": DollarCircle,
-      "coursemodecolor": 'var(--purple)',
-      "courseLink": "http://localhost:3000/",
-    },
-  ],
-};
+
 
 const YoutubeChannels = () => {
 
+  const [loading1, setLoading1] = useState(false);
+  const [limit, setLimit] = useState(1);
+  const [page, setPage] = useState(2)
+  const [currentPage, setCurrentPage] = useState(1);
+
   const { masterCourseId } = useParams();
 
-  const { data, loading, error } = useQuery(GET_YOUTUBE_CHANNELS, {
+  const navigate = useNavigate();
+
+    const selectedMastercourseId = localStorage.getItem('selectedMasterCourseId');
+    console.log("Fetched ID", selectedMastercourseId);
+
+    useEffect(() => {
+        
+        const currentPath = window.location.pathname;
+
+      
+        if (currentPath.endsWith('/undefined')) {
+           
+            const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
+            navigate(updatedPath, { replace: true });
+        }
+    }, [navigate]);
+
+  const { data, loading, error, fetchMore } = useQuery(GET_YOUTUBE_CHANNELS, {
     variables: {
       masterCourseId: masterCourseId,
-      screen: "YOUTUBE_CHANNELS"
+      screen: "YOUTUBE_CHANNELS",
+      page: 1,
+      limit: 1
     }
-  })
+  });
+
+  const handleLoadMore = () => {
+
+    setPage(prev => prev + 1);
+    setLoading1(true);
+    fetchMore({
+      variables: {
+        page: page,
+        limit: 1
+      },
+      updateQuery: (prevResult, { fetchMoreResult }) => {
+        if (!fetchMoreResult) return prevResult;
+        setLoading1(false);
+        return {
+
+          contents: {
+
+            total: fetchMoreResult.contents.total,
+            limit: fetchMoreResult.contents.limit,
+            page: fetchMoreResult.contents.page,
+            items: [...prevResult.contents.items, ...fetchMoreResult.contents.items],
+          },
+        };
+
+      },
+    });
+  };
 
   //if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   console.log("Fetched Data", data);
+  const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total;
 
   return (
     <>
@@ -179,14 +121,14 @@ const YoutubeChannels = () => {
         <Grid container spacing={2.5}>
           {
             data?.contents.items.map((item) => {
-              return(
+              return (
                 <YoutubeChannelCard key={item._key} item={item} />
               )
             })
           }
         </Grid>
         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
-          <LoadButton text={'More YouTube Channels'} />
+        <LoadButton onClick={handleLoadMore} text={'More Youtube Channels'} disabled={allCoursesDisplayed || loading || loading1} loading={loading1} />
         </Box>
       </Box>
 
