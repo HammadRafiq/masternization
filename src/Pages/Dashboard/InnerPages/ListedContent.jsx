@@ -15,6 +15,7 @@ query($page: Int, $limit: Int, $screen: String, $section: String, $masterCourseI
     total
     items {
       _id
+      serialNum
       availability
       desc
       location
@@ -52,7 +53,7 @@ const DELETE_CONTENT = gql`
   }
 `
 
-const limit = 7
+const limit = 10
 
 const ListedContent = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -140,9 +141,14 @@ const ListedContent = () => {
 
   const columns = [
     {
+      title: 'Serial #',
+      dataIndex: 'serialNum',
+      width: "10%"
+    },
+    {
       title: 'Work Name',
       dataIndex: 'title',
-      width: "35%"
+      width: "30%"
     },
     {
       title: 'Type',
@@ -152,7 +158,7 @@ const ListedContent = () => {
     {
       title: 'Listing Date',
       dataIndex: 'date',
-      width: "20%",
+      width: "15%",
       render: (text) => <div>{text ? moment(text).format("LL") : ""}</div>
     },
     {

@@ -16,16 +16,13 @@ const CustomTable = ({
     onChange = () => null
 }) => {
     return (
-        <Box sx={{ padding: '24px', border: '1px solid var(--stroke-card)', borderRadius: '16px', margin: '40px' }} position="relative">
+        <Box sx={{ padding: '15px', border: '1px solid var(--stroke-card)', borderRadius: '16px', margin: '30px' }} position="relative">
             <Table
                 columns={columns}
                 data={data}
                 scroll={{
-                    y: "calc(100vh - 320px)"
+                    y: "calc(100vh - 250px)"
                 }}
-                // style={{
-                //     minHeight: "300px"
-                // }}
                 className='primary-table'
             />
             <Pagination
