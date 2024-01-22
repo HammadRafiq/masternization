@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import Typography from '@mui/material/Typography';
@@ -21,6 +21,15 @@ const BloggingCourseCard = ({ key, item }) => {
     const isLoggedIn = isAuthenticated()
 
     const [isPopupOpen, setPopupOpen] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+
+    useEffect(() => {
+
+    }, [])
+
+    const handleHeartClick = () => {
+        
+    }
 
     const handleLinkClick = (e) => {
         if (!isLoggedIn) {
