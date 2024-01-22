@@ -11,10 +11,10 @@ const MenuItem = ({ icon, title, link, linkRef, styles={} }) => {
             <Box
                 className="dashboard-menu-item"
                 sx={{
-                    margin: '0 8px 21px',
+                    margin: '0 8px 5px',
                     display: 'flex',
                     alignItems: 'center',
-                    padding: '12px 20px',
+                    padding: '10px 20px',
                     background: isActiveMenu ? "var(--purple)" : "var(--dark-purple)",
                     borderRadius: "8px",
                     ...styles
