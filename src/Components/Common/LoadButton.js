@@ -21,6 +21,7 @@ const LoadButton = (
       onClick={onClick}
       loading={loading}
       disabled={disabled}
+      {...rest}
       sx={{
         backgroundColor: 'var(--purple)',
         color: 'var(--white)',
@@ -30,6 +31,9 @@ const LoadButton = (
         fontSize: '18px',
         fontWeight: 500,
         height: '60px',
+        ".MuiLoadingButton-loadingIndicator": {
+          color: "white"
+        },
         marginTop: {
           xs: '15px',
           md: '0'

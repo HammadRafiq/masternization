@@ -177,35 +177,39 @@ function App() {
       path: "/",
       element: () => <Navigate to="/home" />,
     },
+    {
+      path: "/dashboard/edit-content/:contentId",
+      element: Content,
+      layout: DashboardLayout
+    },
   ]
 
   return (
     <>
       <GlobalInfo.Provider value={{ globalMasterCourseId, setGlobalMasterCourseId }}>
-        <Routes>
-          {routes?.map((route, index) => {
-            const Layout = route?.layout || Fragment
-            const Guard = route?.guard || Fragment
-            
-            return (
-              <Route
-                key={index}
-                path={route.path}
-                element={
-                  <Guard>
-                    <Layout>
-                      <Auth>
-                        <route.element />
-                      </Auth>
-                    </Layout>
-                  </Guard>
-                }
-              />
-            )
-          }
-          )}
-        </Routes>
-      </GlobalInfo.Provider >
+      <Routes>
+        {routes?.map((route, index) => {
+          const Layout = route?.layout || Fragment
+          const Guard = route?.guard || Fragment
+          return (
+            <Route
+              key={index}
+              path={route.path}
+              element={
+                <Guard>
+                  <Layout>
+                    <Auth>
+                      <route.element />
+                    </Auth>
+                  </Layout>
+                </Guard>
+              }
+            />
+          )
+        }
+        )}
+      </Routes>
+    </GlobalInfo.Provider >
     </>
   );
 }

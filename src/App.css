@@ -418,6 +418,10 @@ input {
   margin-left: 16px;
 }
 
+.rc-table-thead{
+  text-align: left;
+}
+
 @media only screen and (max-width:600px) {
   .padding-all {
     padding: 50px 20px;
