@@ -9,8 +9,9 @@ import CustomRadioField from '../../../Components/Dashboard/Common/CustomRadioFi
 import LoadButton from '../../../Components/Common/LoadButton';
 import { useDropzone } from 'react-dropzone';
 import AddCircle from '../../../Assets/dashboard/add-circle.svg'
-import { gql, useMutation, useQuery } from '@apollo/client';
+import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { useSnackbar } from 'notistack';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 const availabilityOptions = [
@@ -59,6 +60,30 @@ const GET_MASTERCOURSES = gql`
 }
 `
 
+const SINGLE_CONTENT = gql`
+  query($id: ID!){
+    contentById(id: $id) {
+      _id
+      availability
+      desc
+      location
+      masterCourseId
+      owner
+      page
+      section
+      title
+      type
+      url
+      date
+      status
+      icon {
+        alt
+        src
+      }
+    }
+  }
+`
+
 const ADD_CONTENT = gql`
   mutation($content: addContentPayload!){
     addContent(content: $content) {
@@ -70,19 +95,28 @@ const ADD_CONTENT = gql`
   }
 `
 
+const UPDATE_CONTENT = gql`
+  mutation($content: updateContentPayload){
+    updateContent(content: $content) {
+      _id
+      masterCourseId
+      title
+      page
+    }
+  }
+`
 
 const Content = () => {
-
+  const [files, setFiles] = React.useState([]);
   const { data, loading } = useQuery(GET_MASTERCOURSES, {
     variables: {
       page: 1,
       limit: 30
     }
   })
-
-  const [addContent, { data: data1, loading: loading1 }] = useMutation(ADD_CONTENT, {
-    refetchQueries: "active"
-  })
+  const [contentById, { data: data2 }] = useLazyQuery(SINGLE_CONTENT)
+  const [addContent, { data: data1, loading: loading1 }] = useMutation(ADD_CONTENT)
+  const [updateContent, { data: data3, loading: loading3 }] = useMutation(UPDATE_CONTENT)
 
   const {
     register,
@@ -92,37 +126,74 @@ const Content = () => {
     control,
     setValue
   } = useForm({
-    defaultValues: {
-    },
+    defaultValues: {},
     shouldUnregister: true
   });
 
   const { enqueueSnackbar } = useSnackbar()
+  const { contentId } = useParams()
+  const navigate = useNavigate()
 
   const choosePage = watch("page");
   const chooseSection1 = watch("section")
 
+  useEffect(() => { // Fetching single content data when user wants to edit the record
+    if (contentId) {
+      contentById({
+        variables: {
+          id: contentId
+        },
+        onCompleted: (data) => {
+          Object.entries(data.contentById ?? []).map(entry => {
+            if (entry[1]) { // Not adding null/undefined values to react-hook-form
+              setValue(entry[0], entry[1])
+            }
+          })
+        }
+      })
+    }
+  }, [contentId])
+
   const onSubmit = (data) => {
-    addContent({
-      variables: {
-        content: data
-      },
-      onCompleted: (data) => {
-        enqueueSnackbar("Content added successfully", {
-          variant: "success"
-        })
-      },
-      onError: (err) => {
-        enqueueSnackbar(err?.message || "An error occured", {
-          variant: "error"
-        })
-      }
-    })
+    delete data.status
+    delete data.__typename
+    delete data._id
+    delete data.date
+    if (!(data?.icon instanceof File)) { // If default icon value exists coming from backend then delete else send File object to backend
+      delete data.icon
+    }
+    if (contentId) {
+      updateContent({
+        variables: {
+          content: {
+            ...data,
+            id: contentId,
+          }
+        },
+        onCompleted: (data) => {
+          enqueueSnackbar("Content updated successfully", {
+            variant: "success"
+          })
+          navigate("/dashboard/listed-works")
+        },
+        onError: () => { }
+      })
+    }
+    else {
+      addContent({
+        variables: {
+          content: data
+        },
+        onCompleted: (data) => {
+          enqueueSnackbar("Content added successfully", {
+            variant: "success"
+          })
+          navigate("/dashboard/listed-works")
+        },
+        onError: () => { }
+      })
+    }
   }
-
-  {/* Drop Zone Image Upload */ }
-
-  const [files, setFiles] = React.useState([]);
 
   const onDrop = (acceptedFiles) => {
     setFiles(acceptedFiles.map((file) => Object.assign(file, {
@@ -141,7 +212,7 @@ const Content = () => {
 
 
   return (
-    <Box sx={{ padding: '40px' }}>
+    <Box sx={{ padding: '30px' }}>
       <Typography variant="h3" sx={{ fontSize: '24px', fontWeight: 500, lineHeight: '28px', letterSpacing: '-0.72px' }}>
         Upload New Content
         <Box className="dashboard-content" sx={{ padding: '24px 24px 32px', margin: '20px 0', border: '1px solid var(--stroke-card)', borderRadius: '16px' }}>
@@ -249,9 +320,12 @@ const Content = () => {
                     />
                   </Box>
                 )}
-
                 <Box sx={{ marginTop: '32px' }}>
-                  <LoadButton text={'Post Content'} padding={'10px 112px'} loading={loading1} />
+                  <LoadButton
+                    text={contentId ? 'Update Content' : 'Post Content'}
+                    padding={'10px 112px'}
+                    loading={loading1 || loading3}
+                  />
                 </Box>
               </form>
             </Grid>
@@ -286,7 +360,6 @@ const Content = () => {
               )}
               */}
 
-
               {/* Drop Zone Image Upload Code */}
               {chooseSection1 !== "HOW_TO_START" && (
                 <Box sx={{ display: 'flex', marginTop: '60px' }}>
@@ -298,8 +371,6 @@ const Content = () => {
                     </Box>
                   </div>
                   <Box className="testing123" sx={{ marginLeft: '20px' }}>
-
-
                     {files.map((file) => (
                       <img
                         key={file.name}
@@ -308,12 +379,16 @@ const Content = () => {
                         style={{ maxWidth: '200px', maxHeight: '200px' }}
                       />
                     ))}
-
-
+                    {/* If Content is being edited and no image has been selected by user then show the image coming from API */}
+                    {files.length < 1 && contentId && (
+                      <img
+                        alt={data2?.contentById?.icon?.alt}
+                        src={data2?.contentById?.icon?.src}
+                        style={{ maxWidth: '200px', maxHeight: '200px' }}
+                      />
+                    )}
                   </Box>
                 </Box>
-
-
               )}
               {errors.files && <span style={{ color: 'red' }}>Please upload an image</span>}
 

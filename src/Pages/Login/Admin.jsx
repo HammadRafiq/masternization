@@ -51,10 +51,7 @@ const AdminLogin = () => {
 
     const onSubmit = (data) => {
         loginAdmin({
-            variables: {
-                email: "admin@masternization.com",
-                password: "Masternization*#56%^&"
-            },
+            variables: data,
             onCompleted: (data) => {
                 setSession(data?.loginAdmin?.token)
                 setAdmin(true)
