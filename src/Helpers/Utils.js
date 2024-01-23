@@ -1,5 +1,12 @@
 import { jwtDecode } from "jwt-decode"
 
+export const logoutHandler = () => {
+    setSession(null)
+    setAdmin(null)
+    setUser(null)
+    localStorage.removeItem('selectedMasterCourseId')
+}
+
 ///////////////////////////////////////
 ////////// AUTH FUNCTIONS /////////////
 ///////////////////////////////////////

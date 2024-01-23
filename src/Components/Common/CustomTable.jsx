@@ -21,7 +21,7 @@ const CustomTable = ({
                 columns={columns}
                 data={data}
                 scroll={{
-                    y: "calc(100vh - 250px)"
+                    y: "calc(100vh - 260px)"
                 }}
                 className='primary-table'
             />
@@ -33,7 +33,8 @@ const CustomTable = ({
                 total={total}
                 onChange={onChange}
                 style={{
-                    textAlign: paginationAlign
+                    textAlign: paginationAlign,
+                    marginTop: "10px"
                 }}
             />
             <IsLoading isLoading={loading} />

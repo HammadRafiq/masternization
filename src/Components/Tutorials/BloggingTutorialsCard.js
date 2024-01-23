@@ -64,7 +64,7 @@ const BloggingTutorialsCard = ({ item }) => {
                         padding: '24px',
                         borderRadius: '16px 16px 0 0'
                     }}>
-                        <img src={item.icon.src} alt="Blogging Icon" />
+                        <img src={item.icon.src} alt="Blogging Icon" style={{ maxWidth: "50px", maxHeight: "50px" }} />
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '56px', minWidth: '50px', padding: '8px 16px' }}>
                             <img src={availabilityImage} alt="Dollar Circle" />
                             <Typography variant="body2" sx={{

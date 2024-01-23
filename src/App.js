@@ -112,49 +112,49 @@ function App() {
       path: "/courses/:masterCourseId",
       element: Courses,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/tutorials/:masterCourseId",
       element: Tutorials,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/books/:masterCourseId",
       element: Books,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/tools/:masterCourseId",
       element: Tools,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/youtube-channels/:masterCourseId",
       element: YoutubeChannels,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/groups-forums/:masterCourseId",
       element: BloggingGroups,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/jobs/:masterCourseId",
       element: BloggingJobs,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/master-blogging/:masterCourseId",
       element: MasterBlogging,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/my-account",
@@ -195,29 +195,29 @@ function App() {
   return (
     <>
       <GlobalInfo.Provider value={{ globalMasterCourseId, setGlobalMasterCourseId }}>
-      <Routes>
-        {routes?.map((route, index) => {
-          const Layout = route?.layout || Fragment
-          const Guard = route?.guard || Fragment
-          return (
-            <Route
-              key={index}
-              path={route.path}
-              element={
-                <Guard>
-                  <Layout>
-                    <Auth>
-                      <route.element />
-                    </Auth>
-                  </Layout>
-                </Guard>
-              }
-            />
-          )
-        }
-        )}
-      </Routes>
-    </GlobalInfo.Provider >
+        <Routes>
+          {routes?.map((route, index) => {
+            const Layout = route?.layout || Fragment
+            const Guard = route?.guard || Fragment
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <Guard>
+                    <Layout>
+                      <Auth>
+                        <route.element />
+                      </Auth>
+                    </Layout>
+                  </Guard>
+                }
+              />
+            )
+          }
+          )}
+        </Routes>
+      </GlobalInfo.Provider >
     </>
   );
 }

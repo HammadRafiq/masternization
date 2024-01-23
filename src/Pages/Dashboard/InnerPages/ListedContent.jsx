@@ -120,17 +120,6 @@ const ListedContent = () => {
     })
   }
 
-  // useEffect(() => {
-  //   const subscription = watch((values, { name, type }) => {
-  //     if (name) {
-  //       const value = Object.entries(values ?? []).filter(entry => entry[0] === name)[0]
-  //       updateLiveStatus(value[0], value[1])
-  //       setStatusLoading(value[0])
-  //     }
-  //   })
-  //   return () => subscription.unsubscribe()
-  // }, [watch])
-
   // On every data change, update the live status checkbox values
   useEffect(() => {
     if (data?.contents?.items) {

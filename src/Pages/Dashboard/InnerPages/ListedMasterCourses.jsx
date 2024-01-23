@@ -29,12 +29,12 @@ mutation($id: ID){
   deleteContent(id: $id)
 }
 `
-const limit = 3
+const limit = 10
 
 const ListedMasterCourses = () => {
   const [currentPage, setCurrentPage] = useState(1)
 
-  const { loading, data, refetch } = useQuery(ALL_MASTERCOURSES, {
+  const { loading, data, previousData, refetch } = useQuery(ALL_MASTERCOURSES, {
     variables: {
       page: currentPage,
       limit: limit
@@ -63,10 +63,12 @@ const ListedMasterCourses = () => {
     {
       title: 'Name',
       dataIndex: 'name',
+      width: "30%"
     },
     {
       title: 'Desc',
       dataIndex: 'desc',
+      width: "60%"
     },
   ];
 
@@ -78,11 +80,11 @@ const ListedMasterCourses = () => {
   return (
     <Box>
       <CustomTable
-        data={data?.masterCourses?.items}
+        data={data?.masterCourses?.items ?? previousData?.masterCourses?.items}
         columns={columns}
         loading={loading}
         onChange={onPageChange}
-        total={data?.masterCourses?.total}
+        total={data?.masterCourses?.total ?? previousData?.masterCourses?.total}
         limit={limit}
       />
     </Box>

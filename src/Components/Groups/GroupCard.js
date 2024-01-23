@@ -33,7 +33,7 @@ const GroupCard = ({item}) => {
                 alignItems:'center',
                 justifyContent:'space-between',
                 }}>
-                <img src={item.icon.src} alt={item.icon.alt} />
+                <img className='max-width-100' src={item.icon.src} alt={item.icon.alt} />
             </Box>
             <h2 class="card-heading">{item.title}</h2>
             <Typography sx={{

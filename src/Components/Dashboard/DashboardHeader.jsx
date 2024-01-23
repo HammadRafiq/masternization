@@ -61,12 +61,15 @@ const DashboardHeader = () => {
           }}
         >
           <img src={LogOut} alt="Logout Icon" />
-          <Typography sx={{
-            marginLeft: '8px',
-            color: 'var(--purple)',
-            fontSize: '16px',
-            lineHeight: '28px'
-          }} variant="h5">
+          <Typography
+            sx={{
+              marginLeft: '8px',
+              color: 'var(--purple)',
+              fontSize: '16px',
+              lineHeight: '28px'
+            }}
+            variant="h5"
+          >
             Logout
           </Typography>
         </Box>
