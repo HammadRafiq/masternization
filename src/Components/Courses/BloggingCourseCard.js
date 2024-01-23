@@ -11,6 +11,7 @@ import LoginPrompt from '../Common/LoginPrompt';
 import { Link } from 'react-router-dom';
 import { Dialog, Button } from '@mui/material';
 import { isAuthenticated, setAdmin, setSession } from '../../Helpers/Utils'
+import DefaultImg from "../../Assets/default/courses.svg"
 
 
 let availabilityImage;
@@ -65,7 +66,8 @@ const BloggingCourseCard = ({ key, item }) => {
                     border: '1px solid var(--purple)',
                     padding: '24px',
                     background: 'rgba(107, 99, 251, 0.10);',
-                    position: 'relative'
+                    position: 'relative',
+                    height: "calc(100% - 50px)"
                 }}>
                     <Box sx={{
                         display: 'flex',
@@ -73,7 +75,7 @@ const BloggingCourseCard = ({ key, item }) => {
                         justifyContent: 'space-between',
                     }}
                     >
-                        <img src={item.icon.src} alt="Blogging Icon" style={{ maxWidth: "50px", maxHeight: "50px" }} />
+                        <img src={item?.icon?.src ?? DefaultImg} alt="Blogging Icon" className='card-icon-primary' />
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '56px', minWidth: '40px', padding: '8px 15px' }}>
                             <img src={availabilityImage} alt={item.icon.alt} />
                             <Typography

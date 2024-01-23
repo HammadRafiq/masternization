@@ -8,11 +8,10 @@ import { isAuthenticated, setAdmin, setSession } from '../../Helpers/Utils'
 import LoginPrompt from '../../Components/Common/LoginPrompt'
 import { Link } from 'react-router-dom';
 import { Dialog, Button } from '@mui/material';
+import DefaultImg from "../../Assets/default/youtube.jpg"
+
 
 const YoutubeChannelCard = ({ item }) => {
-
-
-
   const isLoggedIn = isAuthenticated()
 
   const [isPopupOpen, setPopupOpen] = useState(false);
@@ -38,9 +37,10 @@ const YoutubeChannelCard = ({ item }) => {
           border: '1px solid var(--stroke-card)',
           background: '#fff',
           position: 'relative',
-          padding: '12px 12px 24px'
+          padding: '12px 12px 24px',
+          height: "calc(100% - 30px)"
         }}>
-          <img className="max-width-100" src={item.icon?.src} alt={item.icon?.alt} />
+          <img className="card-img-primary" src={item.icon?.src ?? DefaultImg} alt={item.icon?.alt} />
           <Box sx={{ padding: '7px 20px 0' }}>
             <h2 class="card-heading card-heading-inner">{item.title}</h2>
             <p class="card-description youtube-course-descripton">

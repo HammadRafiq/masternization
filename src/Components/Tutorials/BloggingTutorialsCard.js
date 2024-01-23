@@ -11,6 +11,7 @@ import { Link } from 'react-router-dom';
 import { Dialog, Button } from '@mui/material';
 import { isAuthenticated, setAdmin, setSession } from '../../Helpers/Utils'
 import PercentageCircle from '../../Assets/percentage-circle.svg'
+import DefaultImg from "../../Assets/default/courses.svg"
 
 
 const BloggingTutorialsCard = ({ item }) => {
@@ -54,7 +55,9 @@ const BloggingTutorialsCard = ({ item }) => {
                     borderRadius: '16px',
                     border: '1px solid var(--stroke-card)',
                     background: '#fff',
-                    position: 'relative'
+                    position: 'relative',
+                    height: "calc(100% - 30px)",
+                    paddingBottom: "10px"
                 }}>
                     <Box sx={{
                         display: 'flex',
@@ -62,9 +65,9 @@ const BloggingTutorialsCard = ({ item }) => {
                         justifyContent: 'space-between',
                         background: 'var(--purple)',
                         padding: '24px',
-                        borderRadius: '16px 16px 0 0'
+                        borderRadius: '16px 16px 0 0',
                     }}>
-                        <img src={item.icon.src} alt="Blogging Icon" style={{ maxWidth: "50px", maxHeight: "50px" }} />
+                        <img src={item?.icon?.src ?? DefaultImg} alt="Blogging Icon" className='card-icon-primary' />
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '56px', minWidth: '50px', padding: '8px 16px' }}>
                             <img src={availabilityImage} alt="Dollar Circle" />
                             <Typography variant="body2" sx={{

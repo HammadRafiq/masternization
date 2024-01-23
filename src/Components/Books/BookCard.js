@@ -6,6 +6,7 @@ import InfoCircle from '../../Assets/info-circle.svg'
 import BookImg from '../../Assets/book_icon.svg'
 import Typography from '@mui/material/Typography';
 import BookLinkIcon from '../../Assets/book_link_icon.svg'
+import DefaultImg from "../../Assets/default/books.jpg"
 
 
 const BookCard = ({ book }) => {
@@ -17,9 +18,10 @@ const BookCard = ({ book }) => {
                     border: '1px solid var(--stroke-card)',
                     background: '#fff',
                     position: 'relative',
-                    padding: '24px'
+                    padding: '24px',
+                    height: "calc(100% - 50px)"
                 }}>
-                    <img className="max-width-100" src={book.icon?.src} alt="Book Img" />
+                    <img className="max-width-100" style={{ maxHeight: "320px" }} src={book?.icon?.src ?? DefaultImg} alt="Book Img" />
                     <h2 class="card-heading card-heading-inner">{book.title}</h2>
                     <Box sx={{
                         margin: '8px 0 24px',

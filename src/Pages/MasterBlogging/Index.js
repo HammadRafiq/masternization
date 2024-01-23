@@ -52,22 +52,19 @@ const MasterBlogging = () => {
     const selectedMastercourseId = localStorage.getItem('selectedMasterCourseId');
     console.log("Fetched ID", selectedMastercourseId);
 
-    // useEffect(() => {
+    useEffect(() => {
+        const currentPath = window.location.pathname;
+        const sectionElement = document.getElementById('master-dashboard');
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+        if (currentPath.endsWith('/undefined')) {
 
-    //     const currentPath = window.location.pathname;
-    //     const sectionElement = document.getElementById('master-dashboard');
-
-    //     window.scrollTo({
-    //         top: 0,
-    //         behavior: 'smooth',
-    //     });
-
-    //     if (currentPath.endsWith('/undefined')) {
-
-    //         const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
-    //         navigate(updatedPath, { replace: true });
-    //     }
-    // }, [navigate]);
+            const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
+            navigate(updatedPath, { replace: true });
+        }
+    }, [navigate]);
 
 
 

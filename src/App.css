@@ -502,3 +502,13 @@ input {
 .custom-rc-pagination .rc-pagination-item a:hover {
   /* color: var(--dark-purple); */
 }
+
+.card-img-primary{
+  max-width: 100%;
+  max-height: 250px;
+}
+
+.card-icon-primary{
+  max-width: 60px;
+  max-height: 60px;
+}
