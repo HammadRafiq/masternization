@@ -1,5 +1,7 @@
 import { jwtDecode } from "jwt-decode"
 
+export const limit = 3;
+
 export const logoutHandler = () => {
     setSession(null)
     setAdmin(null)

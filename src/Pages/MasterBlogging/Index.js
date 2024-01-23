@@ -15,10 +15,12 @@ import { GlobalInfo } from '../../App';
 import { useNavigate } from 'react-router-dom';
 import Pagination from 'rc-pagination';
 import CustomPagination from '../../Components/Common/CustomPagination';
+import Typography from '@mui/material/Typography';
+import { limit } from '../../Helpers/Utils';
 
 const GET_SUCCESS_STORIES = gql`
-query($masterCourseId: ID, $screen: String, $section: String, $page: Int, $limit: Int){
-    contents(masterCourseId: $masterCourseId, screen: $screen, section: $section, page: $page, limit: $limit) {
+query($masterCourseId: ID, $screen: String, $section: String, $page: Int, $limit: Int, $status: Boolean){
+    contents(masterCourseId: $masterCourseId, screen: $screen, section: $section, page: $page, limit: $limit, status: $status) {
       items {
         _id
         owner
@@ -39,7 +41,7 @@ query($masterCourseId: ID, $screen: String, $section: String, $page: Int, $limit
 
 const MasterBlogging = () => {
 
-    const [limit, setLimit] = useState(1);
+    //const [limit, setLimit] = useState(1);
     const [currentPage, setCurrentPage] = useState(1);
     const [currentPage2, setCurrentPage2] = useState(1);
     const [currentPage3, setCurrentPage3] = useState(1);
@@ -79,14 +81,14 @@ const MasterBlogging = () => {
             screen: "DASHBOARD",
             section: "SUCCESS_STORIES",
             page: currentPage,
-            limit: 3
+            limit: limit
         }
     })
 
     const handlePageChange1 = (page) => {
         setCurrentPage(page);
         fetchMore({
-            variables: { page: currentPage, limit: 3 },
+            variables: { page: currentPage, limit: limit },
         });
     };
 
@@ -100,7 +102,7 @@ const MasterBlogging = () => {
             screen: "DASHBOARD",
             section: "HOW_TO_START",
             page: currentPage2,
-            limit: 3
+            limit: limit
 
         }
     })
@@ -108,7 +110,7 @@ const MasterBlogging = () => {
     const handlePageChange2 = (page) => {
         setCurrentPage2(page);
         fetchMore2({
-            variables: { page: currentPage2, limit: 3 },
+            variables: { page: currentPage2, limit: limit },
         });
     };
 
@@ -123,14 +125,14 @@ const MasterBlogging = () => {
             screen: "DASHBOARD",
             section: "HOW_TO_GET_JOB",
             page: currentPage3,
-            limit: 3
+            limit: limit
         }
     });
 
     const handlePageChange3 = (page) => {
         setCurrentPage3(page);
         fetchMore3({
-            variables: { page: currentPage3, limit: 3 },
+            variables: { page: currentPage3, limit: limit },
         });
     };
 
@@ -142,16 +144,21 @@ const MasterBlogging = () => {
             screen: "DASHBOARD",
             section: "HOW_TO_START_BUSINESS",
             page: currentPage4,
-            limit: 3
+            limit: limit
         }
     });
 
     const handlePageChange4 = (page) => {
         setCurrentPage4(page);
         fetchMore4({
-            variables: { page: currentPage4, limit: 3 },
+            variables: { page: currentPage4, limit: limit },
         });
     };
+
+    const allCoursesDisplayed1 = data1?.contents.items.length >= data1?.contents.total && data1?.contents.items.length !== 0;
+    const allCoursesDisplayed2 = data2?.contents.items.length >= data2?.contents.total && data2?.contents.items.length !== 0;
+    const allCoursesDisplayed3 = data3?.contents.items.length >= data3?.contents.total && data3?.contents.items.length !== 0;
+    const allCoursesDisplayed4 = data4?.contents.items.length >= data4?.contents.total && data4?.contents.items.length !== 0;
 
 
     return (
@@ -184,13 +191,17 @@ const MasterBlogging = () => {
                 <Grid container spacing={2.5}>
 
                     {
-                        data1?.contents.items.map((item) => {
-                            return (
-                                <>
+                        data1?.contents.items.length === 0 ? (
+                            <Typography variant="body2" sx={{
+                                width: '100%', textAlign: 'center', fontSize: '16px', fontWeight: 500, marginTop: '12px'
+                            }}>No data found.</Typography>
+                        )
+                            :
+                            (data1?.contents.items.map((item) => {
+                                return (
                                     <JobCard item={item} />
-                                </>
-                            )
-                        })
+                                )
+                            }))
                     }
 
                 </Grid>
@@ -212,11 +223,17 @@ const MasterBlogging = () => {
                     }
                     <Grid container spacing={2.5}>
                         {
-                            data2?.contents.items.map((item) => {
-                                return (
-                                    <StartBloggingCard item={item} />
-                                )
-                            })
+                            data2?.contents.items.length === 0 ? (
+                                <Typography variant="body2" sx={{
+                                    width: '100%', textAlign: 'center', fontSize: '16px', fontWeight: 500, marginTop: '12px'
+                                }}>No data found.</Typography>
+                            )
+                                :
+                                (data2?.contents.items.map((item) => {
+                                    return (
+                                        <StartBloggingCard item={item} />
+                                    )
+                                }))
                         }
                     </Grid>
 
@@ -237,16 +254,22 @@ const MasterBlogging = () => {
                 }
                 <Grid container spacing={2.5}>
                     {
-                        data3?.contents.items.map((item) => {
-                            return (
-                                <BloggingJobCard item={item} />
-                            )
-                        })
+                        data3?.contents.items.length === 0 ? (
+                            <Typography variant="body2" sx={{
+                                width: '100%', textAlign: 'center', fontSize: '16px', fontWeight: 500, marginTop: '12px'
+                            }}>No data found.</Typography>
+                        )
+                            :
+                            (data3?.contents.items.map((item) => {
+                                return (
+                                    <BloggingJobCard item={item} />
+                                )
+                            }))
                     }
                 </Grid>
                 <Box sx={{ marginTop: '50px' }}>
-                        <CustomPagination total={data3?.contents.total} onChange={handlePageChange3} />
-                    </Box>
+                    <CustomPagination total={data3?.contents.total} onChange={handlePageChange3} />
+                </Box>
                 <Box>
                     <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                         <h5 className="small-tagline letting-spacing-6 mb-12">Be independent</h5>
@@ -260,11 +283,17 @@ const MasterBlogging = () => {
                     }
                     <Grid container spacing={2.5}>
                         {
-                            data4?.contents.items.map((item) => {
-                                return (
-                                    <BloggingBusinessCard item={item} />
-                                )
-                            })
+                            data4?.contents.items.length === 0 ? (
+                                <Typography variant="body2" sx={{
+                                    width: '100%', textAlign: 'center', fontSize: '16px', fontWeight: 500, marginTop: '12px'
+                                }}>No data found.</Typography>
+                            )
+                                :
+                                (data4?.contents.items.map((item) => {
+                                    return (
+                                        <BloggingBusinessCard item={item} />
+                                    )
+                                }))
                         }
                     </Grid>
                     <Box sx={{ marginTop: '50px' }}>

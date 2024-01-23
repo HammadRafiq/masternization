@@ -59,13 +59,14 @@ const BloggingCourseCard = ({ key, item }) => {
 
     return (
         <>
-            <Grid item xs={12} md={6} lg={4}>
+            <Grid  item xs={12} md={6} lg={4}>
                 <Box sx={{
                     borderRadius: '16px',
                     border: '1px solid var(--purple)',
                     padding: '24px',
                     background: 'rgba(107, 99, 251, 0.10);',
-                    position: 'relative'
+                    position: 'relative',
+                    
                 }}>
                     <Box sx={{
                         display: 'flex',
