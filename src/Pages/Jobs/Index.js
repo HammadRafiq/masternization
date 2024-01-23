@@ -10,10 +10,12 @@ import { useQuery } from '@apollo/client';
 import { useMutation, gql } from '@apollo/client';
 import SkeltonLoader from '../../Components/Common/SkeltonLoader';
 import { useNavigate } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
+import { limit } from '../../Helpers/Utils';
 
 const GET_JOBS = gql`
-query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int){
-    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page) {
+query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int, $status: Boolean){
+    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page, status: $status) {
       items {
         _id
         icon {
@@ -37,7 +39,7 @@ query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int){
 const BloggingJobs = () => {
 
     const [loading1, setLoading1] = useState(false);
-    const [limit, setLimit] = useState(1);
+    //const [limit, setLimit] = useState(1);
     const [page, setPage] = useState(2)
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -49,12 +51,12 @@ const BloggingJobs = () => {
     console.log("Fetched ID", selectedMastercourseId);
 
     useEffect(() => {
-        
+
         const currentPath = window.location.pathname;
 
-      
+
         if (currentPath.endsWith('/undefined')) {
-           
+
             const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
             navigate(updatedPath, { replace: true });
         }
@@ -64,8 +66,9 @@ const BloggingJobs = () => {
         variables: {
             masterCourseId: masterCourseId,
             screen: "JOBS",
-            page:1,
-            limit:1
+            page: 1,
+            limit: limit,
+            status:true
         }
     });
 
@@ -76,7 +79,7 @@ const BloggingJobs = () => {
         fetchMore({
             variables: {
                 page: page,
-                limit: 1
+                limit: limit
             },
             updateQuery: (prevResult, { fetchMoreResult }) => {
                 if (!fetchMoreResult) return prevResult;
@@ -100,7 +103,7 @@ const BloggingJobs = () => {
     if (error) return <p>Error: {error.message}</p>;
     console.log("Fetched Data", data);
 
-    const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total;
+    const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total && data?.contents.items.length !== 0;
 
     return (
         <>
@@ -112,17 +115,35 @@ const BloggingJobs = () => {
                 <Grid container spacing={2.5}>
 
                     {
-                        data?.contents.items.map((item) => {
-                            return (
-                                <JobCard key={item._id} item={item} />
-                            )
-                        })
+                        data?.contents.items.length === 0 ? (
+                            <Typography variant="body2" sx={{
+                                width: '100%', textAlign: 'center', fontSize: '16px', fontWeight: 500, marginTop: '12px'
+                            }}>No data found.</Typography>
+                        )
+                            :
+                            (data?.contents.items.map((item) => {
+                                return (
+                                    <JobCard key={item._id} item={item} />
+                                )
+                            }))
                     }
 
                 </Grid>
-                <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
-                    <LoadButton onClick={handleLoadMore} text={'More Jobs'} disabled={allCoursesDisplayed || loading || loading1} loading={loading1} />
-                </Box>
+
+                {
+                    data?.contents.items.length !== 0 && !allCoursesDisplayed && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
+                            <LoadButton onClick={handleLoadMore} text={'More Jobs'} disabled={allCoursesDisplayed || loading || loading1} loading={loading1} />
+                        </Box>
+                    )
+                }
+                {/* Message when all courses are displayed */}
+                {allCoursesDisplayed && <Typography variant="body2" sx={{
+                    textAlign: 'center',
+                    fontSize: '16px',
+                    fontWeight: 500,
+                    marginTop: '30px'
+                }}>All jobs have been displayed.</Typography>}
             </Box>
 
             <FormFooter

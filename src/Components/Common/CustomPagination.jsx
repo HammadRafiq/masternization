@@ -8,7 +8,7 @@ import { ReactComponent as IconNext } from "../../Assets/pagination-next.svg"
 const CustomPagination = ({
     align = "center",
     total = 0,
-    limit = 10,
+    limit = 3,
     onChange = () => null
 }) => {
     return (

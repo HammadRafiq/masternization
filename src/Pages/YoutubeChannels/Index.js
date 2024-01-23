@@ -19,10 +19,13 @@ import { useQuery } from '@apollo/client';
 import { useMutation, gql } from '@apollo/client';
 import SkeltonLoader from '../../Components/Common/SkeltonLoader';
 import { useNavigate } from 'react-router-dom';
+import Typography from '@mui/material/Typography';
+import { limit } from '../../Helpers/Utils';
+
 
 const GET_YOUTUBE_CHANNELS = gql`
-query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int){
-    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page) {
+query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int, $status: Boolean){
+    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page, status: $status) {
       items {
         _id
         icon {
@@ -47,7 +50,7 @@ query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int){
 const YoutubeChannels = () => {
 
   const [loading1, setLoading1] = useState(false);
-  const [limit, setLimit] = useState(1);
+  //const [limit, setLimit] = useState(1);
   const [page, setPage] = useState(2)
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -75,7 +78,8 @@ const YoutubeChannels = () => {
       masterCourseId: masterCourseId,
       screen: "YOUTUBE_CHANNELS",
       page: 1,
-      limit: 1
+      limit: limit,
+      status:true
     }
   });
 
@@ -86,7 +90,7 @@ const YoutubeChannels = () => {
     fetchMore({
       variables: {
         page: page,
-        limit: 1
+        limit: limit
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prevResult;
@@ -109,7 +113,7 @@ const YoutubeChannels = () => {
   //if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
   console.log("Fetched Data", data);
-  const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total;
+  const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total && data?.contents.items.length !== 0;
 
   return (
     <>
@@ -119,17 +123,35 @@ const YoutubeChannels = () => {
           loading && <SkeltonLoader />
         }
         <Grid container spacing={2.5}>
-          {
-            data?.contents.items.map((item) => {
-              return (
-                <YoutubeChannelCard key={item._key} item={item} />
-              )
-            })
+        {
+            data?.contents.items.length === 0 ? (
+              <Typography variant="body2" sx={{
+                width: '100%', textAlign: 'center', fontSize: '16px', fontWeight: 500, marginTop: '12px'
+              }}>No data found.</Typography>
+            )
+              :
+              (data?.contents.items.map((item) => {
+                return (
+                  <YoutubeChannelCard key={item._key} item={item} />
+                )
+              }))
           }
         </Grid>
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
-        <LoadButton onClick={handleLoadMore} text={'More Youtube Channels'} disabled={allCoursesDisplayed || loading || loading1} loading={loading1} />
-        </Box>
+        {
+          data?.contents.items.length !== 0 && !allCoursesDisplayed && (
+            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '49px' }}>
+              <LoadButton onClick={handleLoadMore} text={'More Youtube Channels'} disabled={allCoursesDisplayed || loading || loading1} loading={loading1} />
+            </Box>
+          )
+        }
+
+        {/* Message when all courses are displayed */}
+        {allCoursesDisplayed && <Typography variant="body2" sx={{
+          textAlign: 'center',
+          fontSize: '16px',
+          fontWeight: 500,
+          marginTop: '30px'
+        }}>All youtube channels have been displayed.</Typography>}
       </Box>
 
       <FormFooter
