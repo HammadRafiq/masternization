@@ -79,14 +79,14 @@ const MasterBlogging = () => {
             screen: "DASHBOARD",
             section: "SUCCESS_STORIES",
             page: currentPage,
-            limit: 2
+            limit: 3
         }
     })
 
     const handlePageChange1 = (page) => {
         setCurrentPage(page);
         fetchMore({
-            variables: { page: currentPage, limit: 2 },
+            variables: { page: currentPage, limit: 3 },
         });
     };
 
@@ -100,7 +100,7 @@ const MasterBlogging = () => {
             screen: "DASHBOARD",
             section: "HOW_TO_START",
             page: currentPage2,
-            limit: 2
+            limit: 3
 
         }
     })
@@ -108,7 +108,7 @@ const MasterBlogging = () => {
     const handlePageChange2 = (page) => {
         setCurrentPage2(page);
         fetchMore2({
-            variables: { page: currentPage2, limit: 2 },
+            variables: { page: currentPage2, limit: 3 },
         });
     };
 
@@ -123,14 +123,14 @@ const MasterBlogging = () => {
             screen: "DASHBOARD",
             section: "HOW_TO_GET_JOB",
             page: currentPage3,
-            limit: 2
+            limit: 3
         }
     });
 
     const handlePageChange3 = (page) => {
         setCurrentPage3(page);
         fetchMore3({
-            variables: { page: currentPage3, limit: 2 },
+            variables: { page: currentPage3, limit: 3 },
         });
     };
 
@@ -142,14 +142,14 @@ const MasterBlogging = () => {
             screen: "DASHBOARD",
             section: "HOW_TO_START_BUSINESS",
             page: currentPage4,
-            limit: 2
+            limit: 3
         }
     });
 
     const handlePageChange4 = (page) => {
         setCurrentPage4(page);
         fetchMore4({
-            variables: { page: currentPage4, limit: 2 },
+            variables: { page: currentPage4, limit: 3 },
         });
     };
 
