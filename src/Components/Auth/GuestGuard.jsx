@@ -1,20 +1,27 @@
-import { handleAuthentication, isAuthenticated } from "../../Helpers/Utils";
+import { handleAuthentication, isAdmin, isAuthenticated, isUser } from "../../Helpers/Utils";
 // import { Spin } from "antd";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 // import { DefaultLogo } from 'Config'
 
 function GuestGuard({ children }) {
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate();
     const loggedIn = isAuthenticated()
+    const user = isUser()
+    const admin = isAdmin()
+    const location = useLocation()
 
     useEffect(() => {
-        if (loggedIn) {
+        debugger
+        if (user && location.pathname.includes("login" || "registration" || "admin")) {
             return navigate("/home");
         }
+        else if (admin) {
+            return navigate("/dashboard/overview")
+        }
         setLoading(false)
-    }, [loggedIn]);
+    }, [user, admin]);
 
     if (loading) {
         return (

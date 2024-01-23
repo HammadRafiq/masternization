@@ -2,7 +2,7 @@ import React from 'react'
 import { Link, useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 
-const MenuItem = ({ icon, title, link, linkRef, styles={} }) => {
+const MenuItem = ({ icon, title, link, linkRef, styles = {} }) => {
     const location = useLocation()
     const isActiveMenu = location.pathname.includes(linkRef)
 
@@ -20,8 +20,12 @@ const MenuItem = ({ icon, title, link, linkRef, styles={} }) => {
                     ...styles
                 }}
             >
-                <img className="mr-8" src={icon} alt="menu icon" />
-                <li><Link to={link}>{title}</Link></li>
+                <Link to={link}>
+                    <Box display={"flex"} alignItems={"center"}>
+                        <img className="mr-8" src={icon} alt="menu icon" />
+                        <li>{title}</li>
+                    </Box>
+                </Link>
             </Box>
         </>
     )

@@ -1,5 +1,12 @@
 import { jwtDecode } from "jwt-decode"
 
+export const logoutHandler = () => {
+    setSession(null)
+    setAdmin(null)
+    setUser(null)
+    localStorage.removeItem('selectedMasterCourseId')
+}
+
 ///////////////////////////////////////
 ////////// AUTH FUNCTIONS /////////////
 ///////////////////////////////////////
@@ -43,6 +50,16 @@ export const handleAuthentication = () => {
 
 //////////// ADMIN AUTH FUNCTIONS ///////////////
 
+export const setUser = (value) => {
+    if (value) {
+        localStorage.setItem("isUser", value)
+    } else {
+        localStorage.removeItem("isUser")
+    }
+};
+export const isUser = () => !!localStorage.getItem("isUser")
+
+
 export const setAdmin = (value) => {
     if (value) {
         localStorage.setItem("isAdmin", value)
@@ -50,5 +67,4 @@ export const setAdmin = (value) => {
         localStorage.removeItem("isAdmin")
     }
 };
-
 export const isAdmin = () => !!localStorage.getItem("isAdmin")

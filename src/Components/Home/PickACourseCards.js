@@ -4,6 +4,7 @@ import Box from '@mui/system/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import IconImg from '../../Assets/icon_skill.png'
 import { ReactComponent as HeartIcon } from '../../Assets/courses/heart.svg'
+import CourseIcon from "../../Assets/courses/blogging.svg"
 import Arrow from '../../Assets/Arrow.svg'
 import { Link } from 'react-router-dom';
 
@@ -15,7 +16,7 @@ const PickACourseCards = ({ key, item }) => {
   const handleOnClick = () => {
     localStorage.setItem('selectedMasterCourseId', item._id);
   }
-  
+
   const linkStyles = {
     textDecoration: 'none',
     color: 'inherit',
@@ -33,8 +34,8 @@ const PickACourseCards = ({ key, item }) => {
           alignItems: 'start',
           justifyContent: 'space-between',
         }}>
-        
-          <img class="box-img" src={item.icon?.src} />
+
+          <img class="box-img" src={item.icon?.src ?? CourseIcon} />
 
           <HeartIcon
             style={{ cursor: "pointer" }}

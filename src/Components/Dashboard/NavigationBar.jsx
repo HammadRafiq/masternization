@@ -67,13 +67,11 @@ const NavigationBar = () => {
                 <img style={{ maxWidth: '100%' }} src={DashboardLogo} alt="Dashboard Logo" />
             </Box>
             <ul className="list-style-none">
-
                 <MenuItem icon={DashboardIcon} title={'Dashboard'} link={'/dashboard/overview'} linkRef="overview" />
                 <MenuItem icon={AccountIcon} title={'Account Settings'} link={'/dashboard/account-settings'} linkRef="account-settings" />
                 <MenuItem icon={SavedIcon} title={'Users'} link={'/dashboard/users'} linkRef="users" />
                 <MenuItem icon={SavedIcon} title={'Creators'} link={'/dashboard/creators'} linkRef="creators" />
                 <MenuItem icon={SavedIcon} title={'Saved Works'} link={'/dashboard/saved-works'} linkRef="saved-works" />
-
             </ul>
 
             <List

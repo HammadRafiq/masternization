@@ -15,6 +15,7 @@ query($page: Int, $limit: Int, $screen: String, $section: String, $masterCourseI
     total
     items {
       _id
+      serialNum
       availability
       desc
       location
@@ -52,7 +53,7 @@ const DELETE_CONTENT = gql`
   }
 `
 
-const limit = 7
+const limit = 10
 
 const ListedContent = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -86,25 +87,6 @@ const ListedContent = () => {
     })
   }
 
-  const updateLiveStatus = (id, status) => {
-    setStatusLoading(id)
-    updateStatusContent({
-      variables: {
-        id,
-        status
-      },
-      onCompleted: () => {
-        enqueueSnackbar("Content status updated successfully", {
-          variant: "success"
-        })
-        setStatusLoading("")
-      },
-      onError: () => {
-        setStatusLoading("")
-      },
-    })
-  }
-
   const {
     watch,
     handleSubmit,
@@ -118,16 +100,25 @@ const ListedContent = () => {
     shouldUnregister: true
   })
 
-  // useEffect(() => {
-  //   const subscription = watch((values, { name, type }) => {
-  //     if (name) {
-  //       const value = Object.entries(values ?? []).filter(entry => entry[0] === name)[0]
-  //       updateLiveStatus(value[0], value[1])
-  //       setStatusLoading(value[0])
-  //     }
-  //   })
-  //   return () => subscription.unsubscribe()
-  // }, [watch])
+  const updateLiveStatus = (id, status) => {
+    setStatusLoading(id)
+    updateStatusContent({
+      variables: {
+        id,
+        status
+      },
+      onCompleted: (data) => {
+        enqueueSnackbar("Content status updated successfully", {
+          variant: "success"
+        })
+        setValue(id, data?.updateStatusContent?.status)
+        setStatusLoading("")
+      },
+      onError: () => {
+        setStatusLoading("")
+      },
+    })
+  }
 
   // On every data change, update the live status checkbox values
   useEffect(() => {
@@ -140,9 +131,14 @@ const ListedContent = () => {
 
   const columns = [
     {
+      title: 'Serial #',
+      dataIndex: 'serialNum',
+      width: "10%"
+    },
+    {
       title: 'Work Name',
       dataIndex: 'title',
-      width: "35%"
+      width: "30%"
     },
     {
       title: 'Type',
@@ -152,14 +148,18 @@ const ListedContent = () => {
     {
       title: 'Listing Date',
       dataIndex: 'date',
-      width: "20%",
+      width: "15%",
       render: (text) => <div>{text ? moment(text).format("LL") : ""}</div>
     },
     {
       title: 'Live Status',
       dataIndex: 'status',
       width: "10%",
-      render: (text, record) => (
+      render: (text, record) => statusLoading === record._id ? (
+        <Box py={"8px"}>
+          <CircularProgress size={20} />
+        </Box>
+      ) : (
         <FormControlLabel
           control={
             <Controller

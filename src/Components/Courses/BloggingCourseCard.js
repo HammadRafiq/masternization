@@ -28,7 +28,7 @@ const BloggingCourseCard = ({ key, item }) => {
     }, [])
 
     const handleHeartClick = () => {
-        
+
     }
 
     const handleLinkClick = (e) => {
@@ -71,27 +71,33 @@ const BloggingCourseCard = ({ key, item }) => {
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'space-between',
-                    }}>
-                        <img src={item.icon.src} alt="Blogging Icon" />
+                    }}
+                    >
+                        <img src={item.icon.src} alt="Blogging Icon" style={{ maxWidth: "50px", maxHeight: "50px" }} />
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '56px', minWidth: '40px', padding: '8px 15px' }}>
                             <img src={availabilityImage} alt={item.icon.alt} />
-                            <Typography variant="body2" sx={{
-                                color: availabilityColor,
-                                fontSize: '16px',
-                                fontWeight: 500,
-                                lineHeight: '16px',
-                                marginLeft: '4px'
-                            }}>{item.availability}</Typography>
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: availabilityColor,
+                                    fontSize: '16px',
+                                    fontWeight: 500,
+                                    lineHeight: '16px',
+                                    marginLeft: '4px'
+                                }}
+                            >
+                                {item.availability}
+                            </Typography>
                         </Box>
                     </Box>
-                    
+
                     <Box>
                         <Link
                             to={isLoggedIn ? item.url : '/your-actual-link'}
                             onClick={handleLinkClick}
                             href={isLoggedIn ? item.url : undefined}
                             target="_blank"
-                            style={{textDecoration:'none'}}
+                            style={{ textDecoration: 'none' }}
                         >
                             <h2 class="card-heading card-heading-inner">{item.title}</h2>
                         </Link>

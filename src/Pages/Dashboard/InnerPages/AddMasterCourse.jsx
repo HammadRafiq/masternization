@@ -11,6 +11,7 @@ import { useDropzone } from 'react-dropzone';
 import AddCircle from '../../../Assets/dashboard/add-circle.svg'
 import { gql, useMutation } from '@apollo/client';
 import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 
 
 const availabilityOptions = [
@@ -46,9 +47,9 @@ const ADD_MASTERCOURSE = gql`
 
 
 const AddMasterCourse = () => {
-
     const [addMasterCourse, { loading, data }] = useMutation(ADD_MASTERCOURSE)
     const { enqueueSnackbar } = useSnackbar()
+    const navigate = useNavigate()
 
     const {
         register,
@@ -67,6 +68,7 @@ const AddMasterCourse = () => {
                 enqueueSnackbar("Master course added successfully", {
                     variant: "success"
                 })
+                navigate("/dashboard/listed-master-courses")
             },
             onError: () => { }
         })

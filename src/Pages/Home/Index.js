@@ -172,11 +172,11 @@ const Home = () => {
               '&:hover': {
                 backgroundColor: 'var(--purple)',
               },
-              
+
             }} onClick={handleButtonClick}>
               Start Your Journey
             </Button>
-            
+
           </Grid>
           <Grid item xs={12} md={4.5}>
             <Box height="100%" position="relative">

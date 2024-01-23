@@ -6,7 +6,7 @@ import SearchFieldIcon from '../../Assets/dashboard/search-normal.svg'
 import UserIcon from '../../Assets/dashboard/user-icon.svg'
 import LogOut from '../../Assets/dashboard/logout.svg'
 import Typography from '@mui/material/Typography';
-import { setAdmin, setSession } from '../../Helpers/Utils';
+import { setAdmin, setSession, setUser } from '../../Helpers/Utils';
 import { useNavigate } from "react-router";
 
 
@@ -56,16 +56,20 @@ const DashboardHeader = () => {
           onClick={() => {
             setSession(null)
             setAdmin(null)
+            setUser(null)
             navigate("/admin")
           }}
         >
           <img src={LogOut} alt="Logout Icon" />
-          <Typography sx={{
-            marginLeft: '8px',
-            color: 'var(--purple)',
-            fontSize: '16px',
-            lineHeight: '28px'
-          }} variant="h5">
+          <Typography
+            sx={{
+              marginLeft: '8px',
+              color: 'var(--purple)',
+              fontSize: '16px',
+              lineHeight: '28px'
+            }}
+            variant="h5"
+          >
             Logout
           </Typography>
         </Box>

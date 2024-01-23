@@ -63,91 +63,98 @@ function App() {
     {
       path: "/dashboard/users",
       element: Users,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/account-settings",
       element: AccountSettings,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/creators",
       element: Creators,
-      layout: DashboardLayout
-
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/saved-works",
       element: SavedWorks,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/content",
       element: Content,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/listed-works",
       element: ListedContent,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/add-master-course",
       element: AddMasterCourse,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/dashboard/listed-master-courses",
       element: ListedMasterCourses,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
     {
       path: "/courses/:masterCourseId",
       element: Courses,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/tutorials/:masterCourseId",
       element: Tutorials,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/books/:masterCourseId",
       element: Books,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/tools/:masterCourseId",
       element: Tools,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/youtube-channels/:masterCourseId",
       element: YoutubeChannels,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/groups-forums/:masterCourseId",
       element: BloggingGroups,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/jobs/:masterCourseId",
       element: BloggingJobs,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/master-blogging/:masterCourseId",
       element: MasterBlogging,
       layout: Layout,
-      guard: AuthGuard
+      guard: GuestGuard
     },
     {
       path: "/my-account",
@@ -180,36 +187,37 @@ function App() {
     {
       path: "/dashboard/edit-content/:contentId",
       element: Content,
-      layout: DashboardLayout
+      layout: DashboardLayout,
+      guard: AdminGuard
     },
   ]
 
   return (
     <>
       <GlobalInfo.Provider value={{ globalMasterCourseId, setGlobalMasterCourseId }}>
-      <Routes>
-        {routes?.map((route, index) => {
-          const Layout = route?.layout || Fragment
-          const Guard = route?.guard || Fragment
-          return (
-            <Route
-              key={index}
-              path={route.path}
-              element={
-                <Guard>
-                  <Layout>
-                    <Auth>
-                      <route.element />
-                    </Auth>
-                  </Layout>
-                </Guard>
-              }
-            />
-          )
-        }
-        )}
-      </Routes>
-    </GlobalInfo.Provider >
+        <Routes>
+          {routes?.map((route, index) => {
+            const Layout = route?.layout || Fragment
+            const Guard = route?.guard || Fragment
+            return (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <Guard>
+                    <Layout>
+                      <Auth>
+                        <route.element />
+                      </Auth>
+                    </Layout>
+                  </Guard>
+                }
+              />
+            )
+          }
+          )}
+        </Routes>
+      </GlobalInfo.Provider >
     </>
   );
 }

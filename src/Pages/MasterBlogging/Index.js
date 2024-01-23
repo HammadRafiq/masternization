@@ -52,22 +52,22 @@ const MasterBlogging = () => {
     const selectedMastercourseId = localStorage.getItem('selectedMasterCourseId');
     console.log("Fetched ID", selectedMastercourseId);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        const currentPath = window.location.pathname;
-        const sectionElement = document.getElementById('master-dashboard');
+    //     const currentPath = window.location.pathname;
+    //     const sectionElement = document.getElementById('master-dashboard');
 
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth',
-        });
+    //     window.scrollTo({
+    //         top: 0,
+    //         behavior: 'smooth',
+    //     });
 
-        if (currentPath.endsWith('/undefined')) {
+    //     if (currentPath.endsWith('/undefined')) {
 
-            const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
-            navigate(updatedPath, { replace: true });
-        }
-    }, [navigate]);
+    //         const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
+    //         navigate(updatedPath, { replace: true });
+    //     }
+    // }, [navigate]);
 
 
 
@@ -153,8 +153,6 @@ const MasterBlogging = () => {
         });
     };
 
-    if (error4) return <p>Error: {error4.message}</p>;
-    console.log("Fetched Data", data4);
 
     return (
         <>

@@ -1,4 +1,4 @@
-import { getToken, handleAuthentication, isAuthenticated } from "../../Helpers/Utils";
+import { getToken, handleAuthentication, isAuthenticated, isUser } from "../../Helpers/Utils";
 // import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 function AuthGuard({ children }) {
     const [isLoading, setLoading] = useState(true);
     const loggedIn = isAuthenticated()
+    const user = isUser()
     const navigate = useNavigate();
     /**
         useEffect(() => {
@@ -22,20 +23,11 @@ function AuthGuard({ children }) {
     */
 
     useEffect(() => {
-        if (!loggedIn) {
-            // If user is not logged in and tries to access /home, redirect to /home-guest
-            if (window.location.pathname === '/home') {
-                navigate('/home-guest');
-            }
-        } else {
-            // If user is logged in and tries to access /home-guest, redirect to /home
-            if (window.location.pathname === '/home-guest') {
-                navigate('/home');
-            }
+        if (!user) {
+            return navigate("/home-guest");
         }
         setLoading(false);
-        // You can perform additional logic or set loading state if needed
-    }, [loggedIn, navigate]);
+    }, [user]);
 
     if (isLoading) {
         return (

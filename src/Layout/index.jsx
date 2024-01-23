@@ -6,11 +6,10 @@ import { Box, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import CustomMenu from '../Components/Common/CustomMenu';
 import Footer from '../Components/Footer/Footer';
-import { isAuthenticated, setAdmin, setSession } from '../Helpers/Utils';
+import { isAuthenticated, logoutHandler, setAdmin, setSession, setUser } from '../Helpers/Utils';
 import { useParams } from 'react-router-dom'
 
 const pages = [
-
     {
         title: "Home",
         link: "/home"
@@ -53,6 +52,17 @@ const pages = [
     }
 ]
 
+const home = [
+    {
+        title: "Home",
+        link: "/home"
+    },
+    {
+        title: "My Account",
+        link: "/my-account"
+    }
+]
+
 
 const Layout = ({ children }) => {
     const navigate = useNavigate()
@@ -81,36 +91,35 @@ const Layout = ({ children }) => {
                 {!isHomePage && !isHomeGuest && isMasterCourseIdStored && (
                     <>
                         <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
+                            {
+                                pages
+                                    .filter((page) => page.title !== 'My Account' || isLoggedIn)
+                                    .map((page) => {
+                                        const isActiveMenu = location.pathname.includes(page.link);
 
-
-                            {pages
-                                .filter((page) => page.title !== 'My Account' || isLoggedIn)
-                                .map((page) => {
-                                    const isActiveMenu = location.pathname.includes(page.link);
-
-                                    return (
-                                        <Button
-                                            key={page.link}
-                                            onClick={() => {
-                                                if (page.title === 'Home' || page.title === 'My Account') {
-                                                    navigate(page.link);
-                                                } else {
-                                                    navigate(`${page.link}/${masterCourseId}`);
-                                                }
-                                            }}
-                                            sx={{
-                                                my: 2,
-                                                px: '6px',
-                                                color: isActiveMenu ? '#6B63FB' : 'black',
-                                                display: 'block',
-                                                textTransform: 'capitalize',
-                                                fontWeight: isActiveMenu ? 700 : 400,
-                                            }}
-                                        >
-                                            {page.title}
-                                        </Button>
-                                    );
-                                })}
+                                        return (
+                                            <Button
+                                                key={page.link}
+                                                onClick={() => {
+                                                    if (page.title === 'Home' || page.title === 'My Account') {
+                                                        navigate(page.link);
+                                                    } else {
+                                                        navigate(`${page.link}/${masterCourseId}`);
+                                                    }
+                                                }}
+                                                sx={{
+                                                    my: 2,
+                                                    px: '6px',
+                                                    color: isActiveMenu ? '#6B63FB' : 'black',
+                                                    display: 'block',
+                                                    textTransform: 'capitalize',
+                                                    fontWeight: isActiveMenu ? 700 : 400,
+                                                }}
+                                            >
+                                                {page.title}
+                                            </Button>
+                                        );
+                                    })}
 
 
 
@@ -127,8 +136,7 @@ const Layout = ({ children }) => {
                                         <LoadButton
                                             text={'Logout'}
                                             onClick={() => {
-                                                setSession(null)
-                                                setAdmin(null)
+                                                logoutHandler()
                                                 navigate('/login')
                                             }}
                                             styleProps={{
@@ -148,26 +156,32 @@ const Layout = ({ children }) => {
                 )}
 
                 {
-
-                    isHomePage && (
+                    (isHomePage || (isMyAccount && !isMasterCourseIdStored)) && (
                         <>
                             <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '15px' }}>
-                                <Button
-                                    key="my-account"
-                                    onClick={() => {
-                                        navigate('/my-account');
-                                    }}
-                                    sx={{
-                                        my: 2, px: "6px", display: 'block', textTransform: "capitalize", color: '#000', fontWeight: 500
-                                    }}
-                                >
-                                    My Account
-                                </Button>
+                                {home.map(page => {
+                                    const isActiveMenu = location.pathname.includes(page.link);
+                                    return (
+                                        <Button
+                                            key={page.link}
+                                            onClick={() => navigate(page.link)}
+                                            sx={{
+                                                my: 2,
+                                                px: '6px',
+                                                color: isActiveMenu ? '#6B63FB' : 'black',
+                                                display: 'block',
+                                                textTransform: 'capitalize',
+                                                fontWeight: isActiveMenu ? 700 : 400,
+                                            }}
+                                        >
+                                            {page.title}
+                                        </Button>
+                                    )
+                                })}
                                 <LoadButton
                                     text={'Logout'}
                                     onClick={() => {
-                                        setSession(null)
-                                        setAdmin(null)
+                                        logoutHandler()
                                         navigate('/login')
                                     }}
                                     styleProps={{
@@ -217,42 +231,6 @@ const Layout = ({ children }) => {
                         />
                     </Box>
                 )}
-                {
-                    isMyAccount && !isMasterCourseIdStored && (
-                        <>
-                            <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '15px' }}>
-                                <Button
-                                    key="my-account"
-                                    onClick={() => {
-                                        navigate('/');
-                                    }}
-                                    sx={{
-                                        my: 2, px: "6px", display: 'block', textTransform: "capitalize", color: '#000', fontWeight: 500
-                                    }}
-                                >
-                                    Home
-                                </Button>
-                                <LoadButton
-                                    text={'Logout'}
-                                    onClick={() => {
-                                        setSession(null)
-                                        setAdmin(null)
-                                        navigate('/login')
-                                    }}
-                                    styleProps={{
-                                        minWidth: {
-                                            xs: '110px',
-                                        },
-                                        height: "40px",
-                                        fontSize: "14px",
-                                        marginTop: 0
-                                    }}
-                                />
-
-                            </Box>
-                        </>
-                    )
-                }
             </Box>
             <Box>
                 {children}
