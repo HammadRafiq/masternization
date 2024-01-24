@@ -15,6 +15,8 @@ const PickACourseCards = ({ key, item }) => {
 
   const handleOnClick = () => {
     localStorage.setItem('selectedMasterCourseId', item._id);
+    localStorage.setItem('selectedMasterCourseName', item.name)
+    localStorage.setItem('selectedMasterCourseDesc', item.desc)
   }
 
   const linkStyles = {

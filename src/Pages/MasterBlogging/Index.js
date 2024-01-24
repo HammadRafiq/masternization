@@ -151,7 +151,7 @@ const MasterBlogging = () => {
             variables: { page: currentPage4, limit: limit },
         });
     };
-
+    const masterCourseName = localStorage.getItem("selectedMasterCourseName")
     const allCoursesDisplayed1 = data1?.contents.items.length >= data1?.contents.total && data1?.contents.items.length !== 0;
     const allCoursesDisplayed2 = data2?.contents.items.length >= data2?.contents.total && data2?.contents.items.length !== 0;
     const allCoursesDisplayed3 = data3?.contents.items.length >= data3?.contents.total && data3?.contents.items.length !== 0;
@@ -160,14 +160,13 @@ const MasterBlogging = () => {
 
     return (
         <>
-
             <Box id="master-dashboard" className="master-dashboard pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
                 <Box sx={{ display: { xs: 'block', md: 'flex' }, textAlign: 'center', justifyContent: 'center', gap: '12px', margin: '100px 0 32px' }}>
-                    <LoadButton text={'Master Blogging'} styleProps={{ fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
-                    <LoadButton text={'Become a Blogger'} styleProps={{ background: 'var(--dark-purple)', fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
+                    <LoadButton text={masterCourseName} styleProps={{ fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
+                    <LoadButton text={`Become a ${masterCourseName}`} styleProps={{ background: 'var(--dark-purple)', fontSize: '16px', fontFamily: 'DM Sans !important', fontWeight: 400, letterSpacing: '-0.48px', height: '44px', minWidth: '160px' }} />
                 </Box>
                 <Box>
-                    <h2 className="center main-heading">Master Blogging</h2>
+                    <h2 className="center main-heading">{masterCourseName}</h2>
                 </Box>
                 <Box className="center" sx={{ margin: '100px 0 84px' }}>
                     <h3 className="mb-16">Introduction</h3>
@@ -177,7 +176,7 @@ const MasterBlogging = () => {
                 </Box>
                 <Box sx={{ textAlign: 'center', marginBottom: '42px' }}>
                     <h5 className="small-tagline letting-spacing-6 mb-12">Get Inspired</h5>
-                    <h3 className="mb-16">Blogging Success Stories</h3>
+                    <h3 className="mb-16">{masterCourseName} Success Stories</h3>
                     <p className="p-primary">
                         Blogging is a way of creating and sharing content on the internet to connect with an audience.
                     </p>
@@ -210,7 +209,7 @@ const MasterBlogging = () => {
                 <Box>
                     <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                         <h5 className="small-tagline letting-spacing-6 mb-12">Explore</h5>
-                        <h3 className="mb-16">How To Start Blogging</h3>
+                        <h3 className="mb-16">How To Start {masterCourseName}</h3>
                         <p className="p-primary">
                             Blogging is a way of creating and sharing content on the internet to connect with an audience.
                         </p>
@@ -241,7 +240,7 @@ const MasterBlogging = () => {
                 </Box>
                 <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                     <h5 className="small-tagline letting-spacing-6 mb-12">Find jobs</h5>
-                    <h3 className="mb-16">How To Get A Blogging Job</h3>
+                    <h3 className="mb-16">How To Get A {masterCourseName} Job</h3>
                     <p className="p-primary">
                         Blogging is a way of creating and sharing content on the internet to connect with an audience.
                     </p>
@@ -270,7 +269,7 @@ const MasterBlogging = () => {
                 <Box>
                     <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                         <h5 className="small-tagline letting-spacing-6 mb-12">Be independent</h5>
-                        <h3 className="mb-16">How To Start A Blogging Business</h3>
+                        <h3 className="mb-16">How To Start A {masterCourseName} Business</h3>
                         <p className="p-primary">
                             Blogging is a way of creating and sharing content on the internet to connect with an audience.
                         </p>

@@ -1,8 +1,7 @@
 import { handleAuthentication, isAdmin, isAuthenticated, isUser } from "../../Helpers/Utils";
-// import { Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
-// import { DefaultLogo } from 'Config'
+import GuardLoading from "../Common/GuardLoading";
 
 function GuestGuard({ children }) {
     const [loading, setLoading] = useState(true)
@@ -13,11 +12,10 @@ function GuestGuard({ children }) {
     const location = useLocation()
 
     useEffect(() => {
-        debugger
         if (user && location.pathname.includes("login" || "registration" || "admin")) {
             return navigate("/home");
         }
-        else if (admin) {
+        else if (admin && location.pathname.includes("login" || "registration" || "admin")) {
             return navigate("/dashboard/overview")
         }
         setLoading(false)
@@ -25,14 +23,7 @@ function GuestGuard({ children }) {
 
     if (loading) {
         return (
-            <div style={{ width: "100vw", height: "100vh", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                Loading...
-                {/* <Spin
-                    size="large"
-                >
-                    <DefaultLogo />
-                </Spin> */}
-            </div>
+            <GuardLoading />
         )
     }
 
