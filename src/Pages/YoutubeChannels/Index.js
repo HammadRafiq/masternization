@@ -58,20 +58,20 @@ const YoutubeChannels = () => {
 
   const navigate = useNavigate();
 
-    const selectedMastercourseId = localStorage.getItem('selectedMasterCourseId');
-    console.log("Fetched ID", selectedMastercourseId);
+  const selectedMastercourseId = localStorage.getItem('selectedMasterCourseId');
+  console.log("Fetched ID", selectedMastercourseId);
 
-    useEffect(() => {
-        
-        const currentPath = window.location.pathname;
+  useEffect(() => {
 
-      
-        if (currentPath.endsWith('/undefined')) {
-           
-            const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
-            navigate(updatedPath, { replace: true });
-        }
-    }, [navigate]);
+    const currentPath = window.location.pathname;
+
+
+    if (currentPath.endsWith('/undefined')) {
+
+      const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
+      navigate(updatedPath, { replace: true });
+    }
+  }, [navigate]);
 
   const { data, loading, error, fetchMore } = useQuery(GET_YOUTUBE_CHANNELS, {
     variables: {
@@ -79,7 +79,7 @@ const YoutubeChannels = () => {
       screen: "YOUTUBE_CHANNELS",
       page: 1,
       limit: limit,
-      status:true
+      status: true
     }
   });
 
@@ -110,20 +110,18 @@ const YoutubeChannels = () => {
     });
   };
 
-  //if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  console.log("Fetched Data", data);
+  const masterCourseName = localStorage.getItem("selectedMasterCourseName")
   const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total && data?.contents.items.length !== 0;
 
   return (
     <>
       <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
-        <SecondaryHeader title={'Blogging Youtube Channels'} />
+        <SecondaryHeader title={`${masterCourseName} Youtube Channels`} />
         {
           loading && <SkeltonLoader />
         }
         <Grid container spacing={2.5}>
-        {
+          {
             data?.contents.items.length === 0 ? (
               <Typography variant="body2" sx={{
                 width: '100%', textAlign: 'center', fontSize: '16px', fontWeight: 500, marginTop: '12px'

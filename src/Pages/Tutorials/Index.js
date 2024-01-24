@@ -99,16 +99,13 @@ const Tutorials = () => {
     });
   };
 
-  //if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error: {error.message}</p>;
-  console.log("Fetched Data", data);
-
+  const masterCourseName = localStorage.getItem("selectedMasterCourseName")
   const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total && data?.contents.items.length !== 0;
 
   return (
     <>
       <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
-        <SecondaryHeader title={'Blogging Tutorials'} />
+        <SecondaryHeader title={`${masterCourseName} Tutorials`} />
         {
           loading && <SkeltonLoader />
         }
