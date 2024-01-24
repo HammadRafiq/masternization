@@ -35,7 +35,7 @@ const CustomSelectField = ({ name, label, control, defaultValue, options = [], r
     return (
 
         <>
-            <FormControl className="select-field-custom-styling">
+            <FormControl className="select-field-custom-styling" fullWidth>
                 <label htmlFor="course-name">{label}</label>
                 <Controller
                     name={name}
