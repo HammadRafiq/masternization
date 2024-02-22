@@ -16,7 +16,7 @@ const JobCard = ({ item }) => {
                     height: "calc(100% - 30px)"
                 }}>
                     <Box className="curved-bg" sx={{ padding: '24px 32px 28px' }} >
-                        <img src={item.icon.src} alt={item.icon.alt ?? DefaultImg} className='card-icon-primary' />
+                        <img src={item?.icon?.src ?? DefaultImg} alt={item?.icon?.alt} className='card-icon-primary' />
                         <Typography variant='h2' sx={{
                             fontSize: '20px',
                             lineHeight: '140%',

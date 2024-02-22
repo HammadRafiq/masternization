@@ -185,9 +185,8 @@ const MasterBlogging = () => {
                     loading1 && <SkeltonLoader />
                 }
                 <Grid container spacing={2.5}>
-
                     {
-                        data1?.contents.items.length === 0 ? (
+                        data1?.contents?.items?.length === 0 ? (
                             <Typography variant="body2" sx={{
                                 width: '100%', textAlign: 'center', fontSize: '16px', fontWeight: 500, marginTop: '12px'
                             }}>No data found.</Typography>
