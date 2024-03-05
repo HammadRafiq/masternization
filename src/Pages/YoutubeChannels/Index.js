@@ -24,8 +24,8 @@ import { limit } from '../../Helpers/Utils';
 
 
 const GET_YOUTUBE_CHANNELS = gql`
-query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int, $status: Boolean){
-    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page, status: $status) {
+query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int, $status: Boolean, $sort: String){
+    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page, status: $status, sort: $sort) {
       items {
         _id
         icon {
@@ -46,69 +46,68 @@ query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int, $status: Bo
 `
 
 
-
 const YoutubeChannels = () => {
-
   const [loading1, setLoading1] = useState(false);
-  //const [limit, setLimit] = useState(1);
-  const [page, setPage] = useState(2)
-  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(1)
+  const [search, setSearch] = useState("")
+  const [sort, setSort] = useState("NEWEST")
 
   const { masterCourseId } = useParams();
-
   const navigate = useNavigate();
-
   const selectedMastercourseId = localStorage.getItem('selectedMasterCourseId');
-  console.log("Fetched ID", selectedMastercourseId);
 
   useEffect(() => {
-
     const currentPath = window.location.pathname;
-
-
     if (currentPath.endsWith('/undefined')) {
-
       const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
       navigate(updatedPath, { replace: true });
     }
   }, [navigate]);
 
-  const { data, loading, error, fetchMore } = useQuery(GET_YOUTUBE_CHANNELS, {
+  const { data, loading, fetchMore } = useQuery(GET_YOUTUBE_CHANNELS, {
     variables: {
       masterCourseId: masterCourseId,
       screen: "YOUTUBE_CHANNELS",
       page: 1,
       limit: limit,
-      status: true
+      status: true,
+      search: search,
+      sort: sort
     }
   });
 
   const handleLoadMore = () => {
-
     setPage(prev => prev + 1);
     setLoading1(true);
     fetchMore({
       variables: {
-        page: page,
+        page: page + 1,
         limit: limit
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
         if (!fetchMoreResult) return prevResult;
         setLoading1(false);
         return {
-
           contents: {
-
             total: fetchMoreResult.contents.total,
             limit: fetchMoreResult.contents.limit,
             page: fetchMoreResult.contents.page,
             items: [...prevResult.contents.items, ...fetchMoreResult.contents.items],
           },
         };
-
       },
     });
   };
+
+  const onSearch = (value) => {
+    setPage(1)
+    setSearch(value)
+  }
+
+  const onSort = (value) => {
+      setPage(1)
+      setSort(value)
+  }
 
   const masterCourseName = localStorage.getItem("selectedMasterCourseName")
   const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total && data?.contents.items.length !== 0;
@@ -116,7 +115,7 @@ const YoutubeChannels = () => {
   return (
     <>
       <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
-        <SecondaryHeader title={`${masterCourseName} Youtube Channels`} />
+        <SecondaryHeader title={`${masterCourseName} Youtube Channels`} onSearch={onSearch} onSort={onSort} />
         {
           loading && <SkeltonLoader />
         }

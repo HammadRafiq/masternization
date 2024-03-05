@@ -2,18 +2,14 @@ import React from 'react'
 import Button, { ButtonProps } from '@mui/material/Button';
 import { LoadingButton } from '@mui/lab';
 
-const LoadButton = (
-  {
-    text,
-    styleProps = {},
-    onClick = () => null,
-    loading = false,
-    disabled,
-    ...rest
-  }
-) => {
-
- 
+const LoadButton = ({
+  text,
+  styleProps = {},
+  onClick = () => null,
+  loading = false,
+  disabled,
+  ...rest
+}) => {
 
   return (
     <LoadingButton

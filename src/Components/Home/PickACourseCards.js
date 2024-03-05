@@ -30,30 +30,34 @@ const PickACourseCards = ({ key, item }) => {
         borderRadius: '16px',
         border: '1px solid rgba(38, 38, 38, 0.10)',
         padding: '24px',
+        height: "calc(100% - 50px)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between"
       }}>
-        <Box sx={{
-          display: 'flex',
-          alignItems: 'start',
-          justifyContent: 'space-between',
-        }}>
-
-          <img class="box-img" src={item.icon?.src ?? CourseIcon} />
-
-          <HeartIcon
-            style={{ cursor: "pointer" }}
-            className={`heart-icon ${heart}`}
-            onClick={() => {
-              if (heart == "inactive") {
-                setHeart("active")
-              }
-              else {
-                setHeart("inactive")
-              }
-            }}
-          />
+        <Box>
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'start',
+            justifyContent: 'space-between',
+          }}>
+            <img class="box-img" src={item.icon?.src ?? CourseIcon} />
+            <HeartIcon
+              style={{ cursor: "pointer" }}
+              className={`heart-icon ${heart}`}
+              onClick={() => {
+                if (heart == "inactive") {
+                  setHeart("active")
+                }
+                else {
+                  setHeart("inactive")
+                }
+              }}
+            />
+          </Box>
+          <h2 className="card-heading">{item.name}</h2>
+          <p className="card-description">{item.desc}</p>
         </Box>
-        <h2 className="card-heading">{item.name}</h2>
-        <p className="card-description">{item.desc}</p>
         <Link onClick={handleOnClick} style={linkStyles} to={`/master-blogging/${masterCourseId}`}>
           <Box sx={{
             display: 'flex',
@@ -67,10 +71,8 @@ const PickACourseCards = ({ key, item }) => {
               marginRight: 0
             }
           }}>
-
             <h6>Go to course</h6>
             <img src={Arrow} alt="arrow" />
-
           </Box>
         </Link>
       </Box>

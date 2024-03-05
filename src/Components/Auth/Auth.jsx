@@ -23,7 +23,8 @@ const Auth = ({ children }) => {
     })
 
     const uploadLink = createUploadLink({
-        uri: 'https://masternization-backend1.el.r.appspot.com',
+        // uri: 'http://localhost:4000',
+        uri: "https://masternization-backend1.el.r.appspot.com/",
         headers: {
             authorization: isAuthenticated() ? `Bearer ${getToken()}` : "",
         }

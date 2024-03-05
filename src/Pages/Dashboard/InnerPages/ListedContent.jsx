@@ -8,6 +8,7 @@ import { useSnackbar } from 'notistack';
 import moment from 'moment/moment';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import CommonDeleteModal from '../../../Components/Common/CommonDeleteModal';
 
 const ALL_CONTENTS = gql`
 query($page: Int, $limit: Int, $screen: String, $section: String, $masterCourseId: ID){
@@ -74,7 +75,7 @@ const ListedContent = () => {
   const [updateStatusContent, { loading: loading2 }] = useMutation(UPDATE_STATUS_CONTENT)
 
   const deleteContentHandler = (id) => {
-    deleteContent({
+    return deleteContent({
       variables: {
         id: id
       },
@@ -190,9 +191,9 @@ const ListedContent = () => {
       dataIndex: 'status',
       width: "10%",
       render: (text, record) => (
-        <Box>
-          <EditIcon style={{ cursor: "pointer" }} onClick={() => navigate(`/dashboard/edit-content/${record._id}`)} />
-          <TrashIcon style={{ cursor: "pointer", marginLeft: '15px' }} onClick={() => deleteContentHandler(record._id)} />
+        <Box display={"flex"}>
+          <EditIcon style={{ cursor: "pointer", marginRight: "5px"}} onClick={() => navigate(`/dashboard/edit-content/${record._id}`)} />
+          <CommonDeleteModal onDelete={() => deleteContentHandler(record._id)} />
         </Box>
       )
     },

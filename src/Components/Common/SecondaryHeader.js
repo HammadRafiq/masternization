@@ -5,30 +5,32 @@ import CustomTextField from '../../Components/Common/CustomTextField';
 import ArrowDown from '../../Assets/arrow-down.svg'
 import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
-import CustomSelectField from '../Common/CustomSelectField'
 import FilterSelectField from './FilterSelectField';
 
-const selectOptions = [
-  { value: 'option1', label: 'Option 1' },
-  { value: 'option2', label: 'Option 2' },
-  { value: 'option3', label: 'Option 3' },
-];
 
-const SecondaryHeader = ({ title }) => {
+const SecondaryHeader = ({
+  title,
+  onSearch = () => null,
+  onSort = () => null,
+}) => {
   const {
     register,
-    reset,
     handleSubmit,
     formState: { errors },
-    control,
+    getValues
   } = useForm({
     defaultValues: {
     },
   });
 
+  const searchHandler = () => {
+    onSearch(getValues("searchcourse"))
+  }
+
   const onSubmit = (data) => {
-    console.log('Form Data', data);
   };
+
+
   return (
     <>
       <Box
@@ -113,7 +115,6 @@ const SecondaryHeader = ({ title }) => {
             }, gap: '16px',
 
           }}>
-
             <CustomTextField
               name={'searchcourse'}
               label={''}
@@ -123,15 +124,13 @@ const SecondaryHeader = ({ title }) => {
               bgColor={'#EBEBEC'}
               paddingLeft={'20px'}
               register={register}
-              required={true}
               errors={errors}
               styles={{ position: 'absolute', top: '-15px', left: { xs: '25px', md: '50px' } }}
             />
-            <LoadButton text={'Search'} />
-
+            <LoadButton text={'Search'} onClick={searchHandler} />
           </Box>
           <Box className="filter-select-bar">
-            <FilterSelectField />
+            <FilterSelectField onSort={onSort} />
           </Box>
         </Box>
       </form>

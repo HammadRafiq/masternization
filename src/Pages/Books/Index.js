@@ -16,8 +16,8 @@ import Typography from '@mui/material/Typography';
 
 
 const GET_BOOKS = gql`
-query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int, $status: Boolean){
-    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page, status: $status) {
+query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int, $status: Boolean, $search: String, $sort: String){
+    contents(masterCourseId: $masterCourseId, screen: $screen, limit: $limit, page: $page, status: $status, search: $search, sort: $sort) {
       items {
         _id
         icon {
@@ -36,29 +36,20 @@ query($masterCourseId: ID, $screen: String, $limit: Int, $page: Int, $status: Bo
 `
 
 const Books = () => {
-
-    //const {globalMasterCourseId, setGlobalMasterCourseId} = useContext(GlobalInfo)
-
     const [loading1, setLoading1] = useState(false);
-    //const [limit, setLimit] = useState(1);
-    const [page, setPage] = useState(2)
-    const [currentPage, setCurrentPage] = useState(1);
-
+    const [page, setPage] = useState(1)
+    const [search, setSearch] = useState("")
+    const [sort, setSort] = useState("NEWEST")
 
     const { masterCourseId } = useParams();
 
     const navigate = useNavigate();
 
     const selectedMastercourseId = localStorage.getItem('selectedMasterCourseId');
-    console.log("Fetched ID", selectedMastercourseId);
 
     useEffect(() => {
-
         const currentPath = window.location.pathname;
-
-
         if (currentPath.endsWith('/undefined')) {
-
             const updatedPath = currentPath.replace('/undefined', `/${selectedMastercourseId}`);
             navigate(updatedPath, { replace: true });
         }
@@ -70,17 +61,18 @@ const Books = () => {
             screen: "BOOKS",
             page: 1,
             limit: limit,
-            status: true
+            status: true,
+            search: search,
+            sort: sort
         }
     });
 
     const handleLoadMore = () => {
-
         setPage(prev => prev + 1);
         setLoading1(true);
         fetchMore({
             variables: {
-                page: page,
+                page: page + 1,
                 limit: limit
             },
             updateQuery: (prevResult, { fetchMoreResult }) => {
@@ -101,13 +93,24 @@ const Books = () => {
         });
     };
 
+    const onSearch = (value) => {
+        setPage(1)
+        setSearch(value)
+    }
+
+    const onSort = (value) => {
+        setPage(1)
+        setSort(value)
+    }
+
     const masterCourseName = localStorage.getItem("selectedMasterCourseName")
     const allCoursesDisplayed = data?.contents.items.length >= data?.contents.total && data?.contents.items.length !== 0;
+
 
     return (
         <>
             <Box className="pl-100 pr-100 pb-100" sx={{ flexGrow: 1 }}>
-                <SecondaryHeader title={`${masterCourseName} Books`} />
+                <SecondaryHeader title={`${masterCourseName} Books`} onSearch={onSearch} onSort={onSort} />
                 {
                     loading && <SkeltonLoader />
                 }

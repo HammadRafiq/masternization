@@ -241,7 +241,6 @@ const Home = () => {
         }
 
         <Grid container spacing={2.5}>
-
           {
             data?.masterCourses.items.map((item) => {
               return (
