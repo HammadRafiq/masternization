@@ -17,8 +17,8 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 
 const GET_MASTERCOURSES = gql`
-  query($limit: Int, $page: Int){
-  masterCourses(limit: $limit, page: $page) {
+  query($limit: Int, $page: Int, $search: String){
+  masterCourses(limit: $limit, page: $page, search: $search) {
     total
     items {
       _id
@@ -67,44 +67,37 @@ const pickCourse = {
 };
 
 const Home = () => {
-
-
-  const navigate = useNavigate();
-
   const {
     register,
-    reset,
     handleSubmit,
+    getValues,
     formState: { errors },
-    control,
   } = useForm({
     defaultValues: {
     },
   });
 
   const onSubmit = (data) => {
-    console.log('Form Data', data);
   };
 
   const [loading1, setLoading1] = useState(false);
-  const [limit, setLimit] = useState(1);
-  const [page, setPage] = useState(2)
-  const [currentPage, setCurrentPage] = useState(1);
+  const [page, setPage] = useState(1)
+  const [search, setSearch] = useState("")
 
   const { data, loading, error, fetchMore } = useQuery(GET_MASTERCOURSES, {
     variables: {
       page: 1,
-      limit: 3
+      limit: 3,
+      search: search
     }
   });
 
   const handleLoadMore = () => {
-
     setPage(prev => prev + 1);
     setLoading1(true);
     fetchMore({
       variables: {
-        page: page,
+        page: page + 1,
         limit: 3
       },
       updateQuery: (prevResult, { fetchMoreResult }) => {
@@ -118,22 +111,21 @@ const Home = () => {
             items: [...prevResult.masterCourses.items, ...fetchMoreResult.masterCourses.items],
           },
         };
-
       },
     });
   };
 
-  if (error) return <p>Error: {error.message}</p>;
-
   const handleButtonClick = () => {
-
     const sectionElement = document.getElementById('explore-all-courses');
-
     sectionElement.scrollIntoView({ behavior: 'smooth' });
-
   };
 
   const allCoursesDisplayed = data?.masterCourses.items.length >= data?.masterCourses.total;
+
+  const onSearch = () => {
+    setSearch(getValues("searchcourses"))
+    setPage(1)
+  }
 
   return (
 
@@ -224,13 +216,12 @@ const Home = () => {
                     bgColor={'#EBEBEC'}
                     paddingLeft={'15px'}
                     register={register}
-                    required={true}
                     errors={errors}
                     styles={{ position: 'absolute', top: '0px', left: { xs: '25px', md: '30px' } }}
                   />
                 </Grid>
                 <Grid item xs={12} md={3}>
-                  <LoadButton text={'Search'} />
+                  <LoadButton text={'Search'} onClick={onSearch} />
                 </Grid>
               </Grid>
             </form>
