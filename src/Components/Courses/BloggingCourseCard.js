@@ -77,7 +77,7 @@ const BloggingCourseCard = ({ key, item }) => {
                     >
                         <img src={item?.icon?.src ?? DefaultImg} alt="Blogging Icon" className='card-icon-primary' />
                         <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#fff', borderRadius: '56px', minWidth: '40px', padding: '8px 15px' }}>
-                            <img src={availabilityImage} alt={item.icon.alt} />
+                            <img src={availabilityImage} alt={item?.icon?.alt} />
                             <Typography
                                 variant="body2"
                                 sx={{

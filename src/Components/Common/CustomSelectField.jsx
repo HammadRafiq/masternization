@@ -53,7 +53,10 @@ const CustomSelectField = ({ name, label, control, defaultValue, options = [], r
                                 onChange={handleChange}
                                 IconComponent={ArrowDropDownIcon}
                                 input={<InputBase />}
-                                renderValue={(value) => (value ? value : 'Select category of your work')}
+                                renderValue={(selected) => {
+                                    const selectedOption = options.find((option) => option.value === selected);
+                                    return selectedOption ? selectedOption.label : '';
+                                }}
                                 sx={selectStyles}
                                 error={!!errors[name]}
                                 id={name}

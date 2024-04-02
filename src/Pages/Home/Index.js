@@ -7,14 +7,13 @@ import MasterFeatures from '../../Components/Home/MasterFeatures';
 import Typography from '@mui/material/Typography';
 import CustomTextField from '../../Components/Common/CustomTextField';
 import FormFooter from '../../Components/Common/FormFooter';
-import Pagination from 'rc-pagination';
 import BannerBg from "../../Assets/banner-bg.png"
 import { useForm } from 'react-hook-form';
-import { useMutation, gql } from '@apollo/client';
+import { gql } from '@apollo/client';
 import { useQuery } from '@apollo/client';
 import SkeltonLoader from '../../Components/Common/SkeltonLoader';
 import Button from '@mui/material/Button';
-import { useNavigate } from 'react-router-dom';
+
 
 const GET_MASTERCOURSES = gql`
   query($limit: Int, $page: Int, $search: String){

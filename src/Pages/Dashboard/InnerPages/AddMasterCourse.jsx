@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Grid from '@mui/system/Unstable_Grid';
 import Typography from '@mui/material/Typography';
@@ -9,27 +9,10 @@ import CustomRadioField from '../../../Components/Dashboard/Common/CustomRadioFi
 import LoadButton from '../../../Components/Common/LoadButton';
 import { useDropzone } from 'react-dropzone';
 import AddCircle from '../../../Assets/dashboard/add-circle.svg'
-import { gql, useMutation } from '@apollo/client';
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import { useSnackbar } from 'notistack';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-
-const availabilityOptions = [
-    { value: 'free', label: 'Free' },
-    { value: 'freemium', label: 'Freemium' },
-    { value: 'paid', label: 'Paid' },
-];
-
-const typeOptions = [
-    { value: 'tool', label: 'Tool' },
-    { value: 'resource', label: 'Resource' },
-];
-
-const selectOptions = [
-    { value: 'option1', label: 'Option 1' },
-    { value: 'option2', label: 'Option 2' },
-    { value: 'option3', label: 'Option 3' },
-];
 
 const ADD_MASTERCOURSE = gql`
     mutation ADD_MASTER_COURSE($name: String!, $desc: String!, $icon: Upload){
@@ -38,23 +21,58 @@ const ADD_MASTERCOURSE = gql`
         desc
         name
         icon {
-        alt
-        src
+            alt
+            src
+        }
+    }
+    }
+`
+
+const UPDATE_MASTERCOURSE = gql`
+    mutation($id: ID!, $name: String!, $desc: String!, $icon: Upload){
+    updateMasterCourse(id: $id, name: $name, desc: $desc, icon: $icon) {
+        _id
+        desc
+        name
+        icon {
+            alt
+            src
         }
     }
     }
 `
 
 
+const SINGLE_MASTERCOURSE = gql`
+  query($id: ID!){
+    masterCourseById(id: $id) {
+        _id
+        desc
+        name
+        icon {
+          alt
+          src
+        }
+    }
+  }
+`
+
+
+
 const AddMasterCourse = () => {
     const [addMasterCourse, { loading, data }] = useMutation(ADD_MASTERCOURSE)
+    const [updateMasterCourse, { loading: loading1, data: data1 }] = useMutation(UPDATE_MASTERCOURSE)
+    const [masterCourseById, { data: data2 }] = useLazyQuery(SINGLE_MASTERCOURSE)
+
     const { enqueueSnackbar } = useSnackbar()
     const navigate = useNavigate()
+    const { masterCourseId } = useParams()
 
     const {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
         setValue
     } = useForm({
         defaultValues: {
@@ -62,16 +80,39 @@ const AddMasterCourse = () => {
     });
 
     const onSubmit = (data) => {
-        addMasterCourse({
-            variables: data,
-            onCompleted: (data) => {
-                enqueueSnackbar("Master course added successfully", {
-                    variant: "success"
-                })
-                navigate("/dashboard/listed-master-courses")
-            },
-            onError: () => { }
-        })
+        delete data.__typename
+        delete data._id
+        delete data.date
+        if (!(data?.icon instanceof File)) { // If default icon value exists coming from backend then delete else send File object to backend
+            delete data.icon
+        }
+        if (masterCourseId) {
+            updateMasterCourse({
+                variables: {
+                    ...data,
+                    id: masterCourseId
+                },
+                onCompleted: (data) => {
+                    enqueueSnackbar("Master course updated successfully", {
+                        variant: "success"
+                    })
+                    navigate("/dashboard/listed-master-courses")
+                },
+                onError: () => { },
+            })
+        }
+        else {
+            addMasterCourse({
+                variables: data,
+                onCompleted: (data) => {
+                    enqueueSnackbar("Master course added successfully", {
+                        variant: "success"
+                    })
+                    reset()
+                },
+                onError: () => { }
+            })
+        }
     };
 
     {/* Drop Zone Image Upload */ }
@@ -93,6 +134,23 @@ const AddMasterCourse = () => {
         multiple: false,
     });
 
+    useEffect(() => { // Fetching single master course data when user wants to edit the record
+        if (masterCourseId) {
+            masterCourseById({
+                variables: {
+                    id: masterCourseId
+                },
+                onCompleted: (data) => {
+                    Object.entries(data.masterCourseById ?? []).map(entry => {
+                        if (entry[1]) { // Not adding null/undefined values to react-hook-form
+                            setValue(entry[0], entry[1])
+                        }
+                    })
+                }
+            })
+        }
+    }, [masterCourseId])
+
 
     return (
         <Box sx={{ padding: '40px' }}>
@@ -113,7 +171,7 @@ const AddMasterCourse = () => {
                                 />
                                 {/* Drop Zone Image Upload Code */}
                                 <Box sx={{ display: 'flex', marginTop: '30px' }}>
-                                    <label class="form-label" for="workurl">Work URL</label>
+                                    <label class="form-label" for="workurl">Icon</label>
                                     <div {...getRootProps()} style={{ display: 'inline-block' }}>
                                         <input {...getInputProps()} />
                                         <Box>
@@ -121,8 +179,6 @@ const AddMasterCourse = () => {
                                         </Box>
                                     </div>
                                     <Box sx={{ marginLeft: '20px' }}>
-
-
                                         {files.map((file) => (
                                             <img
                                                 key={file.name}
@@ -131,8 +187,14 @@ const AddMasterCourse = () => {
                                                 style={{ maxWidth: '200px', maxHeight: '200px' }}
                                             />
                                         ))}
-
-
+                                        {/* If Master Course is being edited and no image has been selected by user then show the image coming from API */}
+                                        {files.length < 1 && masterCourseId && (
+                                            <img
+                                                alt={data2?.masterCourseById?.icon?.alt}
+                                                src={data2?.masterCourseById?.icon?.src}
+                                                style={{ maxWidth: '200px', maxHeight: '200px' }}
+                                            />
+                                        )}
                                     </Box>
                                 </Box>
                                 {errors.files && <span style={{ color: 'red' }}>Please upload an image</span>}
@@ -153,7 +215,7 @@ const AddMasterCourse = () => {
                                     rows={6}
                                 />
                                 <Box sx={{ marginTop: '16px', display: 'flex', justifyContent: 'end' }}>
-                                    <LoadButton text={'Create'} padding={'10px 112px'} loading={loading} />
+                                    <LoadButton text={masterCourseId ? "Update" : "Create"} padding={'10px 112px'} loading={loading || loading1} />
                                 </Box>
 
                             </Grid>

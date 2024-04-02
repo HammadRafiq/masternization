@@ -91,6 +91,12 @@ function App() {
       guard: AdminGuard
     },
     {
+      path: "/dashboard/edit-content/:contentId",
+      element: Content,
+      layout: DashboardLayout,
+      guard: AdminGuard
+    },
+    {
       path: "/dashboard/listed-works",
       element: ListedContent,
       layout: DashboardLayout,
@@ -98,6 +104,12 @@ function App() {
     },
     {
       path: "/dashboard/add-master-course",
+      element: AddMasterCourse,
+      layout: DashboardLayout,
+      guard: AdminGuard
+    },
+    {
+      path: "/dashboard/edit-master-course/:masterCourseId",
       element: AddMasterCourse,
       layout: DashboardLayout,
       guard: AdminGuard
@@ -183,12 +195,6 @@ function App() {
     {
       path: "/",
       element: () => <Navigate to="/home" />,
-    },
-    {
-      path: "/dashboard/edit-content/:contentId",
-      element: Content,
-      layout: DashboardLayout,
-      guard: AdminGuard
     },
   ]
 

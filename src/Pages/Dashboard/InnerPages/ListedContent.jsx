@@ -89,10 +89,8 @@ const ListedContent = () => {
   }
 
   const {
-    watch,
     handleSubmit,
     control,
-    register,
     setValue,
     formState: { errors },
   } = useForm({

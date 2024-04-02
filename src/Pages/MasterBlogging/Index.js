@@ -177,9 +177,6 @@ const MasterBlogging = () => {
                 <Box sx={{ textAlign: 'center', marginBottom: '42px' }}>
                     <h5 className="small-tagline letting-spacing-6 mb-12">Get Inspired</h5>
                     <h3 className="mb-16">{masterCourseName} Success Stories</h3>
-                    <p className="p-primary">
-                        Blogging is a way of creating and sharing content on the internet to connect with an audience.
-                    </p>
                 </Box>
                 {
                     loading1 && <SkeltonLoader />
@@ -209,9 +206,6 @@ const MasterBlogging = () => {
                     <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                         <h5 className="small-tagline letting-spacing-6 mb-12">Explore</h5>
                         <h3 className="mb-16">How To Start {masterCourseName}</h3>
-                        <p className="p-primary">
-                            Blogging is a way of creating and sharing content on the internet to connect with an audience.
-                        </p>
                     </Box>
                     {
                         loading2 && <SkeltonLoader />
@@ -240,9 +234,6 @@ const MasterBlogging = () => {
                 <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                     <h5 className="small-tagline letting-spacing-6 mb-12">Find jobs</h5>
                     <h3 className="mb-16">How To Get A {masterCourseName} Job</h3>
-                    <p className="p-primary">
-                        Blogging is a way of creating and sharing content on the internet to connect with an audience.
-                    </p>
                 </Box>
                 {
                     loading3 && <SkeltonLoader />
@@ -269,9 +260,6 @@ const MasterBlogging = () => {
                     <Box sx={{ textAlign: 'center', marginTop: '100px', marginBottom: '42px' }}>
                         <h5 className="small-tagline letting-spacing-6 mb-12">Be independent</h5>
                         <h3 className="mb-16">How To Start A {masterCourseName} Business</h3>
-                        <p className="p-primary">
-                            Blogging is a way of creating and sharing content on the internet to connect with an audience.
-                        </p>
                     </Box>
                     {
                         loading4 && <SkeltonLoader />

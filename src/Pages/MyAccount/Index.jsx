@@ -24,7 +24,6 @@ const MyAccount = () => {
 
     const {
         register,
-        reset,
         handleSubmit,
         formState: { errors },
         control,

@@ -1,12 +1,9 @@
 import React from 'react'
-import { useForm } from 'react-hook-form';
-import { TextField, Button, IconButton, InputAdornment } from '@mui/material';
+import { TextField } from '@mui/material';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/system/Box';
 
 const CustomTextField = ({ name, label, type, register, required, errors, mt, multiline, rows }) => {
-
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
 
     return (
         <>
@@ -24,8 +21,10 @@ const CustomTextField = ({ name, label, type, register, required, errors, mt, mu
                         background: 'var(--light-purple)',
                         borderRadius: '8px',
                     }}
+                    inputProps={{
+                        maxLength: 250
+                    }}
                     error={!!errors[name]}
-
                     {...register(name, { required })}
                 />
 

@@ -121,6 +121,7 @@ const Content = () => {
   const {
     register,
     watch,
+    reset,
     handleSubmit,
     formState: { errors },
     control,
@@ -188,7 +189,8 @@ const Content = () => {
           enqueueSnackbar("Content added successfully", {
             variant: "success"
           })
-          navigate("/dashboard/listed-works")
+          reset()
+          // navigate("/dashboard/listed-works")
         },
         onError: () => { }
       })
